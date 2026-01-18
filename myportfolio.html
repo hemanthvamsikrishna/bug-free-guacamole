@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Building Tomorrow's Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #000; --accent: #FF6B6B;
+            --gradient-1: linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+            --gradient-2: linear-gradient(135deg,#f093fb 0%,#f5576c 100%);
+            --text-light: #666; --border: rgba(0,0,0,0.08);
+        }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: var(--primary); overflow-x: hidden; background: #fff; }
+        html { scroll-behavior: smooth; }
+
+        /* Navigation */
+        nav { position: fixed; top: 0; width: 100%; padding: 1.5rem 5%; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 1000; transition: all 0.3s ease; border-bottom: 1px solid transparent; }
+        nav.scrolled { border-bottom: 1px solid var(--border); }
+        .nav-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+        .logo { font-family: 'Instrument Serif', serif; font-size: 1.5rem; font-weight: 400; white-space: nowrap; }
+        .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+        .nav-links { display: flex; gap: 1.2rem; list-style: none; }
+        .nav-links a { color: var(--primary); text-decoration: none; font-weight: 400; font-size: .95rem; transition: opacity .3s; }
+        .nav-links a:hover { opacity: .6; }
+        .mobile-menu { display: none; flex-direction: column; gap: 4px; cursor: pointer; }
+        .mobile-menu span { width: 25px; height: 2px; background: var(--primary); transition: all .3s; }
+
+        /* Hero */
+        .hero { height: 100vh; display: flex; align-items: center; justify-content: center; background: #fff; position: relative; overflow: hidden; }
+        .hero-content { text-align: center; z-index: 2; animation: fadeInUp 1s ease-out; max-width: 1100px; padding: 0 5%; }
+        .hero h1 { font-family: 'Instrument Serif', serif; font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 400; line-height: 1.1; margin-bottom: 1.2rem; letter-spacing: -0.02em; }
+        .subtitle { font-size: clamp(1rem, 2vw, 1.3rem); color: var(--text-light); font-weight: 300; margin-bottom: 1.2rem; letter-spacing: 0.02em; }
+        .tagline { display: inline-block; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 500; font-size: 1.1rem; margin-bottom: 1.2rem; }
+
+        /* Top social row (new) */
+        .social-hero { display: inline-flex; gap: .9rem; align-items: center; margin-top: .8rem; }
+        .icon-link { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border: 1px solid var(--border); border-radius: 999px; text-decoration: none; transition: transform .2s, box-shadow .2s, border-color .2s; background: #fff; }
+        .icon-link:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,.08); border-color: rgba(0,0,0,.15); }
+        .icon-link svg { width: 22px; height: 22px; display: block; }
+        .social-label { font-size: .85rem; color: var(--text-light); margin-top: .6rem; }
+
+        /* Floating shapes */
+        .floating-shapes { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; opacity: 0.03; }
+        .shape { position: absolute; border-radius: 50%; background: var(--gradient-1); animation: float 20s infinite ease-in-out; }
+        .shape:nth-child(1){ width: 300px; height: 300px; top: -150px; right: -150px; animation-delay: 0s; }
+        .shape:nth-child(2){ width: 200px; height: 200px; bottom: -100px; left: -100px; animation-delay: 5s; background: var(--gradient-2); }
+        .shape:nth-child(3){ width: 150px; height: 150px; top: 50%; left: 50%; animation-delay: 10s; }
+        @keyframes float { 0%,100%{ transform: translate(0,0) scale(1);} 33%{ transform: translate(30px,-30px) scale(1.1);} 66%{ transform: translate(-20px,20px) scale(.9);} }
+
+        /* Sections */
+        section { padding: 5rem 5%; max-width: 1400px; margin: 0 auto; }
+        .section-title { font-family: 'Instrument Serif', serif; font-size: clamp(2rem,5vw,3rem); margin-bottom: 3rem; font-weight: 400; }
+
+        /* Story */
+        .story { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; min-height: 60vh; }
+        .story-text { font-size: 1.1rem; line-height: 1.8; color: var(--text-light); }
+        .story-text span { color: var(--primary); font-weight: 500; }
+        .story-visual { position: relative; height: 400px; background: var(--gradient-1); border-radius: 20px; overflow: hidden; }
+        .story-visual::after { content: "AI"; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 8rem; font-family: 'Instrument Serif', serif; color: #fff; opacity: .2; }
+
+        /* Journey */
+        .journey { background: #fafafa; border-radius: 30px; padding: 4rem; }
+        .timeline { position: relative; padding-left: 2rem; }
+        .timeline::before { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 2px; background: var(--gradient-1); }
+        .timeline-item { margin-bottom: 3rem; position: relative; opacity: 0; animation: fadeInLeft .6s ease-out forwards; }
+        .timeline-item:nth-child(1){ animation-delay: .2s;} .timeline-item:nth-child(2){ animation-delay: .4s;} .timeline-item:nth-child(3){ animation-delay: .6s;}
+        .timeline-item::before { content: ''; position: absolute; left: -2.4rem; top: .5rem; width: 10px; height: 10px; border-radius: 50%; background: #fff; border: 2px solid #667eea; }
+        .timeline-date { font-size: .9rem; color: var(--text-light); margin-bottom: .5rem; }
+        .timeline-title { font-size: 1.3rem; font-weight: 500; margin-bottom: .5rem; }
+        .timeline-desc { color: var(--text-light); line-height: 1.6; }
+
+        /* Skills */
+        .skills { background: linear-gradient(135deg,#667eea15 0%,#764ba215 100%); border-radius: 30px; }
+        .skill-groups { display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 1.2rem; }
+        .skill-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 1.2rem 1.2rem 1rem; }
+        .skill-card h4 { font-size: 1.05rem; margin-bottom: .8rem; }
+        .pill-row { display: flex; flex-wrap: wrap; gap: .5rem; }
+        .pill { padding: .35rem .7rem; background: #f3f3f3; border-radius: 999px; font-size: .85rem; color: var(--text-light); }
+
+        /* Projects / Lab */
+        .lab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px,1fr)); gap: 2rem; }
+        .project-card { background: #fff; border: 1px solid var(--border); border-radius: 20px; padding: 2rem; transition: all .3s; cursor: pointer; position: relative; overflow: hidden; }
+        .project-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--gradient-1); transform: translateX(-100%); transition: transform .3s; }
+        .project-card:hover::before { transform: translateX(0); }
+        .project-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,.1); }
+        .project-title { font-size: 1.3rem; font-weight: 500; margin-bottom: .8rem; }
+        .project-desc { color: var(--text-light); line-height: 1.6; margin-bottom: 1.1rem; }
+        .project-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
+        .tag { padding: .3rem .8rem; background: #f0f0f0; border-radius: 20px; font-size: .85rem; color: var(--text-light); }
+        .project-links { display: flex; gap: .8rem; }
+        .btn-link { display:inline-flex; align-items:center; gap:.5rem; padding:.55rem .9rem; border:1px solid var(--border); border-radius: 999px; text-decoration:none; font-size:.9rem; color: var(--primary); transition: transform .2s, box-shadow .2s, border-color .2s; }
+        .btn-link:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,.08); border-color: rgba(0,0,0,.15); }
+
+        /* Articles (Medium) */
+        .articles { background: #fafafa; border-radius: 30px; padding: 4rem 5%; }
+        .article-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(320px,1fr)); gap: 1.5rem; }
+        .article-card { background:#fff; border:1px solid var(--border); border-radius:16px; padding:1.3rem 1.4rem; transition: box-shadow .2s; }
+        .article-card:hover { box-shadow: 0 10px 25px rgba(0,0,0,.08); }
+        .article-meta { font-size:.85rem; color: var(--text-light); margin-bottom:.35rem; }
+        .article-title { font-weight:600; margin-bottom:.5rem; }
+        .article-excerpt { color: var(--text-light); margin-bottom: .9rem; }
+        .read-more { text-decoration:none; font-weight:500; }
+
+        /* Conferences */
+        .conf-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(320px,1fr)); gap:1.5rem; }
+        .conf-card { border:1px solid var(--border); border-radius:16px; padding:1.3rem 1.4rem; background:#fff; }
+        .conf-title { font-weight:600; margin-bottom:.35rem; }
+        .conf-meta { font-size:.9rem; color: var(--text-light); margin-bottom:.6rem; }
+        .conf-desc { color: var(--text-light); }
+
+        /* Vision */
+        .vision { text-align: center; padding: 8rem 5%; background: linear-gradient(135deg,#667eea15 0%,#764ba215 100%); border-radius: 30px; }
+        .vision-text { font-size: 1.3rem; line-height: 1.8; max-width: 800px; margin: 0 auto 3rem; color: var(--text-light); }
+        .vision-text strong { color: var(--primary); font-weight: 500; }
+        .cta-button { display: inline-block; padding: 1rem 2.5rem; background: var(--primary); color: #fff; text-decoration: none; border-radius: 50px; font-weight: 500; transition: all .3s; position: relative; overflow: hidden; }
+        .cta-button:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,.2); }
+
+        /* Profiles section */
+        .profiles-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap:1rem; }
+        .profile-card { display:flex; align-items:center; gap:.9rem; border:1px solid var(--border); border-radius:16px; padding:1rem 1.1rem; background:#fff; }
+        .profile-card a { text-decoration:none; color: var(--primary); font-weight:500; }
+
+        /* Footer */
+        footer { text-align:center; padding: 3rem 5%; border-top: 1px solid var(--border); }
+        .social-links { display:flex; justify-content:center; gap:2rem; margin-bottom:2rem; }
+        .social-links a { color: var(--primary); text-decoration:none; font-size:.95rem; transition: opacity .3s; }
+        .social-links a:hover { opacity: .6; }
+
+        /* Animations */
+        @keyframes fadeInUp { from{ opacity:0; transform: translateY(30px);} to{ opacity:1; transform: translateY(0);} }
+        @keyframes fadeInLeft { from{ opacity:0; transform: translateX(-30px);} to{ opacity:1; transform: translateX(0);} }
+
+        /* Responsive */
+        @media (max-width: 980px) {
+            .nav-links { position: fixed; top: 0; right: -100%; width: 70%; height: 100vh; background: #fff; flex-direction: column; padding: 5rem 2rem; box-shadow: -5px 0 20px rgba(0,0,0,.1); transition: right .3s; }
+            .nav-links.active { right: 0; }
+            .mobile-menu { display: flex; z-index: 1001; }
+            .story { grid-template-columns: 1fr; gap: 2rem; }
+            .story-visual { height: 300px; }
+            .journey { padding: 2rem; }
+            section { padding: 3rem 5%; }
+            .vision { padding: 4rem 5%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">←Future</div>
+            <div class="nav-right">
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#story">Story</a></li>
+                    <li><a href="#journey">Journey</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#lab">Projects</a></li>
+                    <li><a href="#articles">Articles</a></li>
+                    <li><a href="#conferences">Conferences</a></li>
+                    <li><a href="#vision">Vision</a></li>
+                    <li><a href="#profiles">Profiles</a></li>
+                    <li><a href="#connect">Connect</a></li>
+                </ul>
+                <div class="mobile-menu" id="mobileMenu" aria-label="Open navigation menu" role="button" tabindex="0">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" aria-label="Intro">
+        <div class="floating-shapes">
+            <div class="shape"></div><div class="shape"></div><div class="shape"></div>
+        </div>
+        <div class="hero-content">
+            <h1>Building the Future,<br />One Algorithm at a Time</h1>
+            <p class="subtitle">AI Engineer crafting tomorrow's intelligence</p>
+            <p class="tagline">✨ Currently brewing something worth $1B</p>
+
+            <!-- Top socials (new) -->
+            <div class="social-hero" aria-label="Primary social links">
+                <!-- Replace all href="#" with your real links -->
+                <a class="icon-link" href="#" target="_blank" aria-label="GitHub">
+                    <!-- GitHub SVG -->
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.22c0 4.51 2.87 8.33 6.84 9.68.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.13-4.56-5 0-1.11.39-2.01 1.03-2.72-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.04a9.26 9.26 0 0 1 5 0c1.9-1.31 2.74-1.04 2.74-1.04.56 1.42.21 2.47.1 2.73.64.71 1.03 1.61 1.03 2.72 0 3.88-2.34 4.74-4.57 4.99.36.32.68.95.68 1.92 0 1.38-.01 2.49-.01 2.83 0 .27.18.6.69.49A10.22 10.22 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z" fill="currentColor"/></svg>
+                </a>
+                <a class="icon-link" href="#" target="_blank" aria-label="LinkedIn">
+                    <!-- LinkedIn SVG -->
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3.5 9h3v12h-3V9zm6 0h2.879v1.64h.041C13.04 9.62 14.37 9 15.88 9 19.2 9 20 11.19 20 14.36V21h-3v-6.07c0-1.45-.03-3.31-2.02-3.31-2.03 0-2.34 1.58-2.34 3.21V21H9.5V9z" fill="currentColor"/></svg>
+                </a>
+                <a class="icon-link" href="#" target="_blank" aria-label="Hugging Face">
+                    <!-- Simple HF face -->
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/><path d="M8.5 14c1 .9 2.3 1.5 3.5 1.5S14.5 14.9 15.5 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </a>
+                <a class="icon-link" href="#" target="_blank" aria-label="Medium">
+                    <!-- Medium M -->
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="5" height="14" fill="currentColor"/><path d="M10 7l3.5 5L10 17V7Z" fill="currentColor"/><path d="M15 7h2v10h-2z" fill="currentColor"/></svg>
+                </a>
+            </div>
+            <div class="social-label">Find me on GitHub, LinkedIn, Hugging Face, and Medium</div>
+        </div>
+    </section>
+
+    <!-- Story -->
+    <section id="story" class="story">
+        <div class="story-content">
+            <h2 class="section-title">The Story</h2>
+            <div class="story-text">
+                <p>International mind on a mission. <span>Masters in AI</span> student by day, future architect of intelligent systems by night. I don't just study artificial intelligence—I'm obsessed with pushing its boundaries.</p>
+                <br />
+                <p>While others see code, I see <span>possibilities</span>. While others build features, I'm designing the infrastructure for ideas that don't exist yet. The kind that make investors lean forward in their chairs.</p>
+            </div>
+        </div>
+        <div class="story-visual"></div>
+    </section>
+
+    <!-- Journey -->
+    <section id="journey" class="journey">
+        <h2 class="section-title">The Journey</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">2024 - Present</div>
+                <div class="timeline-title">Masters in Artificial Intelligence</div>
+                <div class="timeline-desc">Deep diving into neural architectures, transformers, and the mathematics that powers tomorrow. GPA doesn't define genius, but mine's pretty solid anyway.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2023 - 2024</div>
+                <div class="timeline-title">AI Research Assistant</div>
+                <div class="timeline-desc">Published research on novel approaches to NLP. Worked with professors who've forgotten more about AI than most people will ever know.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2022 - 2023</div>
+                <div class="timeline-title">Machine Learning Engineer Intern</div>
+                <div class="timeline-desc">Built production models processing millions of data points daily. Reduced inference time by 67%. They offered full-time. I had bigger plans.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills (new) -->
+    <section id="skills" class="skills">
+        <h2 class="section-title">Areas of Skill — especially in AI</h2>
+        <div class="skill-groups">
+            <div class="skill-card"><h4>Core AI/ML</h4><div class="pill-row">
+                <span class="pill">Transformers</span><span class="pill">CNNs</span><span class="pill">RNN/LSTM</span><span class="pill">Reinforcement Learning</span><span class="pill">Diffusion</span><span class="pill">GNN</span>
+            </div></div>
+            <div class="skill-card"><h4>LLMs & NLP</h4><div class="pill-row">
+                <span class="pill">Prompting</span><span class="pill">RAG</span><span class="pill">Fine-tuning</span><span class="pill">Tokenizers</span><span class="pill">Embeddings</span><span class="pill">LangChain</span>
+            </div></div>
+            <div class="skill-card"><h4>Frameworks</h4><div class="pill-row">
+                <span class="pill">PyTorch</span><span class="pill">TensorFlow</span><span class="pill">Scikit-learn</span><span class="pill">Hugging Face</span><span class="pill">OpenCV</span>
+            </div></div>
+            <div class="skill-card"><h4>Data & Systems</h4><div class="pill-row">
+                <span class="pill">Pandas</span><span class="pill">Spark</span><span class="pill">SQL</span><span class="pill">Vector DBs</span><span class="pill">Kafka</span>
+            </div></div>
+            <div class="skill-card"><h4>MLOps & Infra</h4><div class="pill-row">
+                <span class="pill">Docker</span><span class="pill">Kubernetes</span><span class="pill">MLflow</span><span class="pill">Weights & Biases</span><span class="pill">CI/CD</span>
+            </div></div>
+            <div class="skill-card"><h4>Languages & Cloud</h4><div class="pill-row">
+                <span class="pill">Python</span><span class="pill">Rust</span><span class="pill">JavaScript</span><span class="pill">Go</span><span class="pill">AWS</span><span class="pill">Azure</span>
+            </div></div>
+        </div>
+    </section>
+
+    <!-- Projects / Lab -->
+    <section id="lab">
+        <h2 class="section-title">The Lab (Selected Projects)</h2>
+        <div class="lab-grid">
+            <div class="project-card">
+                <h3 class="project-title">Neural Style Transfer Engine</h3>
+                <p class="project-desc">Real-time artistic style transfer using optimized GANs. Processing 4K video at 30fps. Currently in talks with a major streaming platform.</p>
+                <div class="project-tags"><span class="tag">PyTorch</span><span class="tag">GANs</span><span class="tag">CUDA</span></div>
+                <div class="project-links">
+                    <a class="btn-link" href="#" target="_blank" aria-label="View on GitHub">View on GitHub →</a>
+                </div>
+            </div>
+            <div class="project-card">
+                <h3 class="project-title">Autonomous Trading Algorithm</h3>
+                <p class="project-desc">Reinforcement learning meets Wall Street. 127% returns in backtesting. Real money performance? Let's just say my ramen days are over.</p>
+                <div class="project-tags"><span class="tag">RL</span><span class="tag">Transformers</span><span class="tag">Quant</span></div>
+                <div class="project-links">
+                    <a class="btn-link" href="#" target="_blank">View on GitHub →</a>
+                </div>
+            </div>
+            <div class="project-card">
+                <h3 class="project-title">Conversational AI Framework</h3>
+                <p class="project-desc">Built a framework that makes ChatGPT look verbose. 10x faster responses, 3x more accurate. Open-sourced because sharing is caring.</p>
+                <div class="project-tags"><span class="tag">LLMs</span><span class="tag">NLP</span><span class="tag">Rust</span></div>
+                <div class="project-links">
+                    <a class="btn-link" href="#" target="_blank">View on GitHub →</a>
+                </div>
+            </div>
+            <div class="project-card">
+                <h3 class="project-title">Computer Vision for Healthcare</h3>
+                <p class="project-desc">Detecting diseases before doctors can. 98.7% accuracy on retinal scans. Currently in clinical trials at three hospitals.</p>
+                <div class="project-tags"><span class="tag">Vision</span><span class="tag">Medical AI</span><span class="tag">CNN</span></div>
+                <div class="project-links">
+                    <a class="btn-link" href="#" target="_blank">View on GitHub →</a>
+                </div>
+            </div>
+            <div class="project-card">
+                <h3 class="project-title">Project Stealth Mode</h3>
+                <p class="project-desc">Can't say much, but imagine if AI could... actually, I've said too much. NDA's are real. Launch Q2 2025.</p>
+                <div class="project-tags"><span class="tag">Classified</span><span class="tag">Revolutionary</span><span class="tag">Soon™</span></div>
+                <div class="project-links">
+                    <a class="btn-link" href="#" target="_blank">View on GitHub →</a>
+                </div>
+            </div>
+            <div class="project-card">
+                <h3 class="project-title">Open Source Contributions</h3>
+                <p class="project-desc">500+ commits to major ML libraries. That bug in TensorFlow 2.8? Yeah, I fixed that. You're welcome.</p>
+                <div class="project-tags"><span class="tag">OSS</span><span class="tag">Community</span><span class="tag">Impact</span></div>
+                <div class="project-links">
+                    <a class="btn-link" href="#" target="_blank">View on GitHub →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Articles (Medium) -->
+    <section id="articles" class="articles">
+        <h2 class="section-title">On Medium — Latest Articles</h2>
+        <div class="article-grid">
+            <!-- Duplicate/replace cards below with your real content/links -->
+            <article class="article-card">
+                <div class="article-meta">Aug 2025 · 6 min read</div>
+                <div class="article-title">RAG vs Fine‑Tuning: Pick the Right Hammer</div>
+                <p class="article-excerpt">A practical decision framework for when to retrieve, when to adapt, and how to quantify the trade‑offs in latency, quality, and cost.</p>
+                <a class="read-more" href="#" target="_blank">Read on Medium →</a>
+            </article>
+            <article class="article-card">
+                <div class="article-meta">Jul 2025 · 8 min read</div>
+                <div class="article-title">Beating Baselines on Tabular Data with Transformers</div>
+                <p class="article-excerpt">Why modern attention blocks can compete with GBDTs—and when they absolutely should not.</p>
+                <a class="read-more" href="#" target="_blank">Read on Medium →</a>
+            </article>
+            <article class="article-card">
+                <div class="article-meta">Jun 2025 · 5 min read</div>
+                <div class="article-title">Latency Is a Feature: Designing Snappy LLM Apps</div>
+                <p class="article-excerpt">A playbook for caching, streaming, speculative decoding, and UX that feels instant.</p>
+                <a class="read-more" href="#" target="_blank">Read on Medium →</a>
+            </article>
+        </div>
+    </section>
+
+    <!-- Conferences (new) -->
+    <section id="conferences">
+        <h2 class="section-title">Conferences</h2>
+        <div class="conf-grid">
+            <div class="conf-card">
+                <div class="conf-title">Fall Technical Conference (FTC) — Houston, TX</div>
+                <div class="conf-meta">Oct 2025 · Attendee / Presenter</div>
+                <p class="conf-desc">Focused on the effective use of statistics to improve quality and foster innovation; presented work on AI‑driven quality analytics.</p>
+            </div>
+            <div class="conf-card">
+                <div class="conf-title">IEEE AICDSA Conference</div>
+                <div class="conf-meta">2025 · Speaker</div>
+                <p class="conf-desc">Explored robust ECG R‑peak detection with deep learning under class imbalance.</p>
+            </div>
+            <div class="conf-card">
+                <div class="conf-title">ATMAE National Conference</div>
+                <div class="conf-meta">2025 · Presenter</div>
+                <p class="conf-desc">Showcased AI‑powered supply‑chain analytics and visualization frameworks.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision -->
+    <section id="vision" class="vision">
+        <h2 class="section-title">The Vision</h2>
+        <div class="vision-text">
+            I'm not here to build another SaaS tool or productivity app. I'm here to create the kind of technology that makes people say <strong>"How is this even possible?"</strong><br /><br />
+            The idea keeping me up at night? It's bigger than a product—it's a paradigm shift. And when it launches, it won't just disrupt markets. <strong>It'll create new ones.</strong>
+        </div>
+        <a href="#connect" class="cta-button">Let's Build Something Legendary</a>
+    </section>
+
+    <!-- Profiles (optional section for platforms) -->
+    <section id="profiles">
+        <h2 class="section-title">Profiles & Platforms</h2>
+        <div class="profiles-grid">
+            <div class="profile-card">
+                <span class="icon-link" aria-hidden="true"> 
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.58 2 12.22c0 4.51 2.87 8.33 6.84 9.68.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.13-4.56-5 0-1.11.39-2.01 1.03-2.72-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.04a9.26 9.26 0 0 1 5 0c1.9-1.31 2.74-1.04 2.74-1.04.56 1.42.21 2.47.1 2.73.64.71 1.03 1.61 1.03 2.72 0 3.88-2.34 4.74-4.57 4.99.36.32.68.95.68 1.92 0 1.38-.01 2.49-.01 2.83 0 .27.18.6.69.49A10.22 10.22 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z" fill="currentColor"/></svg>
+                </span>
+                <div>
+                    <div style="font-weight:600">GitHub</div>
+                    <a href="#" target="_blank">github.com/your-handle</a>
+                </div>
+            </div>
+            <div class="profile-card">
+                <span class="icon-link" aria-hidden="true"> 
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3.5 9h3v12h-3V9zm6 0h2.879v1.64h.041C13.04 9.62 14.37 9 15.88 9 19.2 9 20 11.19 20 14.36V21h-3v-6.07c0-1.45-.03-3.31-2.02-3.31-2.03 0-2.34 1.58-2.34 3.21V21H9.5V9z" fill="currentColor"/></svg>
+                </span>
+                <div>
+                    <div style="font-weight:600">LinkedIn</div>
+                    <a href="#" target="_blank">linkedin.com/in/your-handle</a>
+                </div>
+            </div>
+            <div class="profile-card">
+                <span class="icon-link" aria-hidden="true"> 
+                    <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/><path d="M8.5 14c1 .9 2.3 1.5 3.5 1.5S14.5 14.9 15.5 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </span>
+                <div>
+                    <div style="font-weight:600">Hugging Face</div>
+                    <a href="#" target="_blank">huggingface.co/your-handle</a>
+                </div>
+            </div>
+            <div class="profile-card">
+                <span class="icon-link" aria-hidden="true"> 
+                    <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="5" height="14" fill="currentColor"/><path d="M10 7l3.5 5L10 17V7Z" fill="currentColor"/><path d="M15 7h2v10h-2z" fill="currentColor"/></svg>
+                </span>
+                <div>
+                    <div style="font-weight:600">Medium</div>
+                    <a href="#" target="_blank">medium.com/@your-handle</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Connect / Footer -->
+    <footer id="connect">
+        <p style="color: var(--text-light); font-size: .9rem; margin-bottom: 1rem;">💌 Currently accepting coffee chats, not job offers</p>
+        <a href="mailto:your.email@university.edu" style="color: var(--primary); text-decoration: none; font-weight: 500;">your.email@university.edu</a>
+        <p style="color: var(--text-light); font-size: .8rem; margin-top: 2rem;">Building the future from Lee's Summit, Missouri 🚀</p>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) navbar.classList.add('scrolled');
+            else navbar.classList.remove('scrolled');
+        });
+
+        // Mobile menu toggle
+        const mobileMenu = document.getElementById('mobileMenu');
+        const navLinks = document.getElementById('navLinks');
+        mobileMenu.addEventListener('click', function(){ navLinks.classList.toggle('active'); });
+        document.querySelectorAll('.nav-links a').forEach(link=>{ link.addEventListener('click',()=> navLinks.classList.remove('active')); });
+
+        // Smooth reveal on scroll
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver(function(entries){ entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.style.opacity='1'; entry.target.style.transform='translateY(0)'; } }); }, observerOptions);
+        document.querySelectorAll('section').forEach(section=>{ section.style.opacity='0'; section.style.transform='translateY(20px)'; section.style.transition='all .6s ease-out'; observer.observe(section); });
+
+        // Hero parallax
+        window.addEventListener('scroll', ()=>{
+            const scrolled = window.pageYOffset; const hero = document.querySelector('.hero-content');
+            if(hero && scrolled < window.innerHeight){ hero.style.transform = `translateY(${scrolled*0.3}px)`; hero.style.opacity = 1 - (scrolled / window.innerHeight); }
+        });
+    </script>
+</body>
+</html>
