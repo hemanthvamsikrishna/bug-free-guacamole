@@ -10,50 +10,395 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --primary: #000; --accent: #FF6B6B;
+            --primary: #000; 
+            --accent: #FF6B6B;
             --gradient-1: linear-gradient(135deg,#667eea 0%,#764ba2 100%);
             --gradient-2: linear-gradient(135deg,#f093fb 0%,#f5576c 100%);
-            --text-light: #666; --border: rgba(0,0,0,0.08);
+            --text-light: #666; 
+            --border: rgba(0,0,0,0.08);
+            --bg-primary: #fff;
+            --bg-secondary: rgba(250, 250, 252, 0.4);
+            --bg-tertiary: #fafafa;
+            --nav-bg: rgba(255,255,255,0.95);
+            --card-bg: #fff;
+            --hero-gradient: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(250,250,252,0.5) 100%);
         }
-        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: var(--primary); overflow-x: hidden; background: #fff; }
+        
+        /* Dark Mode Variables */
+        [data-theme="dark"] {
+            --primary: #fff;
+            --text-light: #a0a0a0;
+            --border: rgba(255,255,255,0.1);
+            --bg-primary: #0a0a0a;
+            --bg-secondary: rgba(20, 20, 22, 0.6);
+            --bg-tertiary: #141416;
+            --nav-bg: rgba(10,10,10,0.95);
+            --card-bg: #141416;
+            --hero-gradient: linear-gradient(180deg, rgba(10,10,10,1) 0%, rgba(20,20,22,0.5) 100%);
+        }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            line-height: 1.6; 
+            color: var(--primary); 
+            overflow-x: hidden; 
+            background: var(--bg-primary);
+            position: relative;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        /* Subtle Background Pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.03;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(118, 75, 162, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.08) 0%, transparent 70%);
+            transition: opacity 0.3s ease;
+        }
+        
+        [data-theme="dark"] body::before {
+            opacity: 0.05;
+        }
+        
+        /* Subtle Noise Texture */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.015;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+        
+        [data-theme="dark"] body::after {
+            opacity: 0.02;
+        }
+        
         html { scroll-behavior: smooth; }
 
         /* Navigation */
-        nav { position: fixed; top: 0; width: 100%; padding: 1.5rem 5%; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 1000; transition: all 0.3s ease; border-bottom: 1px solid transparent; }
+        nav { position: fixed; top: 0; width: 100%; padding: 1.5rem 5%; background: var(--nav-bg); backdrop-filter: blur(10px); z-index: 1000; transition: all 0.3s ease; border-bottom: 1px solid transparent; }
         nav.scrolled { border-bottom: 1px solid var(--border); }
         .nav-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
-        .logo { font-family: 'Instrument Serif', serif; font-size: 1.5rem; font-weight: 400; white-space: nowrap; }
+        .logo { 
+            font-family: 'Instrument Serif', serif; 
+            font-size: 1.5rem; 
+            font-weight: 400; 
+            white-space: nowrap;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.1rem;
+        }
+        
+        /* Dynamic name container */
+        .logo-name-wrapper {
+            position: relative;
+            display: inline-block;
+            min-width: 120px;
+            height: 2rem;
+            overflow: visible;
+        }
+        
+        .logo-name {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            animation: nameRotate 16s infinite;
+            font-family: 'Instrument Serif', serif;
+            font-weight: 400;
+        }
+        
+        /* Stagger animations for each language */
+        .logo-name:nth-child(1) { animation-delay: 0s; }
+        .logo-name:nth-child(2) { animation-delay: 2s; }
+        .logo-name:nth-child(3) { animation-delay: 4s; }
+        .logo-name:nth-child(4) { animation-delay: 6s; }
+        .logo-name:nth-child(5) { animation-delay: 8s; }
+        .logo-name:nth-child(6) { animation-delay: 10s; }
+        .logo-name:nth-child(7) { animation-delay: 12s; }
+        .logo-name:nth-child(8) { animation-delay: 14s; }
+        
+        @keyframes nameRotate {
+            0%, 10% { opacity: 1; transform: translateY(0); }
+            12.5%, 100% { opacity: 0; transform: translateY(-10px); }
+        }
+        
+        /* Pronunciation and meaning */
+        .logo-meta {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            font-weight: 300;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            opacity: 0.6;
+            margin-top: -0.2rem;
+        }
+        
+        .logo-pronunciation {
+            font-style: italic;
+        }
+        
+        .logo-divider {
+            opacity: 0.4;
+        }
+        
+        .logo-meaning {
+            font-weight: 400;
+        }
         .nav-right { display: flex; align-items: center; gap: 1.5rem; }
         .nav-links { display: flex; gap: 1.2rem; list-style: none; }
         .nav-links a { color: var(--primary); text-decoration: none; font-weight: 400; font-size: .95rem; transition: opacity .3s; }
         .nav-links a:hover { opacity: .6; }
+        
+        /* Theme Toggle */
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,.1);
+        }
+        
+        .theme-toggle svg {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            transition: all 0.3s ease;
+        }
+        
+        .sun-icon {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+        
+        .moon-icon {
+            opacity: 0;
+            transform: rotate(90deg) scale(0.5);
+        }
+        
+        [data-theme="dark"] .sun-icon {
+            opacity: 0;
+            transform: rotate(-90deg) scale(0.5);
+        }
+        
+        [data-theme="dark"] .moon-icon {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+        
         .mobile-menu { display: none; flex-direction: column; gap: 4px; cursor: pointer; }
         .mobile-menu span { width: 25px; height: 2px; background: var(--primary); transition: all .3s; }
 
         /* Hero */
-        .hero { height: 100vh; display: flex; align-items: center; justify-content: center; background: #fff; position: relative; overflow: hidden; }
-        .hero-content { text-align: center; z-index: 2; animation: fadeInUp 1s ease-out; max-width: 1100px; padding: 0 5%; }
-        .hero h1 { font-family: 'Instrument Serif', serif; font-size: clamp(2.5rem, 8vw, 6rem); font-weight: 400; line-height: 1.1; margin-bottom: 1.2rem; letter-spacing: -0.02em; }
-        .subtitle { font-size: clamp(1rem, 2vw, 1.3rem); color: var(--text-light); font-weight: 300; margin-bottom: 1.2rem; letter-spacing: 0.02em; }
-        .tagline { display: inline-block; background: var(--gradient-1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 500; font-size: 1.1rem; margin-bottom: 1.2rem; }
+        .hero { 
+            height: 100vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            background: var(--hero-gradient);
+            position: relative; 
+            overflow: hidden; 
+        }
+        .hero-content { text-align: center; z-index: 2; animation: fadeInUp 1s ease-out; max-width: 900px; padding: 0 5%; }
+        .hero h1 { font-family: 'Instrument Serif', serif; font-size: clamp(1.75rem, 5vw, 3.25rem); font-weight: 400; line-height: 1.2; margin-bottom: 1rem; letter-spacing: -0.02em; }
+        .subtitle { font-family: 'Inter', sans-serif; font-size: clamp(0.85rem, 1.3vw, 0.95rem); color: var(--text-light); font-weight: 400; margin-bottom: 2.5rem; letter-spacing: 0.01em; line-height: 1.5; }
+        
+        /* Hero Actions Container */
+        .hero-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .tagline { 
+            display: inline-block; 
+            background: var(--gradient-1); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            background-clip: text; 
+            font-weight: 500; 
+            font-size: 1rem; 
+            margin: 0;
+            letter-spacing: 0.3px;
+        }
+
+        /* Hero CTA Buttons */
+        .hero-cta-buttons {
+            display: inline-flex;
+            align-items: center;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .btn-divider {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            font-weight: 300;
+            opacity: 0.5;
+        }
+        
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0;
+            background: none;
+            border: none;
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            color: var(--primary);
+            position: relative;
+        }
+        
+        .hero-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .hero-btn:hover::after {
+            width: 100%;
+        }
+        
+        .hero-btn:hover {
+            opacity: 0.7;
+        }
+        
+        .hero-btn svg {
+            width: 14px;
+            height: 14px;
+            transition: transform 0.3s ease;
+        }
+        
+        .hero-btn:hover svg {
+            transform: translateX(3px);
+        }
+        
+        /* Featured Platforms Badge - Ultra Minimal */
+        .featured-platforms {
+            display: inline-flex;
+            align-items: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            padding: 0;
+            background: none;
+            border: none;
+        }
+        
+        .platform-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            padding: 0;
+        }
+        
+        .platform-badge:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .platform-badge svg {
+            width: 20px;
+            height: 20px;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+        }
+        
+        .platform-badge:hover svg {
+            opacity: 1;
+        }
+        
+        .platform-badge-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .platform-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.6;
+        }
+        
+        .platform-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .platforms-divider {
+            width: 1px;
+            height: 30px;
+            background: rgba(0,0,0,0.08);
+        }
 
         /* Top social row (new) */
         .social-hero { display: inline-flex; gap: .9rem; align-items: center; margin-top: .8rem; }
-        .icon-link { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border: 1px solid var(--border); border-radius: 999px; text-decoration: none; transition: transform .2s, box-shadow .2s, border-color .2s; background: #fff; }
+        .icon-link { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border: 1px solid var(--border); border-radius: 999px; text-decoration: none; transition: transform .2s, box-shadow .2s, border-color .2s; background: var(--card-bg); }
         .icon-link:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,.08); border-color: rgba(0,0,0,.15); }
         .icon-link svg { width: 22px; height: 22px; display: block; }
         .social-label { font-size: .85rem; color: var(--text-light); margin-top: .6rem; }
 
         /* Floating shapes */
-        .floating-shapes { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; opacity: 0.03; }
-        .shape { position: absolute; border-radius: 50%; background: var(--gradient-1); animation: float 20s infinite ease-in-out; }
-        .shape:nth-child(1){ width: 300px; height: 300px; top: -150px; right: -150px; animation-delay: 0s; }
-        .shape:nth-child(2){ width: 200px; height: 200px; bottom: -100px; left: -100px; animation-delay: 5s; background: var(--gradient-2); }
-        .shape:nth-child(3){ width: 150px; height: 150px; top: 50%; left: 50%; animation-delay: 10s; }
+        .floating-shapes { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; opacity: 0.06; }
+        .shape { position: absolute; border-radius: 50%; background: var(--gradient-1); animation: float 20s infinite ease-in-out; filter: blur(40px); }
+        .shape:nth-child(1){ width: 400px; height: 400px; top: -150px; right: -150px; animation-delay: 0s; }
+        .shape:nth-child(2){ width: 300px; height: 300px; bottom: -100px; left: -100px; animation-delay: 5s; background: var(--gradient-2); }
+        .shape:nth-child(3){ width: 250px; height: 250px; top: 50%; left: 50%; animation-delay: 10s; }
         @keyframes float { 0%,100%{ transform: translate(0,0) scale(1);} 33%{ transform: translate(30px,-30px) scale(1.1);} 66%{ transform: translate(-20px,20px) scale(.9);} }
 
         /* Sections */
-        section { padding: 5rem 5%; max-width: 1400px; margin: 0 auto; }
+        section { 
+            padding: 5rem 5%; 
+            max-width: 1400px; 
+            margin: 0 auto; 
+            position: relative;
+        }
+        
+        /* Alternating subtle section backgrounds */
+        section:nth-child(even) {
+            background: rgba(250, 250, 252, 0.4);
+        }
+        
         .section-title { font-family: 'Instrument Serif', serif; font-size: clamp(2rem,5vw,3rem); margin-bottom: 3rem; font-weight: 400; }
 
         /* Story */
@@ -64,27 +409,37 @@
         .story-visual::after { content: "AI"; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 8rem; font-family: 'Instrument Serif', serif; color: #fff; opacity: .2; }
 
         /* Journey */
-        .journey { background: #fafafa; border-radius: 30px; padding: 4rem; }
+        .journey { background: var(--bg-tertiary); border-radius: 30px; padding: 4rem; }
         .timeline { position: relative; padding-left: 2rem; }
         .timeline::before { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 2px; background: var(--gradient-1); }
         .timeline-item { margin-bottom: 3rem; position: relative; opacity: 0; animation: fadeInLeft .6s ease-out forwards; }
         .timeline-item:nth-child(1){ animation-delay: .2s;} .timeline-item:nth-child(2){ animation-delay: .4s;} .timeline-item:nth-child(3){ animation-delay: .6s;}
-        .timeline-item::before { content: ''; position: absolute; left: -2.4rem; top: .5rem; width: 10px; height: 10px; border-radius: 50%; background: #fff; border: 2px solid #667eea; }
+        .timeline-item::before { content: ''; position: absolute; left: -2.4rem; top: .5rem; width: 10px; height: 10px; border-radius: 50%; background: var(--card-bg); border: 2px solid #667eea; }
         .timeline-date { font-size: .9rem; color: var(--text-light); margin-bottom: .5rem; }
-        .timeline-title { font-size: 1.3rem; font-weight: 500; margin-bottom: .5rem; }
+        .timeline-title { font-size: 1.3rem; font-weight: 500; margin-bottom: .3rem; }
+        .timeline-company { font-size: 1rem; color: var(--text-light); margin-bottom: .8rem; font-weight: 400; }
         .timeline-desc { color: var(--text-light); line-height: 1.6; }
 
         /* Skills */
         .skills { background: linear-gradient(135deg,#667eea15 0%,#764ba215 100%); border-radius: 30px; }
-        .skill-groups { display: grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap: 1.2rem; }
-        .skill-card { background: #fff; border: 1px solid var(--border); border-radius: 16px; padding: 1.2rem 1.2rem 1rem; }
-        .skill-card h4 { font-size: 1.05rem; margin-bottom: .8rem; }
-        .pill-row { display: flex; flex-wrap: wrap; gap: .5rem; }
-        .pill { padding: .35rem .7rem; background: #f3f3f3; border-radius: 999px; font-size: .85rem; color: var(--text-light); }
+        .skill-groups { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+        .skill-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 1.2rem 1.2rem 1rem; min-height: 120px; display: flex; flex-direction: column; }
+        .skill-card h4 { font-size: 1.05rem; margin-bottom: .8rem; font-weight: 500; }
+        .pill-row { display: flex; flex-wrap: wrap; gap: .5rem; align-content: flex-start; flex: 1; }
+        .pill { padding: .35rem .7rem; background: #f3f3f3; border-radius: 999px; font-size: .85rem; color: var(--text-light); white-space: nowrap; }
+        
+        [data-theme="dark"] .pill {
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        @media (max-width: 768px) {
+            .skill-groups { grid-template-columns: 1fr; }
+        }
 
         /* Projects / Lab */
         .lab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px,1fr)); gap: 2rem; }
-        .project-card { background: #fff; border: 1px solid var(--border); border-radius: 20px; padding: 2rem; transition: all .3s; cursor: pointer; position: relative; overflow: hidden; }
+        .project-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; transition: all .3s; cursor: pointer; position: relative; overflow: hidden; }
         .project-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--gradient-1); transform: translateX(-100%); transition: transform .3s; }
         .project-card:hover::before { transform: translateX(0); }
         .project-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,.1); }
@@ -97,21 +452,341 @@
         .btn-link:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,.08); border-color: rgba(0,0,0,.15); }
 
         /* Articles (Medium) */
-        .articles { background: #fafafa; border-radius: 30px; padding: 4rem 5%; }
-        .article-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(320px,1fr)); gap: 1.5rem; }
-        .article-card { background:#fff; border:1px solid var(--border); border-radius:16px; padding:1.3rem 1.4rem; transition: box-shadow .2s; }
-        .article-card:hover { box-shadow: 0 10px 25px rgba(0,0,0,.08); }
-        .article-meta { font-size:.85rem; color: var(--text-light); margin-bottom:.35rem; }
-        .article-title { font-weight:600; margin-bottom:.5rem; }
-        .article-excerpt { color: var(--text-light); margin-bottom: .9rem; }
-        .read-more { text-decoration:none; font-weight:500; }
+        .articles { background: var(--bg-tertiary); border-radius: 30px; padding: 4rem 5%; overflow: hidden; }
+        
+        /* Horizontal scrolling container */
+        .articles-scroll-container { 
+            position: relative; 
+            width: 100%; 
+            overflow: hidden;
+            padding: 1rem 0;
+        }
+        
+        .article-scroll-wrapper {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+            padding-bottom: 1rem;
+        }
+        
+        .article-scroll-wrapper::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+        
+        /* Article cards with banner */
+        .article-card { 
+            flex: 0 0 380px;
+            background: var(--card-bg); 
+            border: 1px solid var(--border); 
+            border-radius: 16px; 
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .article-card:hover { 
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,.12);
+            border-color: rgba(0,0,0,.15);
+        }
+        
+        /* Banner image */
+        .article-banner {
+            width: 100%;
+            height: 200px;
+            background: var(--gradient-1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .article-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .article-card:hover .article-banner img {
+            transform: scale(1.05);
+        }
+        
+        /* Fallback gradient for articles without images */
+        .article-banner.gradient-fallback {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-family: 'Instrument Serif', serif;
+            color: rgba(255,255,255,0.3);
+        }
+        
+        /* Article content */
+        .article-content {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .article-meta { 
+            font-size: 0.85rem; 
+            color: var(--text-light); 
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .article-title { 
+            font-weight: 600; 
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+            color: var(--primary);
+        }
+        
+        .article-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-bottom: 0.8rem;
+            font-style: italic;
+            line-height: 1.5;
+        }
+        
+        .article-excerpt { 
+            color: var(--text-light); 
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            flex: 1;
+            font-size: 0.95rem;
+        }
+        
+        .read-more { 
+            text-decoration: none; 
+            font-weight: 500;
+            color: #667eea;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.9rem;
+            transition: gap 0.2s ease;
+        }
+        
+        .read-more:hover {
+            gap: 0.6rem;
+        }
+        
+        /* Scroll controls */
+        .scroll-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .scroll-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--card-bg);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .scroll-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,.1);
+            border-color: rgba(0,0,0,.15);
+        }
+        
+        .scroll-btn svg {
+            width: 20px;
+            height: 20px;
+        }
 
         /* Conferences */
         .conf-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(320px,1fr)); gap:1.5rem; }
-        .conf-card { border:1px solid var(--border); border-radius:16px; padding:1.3rem 1.4rem; background:#fff; }
+        .conf-card { border:1px solid var(--border); border-radius:16px; padding:1.3rem 1.4rem; background: var(--card-bg); }
         .conf-title { font-weight:600; margin-bottom:.35rem; }
         .conf-meta { font-size:.9rem; color: var(--text-light); margin-bottom:.6rem; }
-        .conf-desc { color: var(--text-light); }
+        .conf-desc { color: var(--text-light); margin-bottom: 1rem; }
+        .conf-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: opacity 0.3s ease;
+        }
+        .conf-link:hover {
+            opacity: 0.6;
+        }
+        
+        /* Startup Story Slider */
+        .startup-story {
+            background: var(--bg-tertiary);
+            border-radius: 30px;
+            padding: 5rem 0;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .startup-story .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 0 5%;
+        }
+        
+        .startup-slider-container {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            overflow: hidden;
+        }
+        
+        .startup-slider {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+        }
+        
+        .startup-slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 10%;
+            gap: 4rem;
+        }
+        
+        .slide-image {
+            flex: 0 0 45%;
+            height: 500px;
+            background: var(--gradient-1);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,.12);
+        }
+        
+        .slide-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .slide-image.placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            font-family: 'Instrument Serif', serif;
+            color: rgba(255,255,255,0.4);
+        }
+        
+        .slide-content {
+            flex: 1;
+            max-width: 600px;
+        }
+        
+        .slide-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+            line-height: 1.2;
+        }
+        
+        .slide-body {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-light);
+        }
+        
+        .slide-body p {
+            margin-bottom: 1rem;
+        }
+        
+        .slide-body strong {
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        /* Slider Controls */
+        .slider-controls {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 10;
+        }
+        
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .slider-dot.active {
+            background: var(--primary);
+            width: 32px;
+            border-radius: 6px;
+        }
+        
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .slider-arrow:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,.1);
+        }
+        
+        .slider-arrow.left {
+            left: 2rem;
+        }
+        
+        .slider-arrow.right {
+            right: 2rem;
+        }
+        
+        .slider-arrow svg {
+            width: 24px;
+            height: 24px;
+        }
 
         /* Vision */
         .vision { text-align: center; padding: 8rem 5%; background: linear-gradient(135deg,#667eea15 0%,#764ba215 100%); border-radius: 30px; }
@@ -122,8 +797,22 @@
 
         /* Profiles section */
         .profiles-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap:1rem; }
-        .profile-card { display:flex; align-items:center; gap:.9rem; border:1px solid var(--border); border-radius:16px; padding:1rem 1.1rem; background:#fff; }
-        .profile-card a { text-decoration:none; color: var(--primary); font-weight:500; }
+        .profile-card { display:flex; flex-direction: column; gap:.9rem; border:1px solid var(--border); border-radius:16px; padding:1.3rem 1.4rem; background: var(--card-bg); transition: all 0.3s ease; }
+        .profile-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,.08); border-color: rgba(0,0,0,.12); }
+        
+        .profile-header { display: flex; align-items: center; gap: 0.9rem; }
+        .profile-content { flex: 1; }
+        .profile-content a { text-decoration:none; color: var(--primary); font-weight:600; font-size: 1.05rem; transition: opacity 0.3s ease; }
+        .profile-content a:hover { opacity: 0.6; }
+        
+        .profile-caption { 
+            font-size: 0.88rem; 
+            color: var(--text-light); 
+            line-height: 1.5;
+            font-style: italic;
+            margin-top: 0.3rem;
+            opacity: 0.85;
+        }
 
         /* Footer */
         footer { text-align:center; padding: 3rem 5%; border-top: 1px solid var(--border); }
@@ -137,7 +826,7 @@
 
         /* Responsive */
         @media (max-width: 980px) {
-            .nav-links { position: fixed; top: 0; right: -100%; width: 70%; height: 100vh; background: #fff; flex-direction: column; padding: 5rem 2rem; box-shadow: -5px 0 20px rgba(0,0,0,.1); transition: right .3s; }
+            .nav-links { position: fixed; top: 0; right: -100%; width: 70%; height: 100vh; background: var(--card-bg); flex-direction: column; padding: 5rem 2rem; box-shadow: -5px 0 20px rgba(0,0,0,.1); transition: right .3s; }
             .nav-links.active { right: 0; }
             .mobile-menu { display: flex; z-index: 1001; }
             .story { grid-template-columns: 1fr; gap: 2rem; }
@@ -145,6 +834,95 @@
             .journey { padding: 2rem; }
             section { padding: 3rem 5%; }
             .vision { padding: 4rem 5%; }
+            
+            /* Article cards responsive */
+            .article-card {
+                flex: 0 0 300px;
+            }
+            
+            .article-banner {
+                height: 160px;
+            }
+            
+            .article-content {
+                padding: 1.2rem;
+            }
+            
+            .article-title {
+                font-size: 1.05rem;
+            }
+            
+            .article-subtitle {
+                font-size: 0.88rem;
+            }
+            
+            .article-excerpt {
+                font-size: 0.88rem;
+            }
+            
+            /* Startup slider responsive */
+            .startup-slide {
+                flex-direction: column;
+                padding: 2rem 5%;
+                gap: 2rem;
+            }
+            
+            .slide-image {
+                flex: 0 0 auto;
+                width: 100%;
+                height: 300px;
+            }
+            
+            .slide-content {
+                text-align: center;
+            }
+            
+            .slider-arrow {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .slider-arrow.left {
+                left: 1rem;
+            }
+            
+            .slider-arrow.right {
+                right: 1rem;
+            }
+            
+            /* Featured platforms responsive */
+            .featured-platforms {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .platforms-divider {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .article-card {
+                flex: 0 0 280px;
+            }
+            
+            .articles {
+                padding: 3rem 5%;
+            }
+            
+            .hero-cta-buttons {
+                gap: 1rem;
+                flex-direction: column;
+            }
+            
+            .btn-divider {
+                display: none;
+            }
+            
+            .startup-slider-container {
+                height: auto;
+                min-height: 500px;
+            }
         }
     </style>
 </head>
@@ -152,19 +930,49 @@
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
-            <div class="logo">←Future</div>
+            <div class="logo">
+                <div class="logo-name-wrapper">
+                    <span class="logo-name">Hemanth</span>
+                    <span class="logo-name">हेमन्त</span>
+                    <span class="logo-name">హేమంత్</span>
+                    <span class="logo-name">Hemanth</span>
+                    <span class="logo-name">赫曼特</span>
+                    <span class="logo-name">ヘマント</span>
+                    <span class="logo-name">Hemanth</span>
+                    <span class="logo-name">Гемант</span>
+                </div>
+                <span class="logo-meta">
+                    <span class="logo-pronunciation">/ˈheɪ.mənθ/</span>
+                </span>
+            </div>
             <div class="nav-right">
                 <ul class="nav-links" id="navLinks">
-                    <li><a href="#story">Story</a></li>
-                    <li><a href="#journey">Journey</a></li>
+                    <li><a href="#journey">Experience</a></li>
                     <li><a href="#skills">Skills</a></li>
                     <li><a href="#lab">Projects</a></li>
                     <li><a href="#articles">Articles</a></li>
-                    <li><a href="#conferences">Conferences</a></li>
+                    <li><a href="#conferences">Publications</a></li>
+                    <li><a href="#startups">Startups</a></li>
                     <li><a href="#vision">Vision</a></li>
                     <li><a href="#profiles">Profiles</a></li>
                     <li><a href="#connect">Connect</a></li>
                 </ul>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
                 <div class="mobile-menu" id="mobileMenu" aria-label="Open navigation menu" role="button" tabindex="0">
                     <span></span><span></span><span></span>
                 </div>
@@ -178,144 +986,180 @@
             <div class="shape"></div><div class="shape"></div><div class="shape"></div>
         </div>
         <div class="hero-content">
-            <h1>Building the Future,<br />One Algorithm at a Time</h1>
-            <p class="subtitle">AI Engineer crafting tomorrow's intelligence</p>
-            <p class="tagline">✨ Currently brewing something worth $1B</p>
+            <h1>My two failed startups taught me<br />what no MBA ever could</h1>
+            <p class="subtitle">Currently Finishing my Master's in Artificial Intelligence — building depth in knowledge and preparing for a smarter comeback.</p>
+            
+            <!-- Redesigned CTA Section -->
+            <div class="hero-actions">
+                <p class="tagline">✨ Currently brewing something AI</p>
+                <div class="hero-cta-buttons">
+                    <a href="#lab" class="hero-btn">
+                        <span>View My Work</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <span class="btn-divider">|</span>
+                    <a href="#startups" class="hero-btn">
+                        <span>Read My Story</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
 
-            <!-- Top socials (new) -->
-            <div class="social-hero" aria-label="Primary social links">
-                <!-- Replace all href="#" with your real links -->
+            <!-- Featured Platforms - Minimal (3 platforms) -->
+            <div class="featured-platforms">
+                <a href="https://github.com/hemanthvamsikrishna" target="_blank" class="platform-badge">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.58 2 12.22c0 4.51 2.87 8.33 6.84 9.68.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.13-4.56-5 0-1.11.39-2.01 1.03-2.72-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.04a9.26 9.26 0 0 1 5 0c1.9-1.31 2.74-1.04 2.74-1.04.56 1.42.21 2.47.1 2.73.64.71 1.03 1.61 1.03 2.72 0 3.88-2.34 4.74-4.57 4.99.36.32.68.95.68 1.92 0 1.38-.01 2.49-.01 2.83 0 .27.18.6.69.49A10.22 10.22 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z"/>
+                    </svg>
+                    <div class="platform-badge-text">
+                        <span class="platform-label">Code lives on</span>
+                        <span class="platform-name">GitHub</span>
+                    </div>
+                </a>
+                <div class="platforms-divider"></div>
+                <a href="https://huggingface.co/your-handle" target="_blank" class="platform-badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <circle cx="12" cy="12" r="10"/>
+                        <circle cx="9" cy="10" r="1" fill="currentColor"/>
+                        <circle cx="15" cy="10" r="1" fill="currentColor"/>
+                        <path d="M8.5 14c1 .9 2.3 1.5 3.5 1.5S14.5 14.9 15.5 14" stroke-linecap="round"/>
+                    </svg>
+                    <div class="platform-badge-text">
+                        <span class="platform-label">Models shared on</span>
+                        <span class="platform-name">Hugging Face</span>
+                    </div>
+                </a>
+                <div class="platforms-divider"></div>
+                <a href="https://medium.com/@hemanthvamsikrishna" target="_blank" class="platform-badge">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="3" y="5" width="5" height="14"/>
+                        <path d="M10 7l3.5 5L10 17V7Z"/>
+                        <path d="M15 7h2v10h-2z"/>
+                    </svg>
+                    <div class="platform-badge-text">
+                        <span class="platform-label">Articles on</span>
+                        <span class="platform-name">Medium</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Social icons - existing (hidden below, kept for compatibility) -->
+            <div class="social-hero" aria-label="Primary social links" style="display: none;">
                 <a class="icon-link" href="#" target="_blank" aria-label="GitHub">
-                    <!-- GitHub SVG -->
                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.22c0 4.51 2.87 8.33 6.84 9.68.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.13-4.56-5 0-1.11.39-2.01 1.03-2.72-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.04a9.26 9.26 0 0 1 5 0c1.9-1.31 2.74-1.04 2.74-1.04.56 1.42.21 2.47.1 2.73.64.71 1.03 1.61 1.03 2.72 0 3.88-2.34 4.74-4.57 4.99.36.32.68.95.68 1.92 0 1.38-.01 2.49-.01 2.83 0 .27.18.6.69.49A10.22 10.22 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z" fill="currentColor"/></svg>
                 </a>
                 <a class="icon-link" href="#" target="_blank" aria-label="LinkedIn">
-                    <!-- LinkedIn SVG -->
                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3.5 9h3v12h-3V9zm6 0h2.879v1.64h.041C13.04 9.62 14.37 9 15.88 9 19.2 9 20 11.19 20 14.36V21h-3v-6.07c0-1.45-.03-3.31-2.02-3.31-2.03 0-2.34 1.58-2.34 3.21V21H9.5V9z" fill="currentColor"/></svg>
                 </a>
                 <a class="icon-link" href="#" target="_blank" aria-label="Hugging Face">
-                    <!-- Simple HF face -->
                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/><path d="M8.5 14c1 .9 2.3 1.5 3.5 1.5S14.5 14.9 15.5 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                 </a>
                 <a class="icon-link" href="#" target="_blank" aria-label="Medium">
-                    <!-- Medium M -->
                     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="5" height="14" fill="currentColor"/><path d="M10 7l3.5 5L10 17V7Z" fill="currentColor"/><path d="M15 7h2v10h-2z" fill="currentColor"/></svg>
                 </a>
             </div>
-            <div class="social-label">Find me on GitHub, LinkedIn, Hugging Face, and Medium</div>
         </div>
     </section>
 
     <!-- Story -->
-    <section id="story" class="story">
-        <div class="story-content">
-            <h2 class="section-title">The Story</h2>
-            <div class="story-text">
-                <p>International mind on a mission. <span>Masters in AI</span> student by day, future architect of intelligent systems by night. I don't just study artificial intelligence—I'm obsessed with pushing its boundaries.</p>
-                <br />
-                <p>While others see code, I see <span>possibilities</span>. While others build features, I'm designing the infrastructure for ideas that don't exist yet. The kind that make investors lean forward in their chairs.</p>
-            </div>
-        </div>
-        <div class="story-visual"></div>
-    </section>
-
     <!-- Journey -->
     <section id="journey" class="journey">
-        <h2 class="section-title">The Journey</h2>
+        <h2 class="section-title">Work Experience</h2>
         <div class="timeline">
             <div class="timeline-item">
-                <div class="timeline-date">2024 - Present</div>
-                <div class="timeline-title">Masters in Artificial Intelligence</div>
-                <div class="timeline-desc">Deep diving into neural architectures, transformers, and the mathematics that powers tomorrow. GPA doesn't define genius, but mine's pretty solid anyway.</div>
+                <div class="timeline-date">Dec 2021 – July 2024</div>
+                <div class="timeline-title">Systems Engineer (Full Time)</div>
+                <div class="timeline-company">Tata Consultancy Services (TCS) · Hyderabad, India</div>
+                <div class="timeline-desc">
+                    <strong>LLM Integration & Backend Engineering:</strong> Developed GPT-3.5–powered enterprise applications using Python (FastAPI), Azure OpenAI, and LangChain; designed modular prompt templates, system instructions, and multi-turn conversational flows to improve reliability and accuracy.
+                    <br><br>
+                    <strong>Retrieval-Augmented Generation (RAG):</strong> Built RAG pipelines using Azure Cognitive Search, vector embeddings, chunking strategies, and metadata-based retrieval to deliver grounded, domain-specific answers for document-heavy enterprise use cases.
+                    <br><br>
+                    <strong>Data Engineering & Big Data Pipelines:</strong> Engineered large-scale data pipelines using Azure Data Factory and Azure Databricks; developed PySpark ETL jobs on Spark clusters, optimized distributed transformations, and implemented Delta Lake–based architectures on Data Lake Storage (ADLS) to ensure reliable, versioned, and ML-ready datasets.
+                    <br><br>
+                    <strong>Document Intelligence & Cognitive Automation:</strong> Integrated Azure Document Intelligence, Cognitive Search, Blob Storage, and Function Apps to automate document ingestion, semantic indexing, and large-scale retrieval workflows. Implemented machine learning and computer vision models using TensorFlow, Keras, and OpenCV for classification.
+                    <br><br>
+                    <strong>Backend Engineering & Intelligent Retrieval:</strong> Developed scalable backend microservices supporting AI inference, vector search, prompt routing, and hybrid retrieval (keyword + embedding) for cross-database lookups, multi-document summarization, and structured content extraction using Python (FastAPI), Azure Cloud, and Microsoft SQL Server.
+                </div>
             </div>
             <div class="timeline-item">
-                <div class="timeline-date">2023 - 2024</div>
-                <div class="timeline-title">AI Research Assistant</div>
-                <div class="timeline-desc">Published research on novel approaches to NLP. Worked with professors who've forgotten more about AI than most people will ever know.</div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-date">2022 - 2023</div>
-                <div class="timeline-title">Machine Learning Engineer Intern</div>
-                <div class="timeline-desc">Built production models processing millions of data points daily. Reduced inference time by 67%. They offered full-time. I had bigger plans.</div>
+                <div class="timeline-date">Oct 2020 - June 2021</div>
+                <div class="timeline-title">Startup Founder and AI/ML Engineer (Self Employed - Full Time)</div>
+                <div class="timeline-company">Vaaraahi Farms (GST Registered) · Andhra Pradesh, India</div>
+                <div class="timeline-desc">
+                    <strong>Technology Leadership:</strong> Founded a registered services business offering technology-driven IoT and ML/data analytics solutions to agriculture-focused clients. Built regression, anomaly-detection, and forecasting models to predict nutrient imbalance, detect system faults, and optimize growing conditions in controlled-environment farms.
+                    <br><br>
+                    <strong>Predictive Maintenance:</strong> Implemented predictive maintenance algorithms that identified pump degradation, aeration failures, and chemical drift patterns using IoT telemetry, reducing downtime and enhancing system reliability.
+                    <br><br>
+                    <strong>ML Analytics:</strong> Developed ML-driven solutions for practical on-ground problems such as predicting lettuce tip-burn before it became visible, forecasting ammonia spikes in aquaponics to prevent fish mortality, estimating optimal harvest timing using microclimate patterns, and detecting abnormal pH drift caused by microbial activity resulting in proactive interventions and higher system stability.
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Skills (new) -->
     <section id="skills" class="skills">
-        <h2 class="section-title">Areas of Skill — especially in AI</h2>
+        <h2 class="section-title">Skills</h2>
         <div class="skill-groups">
-            <div class="skill-card"><h4>Core AI/ML</h4><div class="pill-row">
-                <span class="pill">Transformers</span><span class="pill">CNNs</span><span class="pill">RNN/LSTM</span><span class="pill">Reinforcement Learning</span><span class="pill">Diffusion</span><span class="pill">GNN</span>
+            <div class="skill-card"><h4>Programming & Core Libraries</h4><div class="pill-row">
+                <span class="pill">Python</span><span class="pill">SQL</span><span class="pill">Bash</span><span class="pill">Pandas</span><span class="pill">NumPy</span><span class="pill">Git</span>
             </div></div>
-            <div class="skill-card"><h4>LLMs & NLP</h4><div class="pill-row">
-                <span class="pill">Prompting</span><span class="pill">RAG</span><span class="pill">Fine-tuning</span><span class="pill">Tokenizers</span><span class="pill">Embeddings</span><span class="pill">LangChain</span>
+            <div class="skill-card"><h4>Machine Learning & Frameworks</h4><div class="pill-row">
+                <span class="pill">PyTorch</span><span class="pill">TensorFlow</span><span class="pill">Keras</span><span class="pill">Scikit-learn</span><span class="pill">CNNs</span><span class="pill">LSTMs</span><span class="pill">Transformers</span><span class="pill">Feature Engineering</span><span class="pill">Hyperparameter Tuning</span><span class="pill">Model Evaluation</span>
             </div></div>
-            <div class="skill-card"><h4>Frameworks</h4><div class="pill-row">
-                <span class="pill">PyTorch</span><span class="pill">TensorFlow</span><span class="pill">Scikit-learn</span><span class="pill">Hugging Face</span><span class="pill">OpenCV</span>
+            <div class="skill-card"><h4>LLMs, NLP & Generative AI</h4><div class="pill-row">
+                <span class="pill">GPT</span><span class="pill">HuggingFace</span><span class="pill">Prompt Engineering</span><span class="pill">RAG</span><span class="pill">Fine-tuning</span><span class="pill">Transfer Learning</span><span class="pill">Embeddings</span><span class="pill">Vector Databases</span><span class="pill">Semantic Search</span><span class="pill">Text Classification</span><span class="pill">NER</span><span class="pill">Summarization</span>
             </div></div>
-            <div class="skill-card"><h4>Data & Systems</h4><div class="pill-row">
-                <span class="pill">Pandas</span><span class="pill">Spark</span><span class="pill">SQL</span><span class="pill">Vector DBs</span><span class="pill">Kafka</span>
+            <div class="skill-card"><h4>Data Engineering & Big Data</h4><div class="pill-row">
+                <span class="pill">PySpark</span><span class="pill">Azure Data Factory</span><span class="pill">Azure Databricks</span><span class="pill">Spark Clusters</span><span class="pill">Delta Lake</span><span class="pill">ADLS</span><span class="pill">ETL Pipelines</span><span class="pill">Distributed Computing</span><span class="pill">Batch/Stream Processing</span>
             </div></div>
-            <div class="skill-card"><h4>MLOps & Infra</h4><div class="pill-row">
-                <span class="pill">Docker</span><span class="pill">Kubernetes</span><span class="pill">MLflow</span><span class="pill">Weights & Biases</span><span class="pill">CI/CD</span>
+            <div class="skill-card"><h4>Cloud & Azure Services</h4><div class="pill-row">
+                <span class="pill">Azure Cloud</span><span class="pill">Azure OpenAI</span><span class="pill">Azure Functions</span><span class="pill">Blob Storage</span><span class="pill">Cognitive Search</span><span class="pill">Document Intelligence</span><span class="pill">SQL Server</span>
             </div></div>
-            <div class="skill-card"><h4>Languages & Cloud</h4><div class="pill-row">
-                <span class="pill">Python</span><span class="pill">Rust</span><span class="pill">JavaScript</span><span class="pill">Go</span><span class="pill">AWS</span><span class="pill">Azure</span>
+            <div class="skill-card"><h4>MLOps & Deployment</h4><div class="pill-row">
+                <span class="pill">FastAPI</span><span class="pill">REST APIs</span><span class="pill">Docker</span><span class="pill">CI/CD</span><span class="pill">Model Serving</span><span class="pill">Inference Optimization</span><span class="pill">Monitoring & Logging</span>
             </div></div>
         </div>
     </section>
 
     <!-- Projects / Lab -->
     <section id="lab">
-        <h2 class="section-title">The Lab (Selected Projects)</h2>
+        <h2 class="section-title">Projects</h2>
         <div class="lab-grid">
             <div class="project-card">
-                <h3 class="project-title">Neural Style Transfer Engine</h3>
-                <p class="project-desc">Real-time artistic style transfer using optimized GANs. Processing 4K video at 30fps. Currently in talks with a major streaming platform.</p>
-                <div class="project-tags"><span class="tag">PyTorch</span><span class="tag">GANs</span><span class="tag">CUDA</span></div>
+                <h3 class="project-title">RNN & Transformer Architecture from Scratch</h3>
+                <p class="project-desc">Complete implementation of RNN and Transformer architectures built from scratch in Python. Includes attention mechanisms, positional encoding, and multi-head attention—pure NumPy implementations for deep understanding of modern NLP architectures.</p>
+                <div class="project-tags"><span class="tag">Python</span><span class="tag">Transformers</span><span class="tag">RNN</span><span class="tag">Attention</span><span class="tag">NumPy</span></div>
                 <div class="project-links">
-                    <a class="btn-link" href="#" target="_blank" aria-label="View on GitHub">View on GitHub →</a>
+                    <a class="btn-link" href="https://github.com/hemanthvamsikrishna/RNN-Transformer-Architecture-from-scratch" target="_blank" aria-label="View on GitHub">View on GitHub →</a>
                 </div>
             </div>
             <div class="project-card">
-                <h3 class="project-title">Autonomous Trading Algorithm</h3>
-                <p class="project-desc">Reinforcement learning meets Wall Street. 127% returns in backtesting. Real money performance? Let's just say my ramen days are over.</p>
-                <div class="project-tags"><span class="tag">RL</span><span class="tag">Transformers</span><span class="tag">Quant</span></div>
+                <h3 class="project-title">CNN Architecture from Scratch</h3>
+                <p class="project-desc">Ground-up implementation of Convolutional Neural Networks without deep learning frameworks. Built convolution layers, pooling, backpropagation, and optimization algorithms to understand the mathematical foundations of computer vision models.</p>
+                <div class="project-tags"><span class="tag">Python</span><span class="tag">CNN</span><span class="tag">Computer Vision</span><span class="tag">NumPy</span><span class="tag">Backpropagation</span></div>
                 <div class="project-links">
-                    <a class="btn-link" href="#" target="_blank">View on GitHub →</a>
+                    <a class="btn-link" href="https://github.com/hemanthvamsikrishna/CNN-Architecture-from-Scratch" target="_blank">View on GitHub →</a>
                 </div>
             </div>
             <div class="project-card">
-                <h3 class="project-title">Conversational AI Framework</h3>
-                <p class="project-desc">Built a framework that makes ChatGPT look verbose. 10x faster responses, 3x more accurate. Open-sourced because sharing is caring.</p>
-                <div class="project-tags"><span class="tag">LLMs</span><span class="tag">NLP</span><span class="tag">Rust</span></div>
+                <h3 class="project-title">Building Neural Network from Scratch</h3>
+                <p class="project-desc">Foundational neural network implementation from first principles. Custom gradient descent, activation functions, forward/backward propagation, and loss functions—all built without ML libraries to master the core mechanics of deep learning.</p>
+                <div class="project-tags"><span class="tag">Python</span><span class="tag">Neural Networks</span><span class="tag">Gradient Descent</span><span class="tag">NumPy</span></div>
                 <div class="project-links">
-                    <a class="btn-link" href="#" target="_blank">View on GitHub →</a>
+                    <a class="btn-link" href="https://github.com/hemanthvamsikrishna/Building-Neural-Network-From-Scratch" target="_blank">View on GitHub →</a>
                 </div>
             </div>
             <div class="project-card">
-                <h3 class="project-title">Computer Vision for Healthcare</h3>
-                <p class="project-desc">Detecting diseases before doctors can. 98.7% accuracy on retinal scans. Currently in clinical trials at three hospitals.</p>
-                <div class="project-tags"><span class="tag">Vision</span><span class="tag">Medical AI</span><span class="tag">CNN</span></div>
+                <h3 class="project-title">QHIVE - Quality Hive Network</h3>
+                <p class="project-desc">Distributed AI-driven framework for defect pattern mining and cross-plant rule discovery in manufacturing. Multi-agent architecture enabling collaborative model learning and real-time defect detection across simulated manufacturing networks.</p>
+                <div class="project-tags"><span class="tag">Python</span><span class="tag">Distributed AI</span><span class="tag">Computer Vision</span><span class="tag">Manufacturing</span><span class="tag">Quality Control</span></div>
                 <div class="project-links">
-                    <a class="btn-link" href="#" target="_blank">View on GitHub →</a>
-                </div>
-            </div>
-            <div class="project-card">
-                <h3 class="project-title">Project Stealth Mode</h3>
-                <p class="project-desc">Can't say much, but imagine if AI could... actually, I've said too much. NDA's are real. Launch Q2 2025.</p>
-                <div class="project-tags"><span class="tag">Classified</span><span class="tag">Revolutionary</span><span class="tag">Soon™</span></div>
-                <div class="project-links">
-                    <a class="btn-link" href="#" target="_blank">View on GitHub →</a>
-                </div>
-            </div>
-            <div class="project-card">
-                <h3 class="project-title">Open Source Contributions</h3>
-                <p class="project-desc">500+ commits to major ML libraries. That bug in TensorFlow 2.8? Yeah, I fixed that. You're welcome.</p>
-                <div class="project-tags"><span class="tag">OSS</span><span class="tag">Community</span><span class="tag">Impact</span></div>
-                <div class="project-links">
-                    <a class="btn-link" href="#" target="_blank">View on GitHub →</a>
+                    <a class="btn-link" href="https://github.com/hemanthvamsikrishna/QHIVE" target="_blank">View on GitHub →</a>
                 </div>
             </div>
         </div>
@@ -324,47 +1168,212 @@
     <!-- Articles (Medium) -->
     <section id="articles" class="articles">
         <h2 class="section-title">On Medium — Latest Articles</h2>
-        <div class="article-grid">
-            <!-- Duplicate/replace cards below with your real content/links -->
-            <article class="article-card">
-                <div class="article-meta">Aug 2025 · 6 min read</div>
-                <div class="article-title">RAG vs Fine‑Tuning: Pick the Right Hammer</div>
-                <p class="article-excerpt">A practical decision framework for when to retrieve, when to adapt, and how to quantify the trade‑offs in latency, quality, and cost.</p>
-                <a class="read-more" href="#" target="_blank">Read on Medium →</a>
-            </article>
-            <article class="article-card">
-                <div class="article-meta">Jul 2025 · 8 min read</div>
-                <div class="article-title">Beating Baselines on Tabular Data with Transformers</div>
-                <p class="article-excerpt">Why modern attention blocks can compete with GBDTs—and when they absolutely should not.</p>
-                <a class="read-more" href="#" target="_blank">Read on Medium →</a>
-            </article>
-            <article class="article-card">
-                <div class="article-meta">Jun 2025 · 5 min read</div>
-                <div class="article-title">Latency Is a Feature: Designing Snappy LLM Apps</div>
-                <p class="article-excerpt">A playbook for caching, streaming, speculative decoding, and UX that feels instant.</p>
-                <a class="read-more" href="#" target="_blank">Read on Medium →</a>
-            </article>
+        
+        <div class="articles-scroll-container">
+            <div class="article-scroll-wrapper" id="articleScrollWrapper">
+                <!-- Article 1 -->
+                <a class="article-card" href="https://medium.com/@hemanthvamsikrishna/are-humans-going-next-level-on-kardashev-scale-with-ai-data-centers-in-space-93efb2995893" target="_blank">
+                    <div class="article-banner">
+                        <img src="https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&q=80" alt="AI Data Centers in Space" onerror="this.parentElement.classList.add('gradient-fallback'); this.parentElement.innerHTML='🚀';">
+                    </div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>2024</span>
+                            <span>•</span>
+                            <span>6 min read</span>
+                        </div>
+                        <div class="article-title">Are Humans Going Next Level on Kardashev Scale with AI Data Centers in Space?</div>
+                        <div class="article-subtitle">Exploring the future of computing beyond Earth</div>
+                        <p class="article-excerpt">As AI computing demands skyrocket, space-based data centers could be humanity's next leap on the Kardashev scale. Exploring the intersection of artificial intelligence, energy consumption, and space infrastructure...</p>
+                        <span class="read-more">Read on Medium →</span>
+                    </div>
+                </a>
+
+                <!-- Article 2 -->
+                <a class="article-card" href="https://medium.com/@hemanthvamsikrishna/how-to-design-a-neural-network-the-complete-guide-5f31b06681ba" target="_blank">
+                    <div class="article-banner">
+                        <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80" alt="How to Design a Neural Network" onerror="this.parentElement.classList.add('gradient-fallback'); this.parentElement.innerHTML='🧠';">
+                    </div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>2024</span>
+                            <span>•</span>
+                            <span>10 min read</span>
+                        </div>
+                        <div class="article-title">How to Design a Neural Network: The Complete Guide</div>
+                        <div class="article-subtitle">A comprehensive approach to neural network architecture</div>
+                        <p class="article-excerpt">From choosing the right architecture to optimizing performance, this complete guide walks through the fundamental principles and practical considerations for designing effective neural networks...</p>
+                        <span class="read-more">Read on Medium →</span>
+                    </div>
+                </a>
+
+                <!-- Article 3 -->
+                <a class="article-card" href="https://medium.com/@hemanthvamsikrishna/how-i-accidentally-discovered-the-perfect-roadmap-to-learn-artificial-intelligence-b338aa5d1331" target="_blank">
+                    <div class="article-banner">
+                        <img src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&q=80" alt="AI Learning Roadmap" onerror="this.parentElement.classList.add('gradient-fallback'); this.parentElement.innerHTML='🗺️';">
+                    </div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>2024</span>
+                            <span>•</span>
+                            <span>8 min read</span>
+                        </div>
+                        <div class="article-title">How I Accidentally Discovered the Perfect Roadmap to Learn Artificial Intelligence</div>
+                        <div class="article-subtitle">A practical path through the AI landscape</div>
+                        <p class="article-excerpt">Learning AI can feel overwhelming with countless resources and topics. Here's the roadmap I wish I had when starting out—distilled from trial, error, and eventually finding what actually works...</p>
+                        <span class="read-more">Read on Medium →</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll controls -->
+        <div class="scroll-controls">
+            <button class="scroll-btn" id="scrollLeft" aria-label="Scroll left">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </button>
+            <button class="scroll-btn" id="scrollRight" aria-label="Scroll right">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </button>
         </div>
     </section>
 
     <!-- Conferences (new) -->
     <section id="conferences">
-        <h2 class="section-title">Conferences</h2>
-        <div class="conf-grid">
-            <div class="conf-card">
-                <div class="conf-title">Fall Technical Conference (FTC) — Houston, TX</div>
-                <div class="conf-meta">Oct 2025 · Attendee / Presenter</div>
-                <p class="conf-desc">Focused on the effective use of statistics to improve quality and foster innovation; presented work on AI‑driven quality analytics.</p>
+        <h2 class="section-title">Publications & Conferences</h2>
+        
+        <div class="articles-scroll-container">
+            <div class="article-scroll-wrapper" id="publicationScrollWrapper">
+                <!-- Publication 1: Book Chapter -->
+                <a class="article-card" href="https://www.taylorfrancis.com/books/edit/10.1201/9781003483144/cognitive-fairness-aware-techniques-human-machine-interface-vithya-ganesan-indu-vadhani-subrata-chowdhury-souvik-pal-vishnu-pendyala" target="_blank">
+                    <div class="article-banner">
+                        <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800&q=80" alt="Book Chapter Publication" onerror="this.parentElement.classList.add('gradient-fallback'); this.parentElement.innerHTML='📚';">
+                    </div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>Forthcoming</span>
+                            <span>•</span>
+                            <span>Chapman & Hall/CRC</span>
+                        </div>
+                        <div class="article-title">Chapter 13: Implementing a Graph Machine Learning Pipeline for Anomaly Detection</div>
+                        <div class="article-subtitle">Cognitive Fairness-Aware Techniques for Human-Machine Interface</div>
+                        <p class="article-excerpt">ISBN-13: 9781032767093 | Co-authored research on graph-based anomaly detection architectures, fairness-aware AI considerations, and GNN-driven modeling workflows for human–machine decision systems...</p>
+                        <span class="read-more">View Publication →</span>
+                    </div>
+                </a>
+
+                <!-- Conference 1: ATMAE -->
+                <a class="article-card" href="https://atmae.org/wp-content/uploads/25-Final-Conference-Proceedings.pdf" target="_blank">
+                    <div class="article-banner">
+                        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80" alt="ATMAE Conference" onerror="this.parentElement.classList.add('gradient-fallback'); this.parentElement.innerHTML='🎤';">
+                    </div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>2025</span>
+                            <span>•</span>
+                            <span>Memphis, TN</span>
+                        </div>
+                        <div class="article-title">How AI is Transforming Industrial Ecosystems and Threatening Market Dominance</div>
+                        <div class="article-subtitle">ATMAE Annual Conference 2025 — Research Paper</div>
+                        <p class="article-excerpt">Analyzed the convergence of AI-driven automation, cybersecurity vulnerabilities, and industrial data monopolies through reinforcement learning and system resilience modeling...</p>
+                        <span class="read-more">View Proceedings →</span>
+                    </div>
+                </a>
+
+                <!-- Conference 2: ASQ -->
+                <a class="article-card" href="https://sites.google.com/a/ucmo.edu/asqstudent/asq-home-page?authuser=0" target="_blank">
+                    <div class="article-banner">
+                        <img src="https://images.unsplash.com/photo-1581093458791-9d42e1bb7d5f?w=800&q=80" alt="ASQ Conference" onerror="this.parentElement.classList.add('gradient-fallback'); this.parentElement.innerHTML='🏆';">
+                    </div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>2024</span>
+                            <span>•</span>
+                            <span>3rd Prize 🏆</span>
+                        </div>
+                        <div class="article-title">The Hive Quality Network: A Distributed AI-Driven Framework for Defect Pattern Mining</div>
+                        <div class="article-subtitle">17th Annual ASQ UCM Quality Management Conference — Poster</div>
+                        <p class="article-excerpt">Designed distributed multi-agent architectures enabling collaborative model learning and real-time defect detection across simulated manufacturing networks. Cross-plant rule discovery through federated learning...</p>
+                        <span class="read-more">View Conference →</span>
+                    </div>
+                </a>
             </div>
-            <div class="conf-card">
-                <div class="conf-title">IEEE AICDSA Conference</div>
-                <div class="conf-meta">2025 · Speaker</div>
-                <p class="conf-desc">Explored robust ECG R‑peak detection with deep learning under class imbalance.</p>
+        </div>
+
+        <!-- Scroll controls -->
+        <div class="scroll-controls">
+            <button class="scroll-btn" id="scrollLeftPub" aria-label="Scroll left">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </button>
+            <button class="scroll-btn" id="scrollRightPub" aria-label="Scroll right">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </button>
+        </div>
+    </section>
+
+    <!-- Startup Story Slider -->
+    <section id="startups" class="startup-story">
+        <h2 class="section-title">My Startup Journey</h2>
+        
+        <div class="startup-slider-container">
+            <div class="startup-slider" id="startupSlider">
+                <!-- Slide 1: Vaaraahi Farms -->
+                <div class="startup-slide">
+                    <div class="slide-image placeholder">
+                        🌱
+                        <!-- Replace with actual image: <img src="path-to-image.jpg" alt="Vaaraahi Farms"> -->
+                    </div>
+                    <div class="slide-content">
+                        <h3 class="slide-title">Vaaraahi Farms: Growing Tech in Soil</h3>
+                        <div class="slide-body">
+                            <p>In 2020, I launched <strong>Vaaraahi Farms</strong>, an AI-driven hydroponics system that integrated IoT sensors with automated growing environments. The vision was ambitious: democratize urban farming through intelligent automation.</p>
+                            <p>We built a working prototype, integrated real-time sensor networks, and developed predictive models for crop yield optimization. But reality hit hard—<strong>customer acquisition costs outpaced revenue</strong>, and scaling hardware proved more capital-intensive than anticipated.</p>
+                            <p>The lesson? <strong>Technology alone doesn't create value</strong>. Understanding market readiness, distribution channels, and unit economics matters just as much as the innovation itself.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2: Hive Quality Network -->
+                <div class="startup-slide">
+                    <div class="slide-image placeholder">
+                        🔍
+                        <!-- Replace with actual image: <img src="path-to-image.jpg" alt="Hive Quality Network"> -->
+                    </div>
+                    <div class="slide-content">
+                        <h3 class="slide-title">Hive Quality Network: Distributed Intelligence</h3>
+                        <div class="slide-body">
+                            <p>Learning from Vaaraahi, I pivoted to <strong>Hive Quality Network</strong>—a distributed defect detection platform for manufacturing. Computer vision meets edge computing, designed to scale across multiple production lines.</p>
+                            <p>We achieved <strong>98.7% accuracy</strong> on defect classification and reduced false positives by 60%. The tech worked brilliantly. But enterprise sales cycles are measured in quarters, not weeks, and we couldn't sustain runway.</p>
+                            <p>Second failure, deeper lesson: <strong>Build for a market you can reach</strong>. The best product means nothing if you can't get it in front of the right buyers at the right time.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="conf-card">
-                <div class="conf-title">ATMAE National Conference</div>
-                <div class="conf-meta">2025 · Presenter</div>
-                <p class="conf-desc">Showcased AI‑powered supply‑chain analytics and visualization frameworks.</p>
+
+            <!-- Slider arrows -->
+            <button class="slider-arrow left" id="sliderPrev" aria-label="Previous startup">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </button>
+            <button class="slider-arrow right" id="sliderNext" aria-label="Next startup">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </button>
+
+            <!-- Slider dots -->
+            <div class="slider-controls">
+                <button class="slider-dot active" data-slide="0" aria-label="View Vaaraahi Farms"></button>
+                <button class="slider-dot" data-slide="1" aria-label="View Hive Quality Network"></button>
             </div>
         </div>
     </section>
@@ -384,40 +1393,51 @@
         <h2 class="section-title">Profiles & Platforms</h2>
         <div class="profiles-grid">
             <div class="profile-card">
-                <span class="icon-link" aria-hidden="true"> 
-                    <svg viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.58 2 12.22c0 4.51 2.87 8.33 6.84 9.68.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.13-4.56-5 0-1.11.39-2.01 1.03-2.72-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.04a9.26 9.26 0 0 1 5 0c1.9-1.31 2.74-1.04 2.74-1.04.56 1.42.21 2.47.1 2.73.64.71 1.03 1.61 1.03 2.72 0 3.88-2.34 4.74-4.57 4.99.36.32.68.95.68 1.92 0 1.38-.01 2.49-.01 2.83 0 .27.18.6.69.49A10.22 10.22 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z" fill="currentColor"/></svg>
-                </span>
-                <div>
-                    <div style="font-weight:600">GitHub</div>
-                    <a href="#" target="_blank">github.com/your-handle</a>
+                <div class="profile-header">
+                    <span class="icon-link" aria-hidden="true"> 
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.58 2 12.22c0 4.51 2.87 8.33 6.84 9.68.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.13-4.56-5 0-1.11.39-2.01 1.03-2.72-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.04a9.26 9.26 0 0 1 5 0c1.9-1.31 2.74-1.04 2.74-1.04.56 1.42.21 2.47.1 2.73.64.71 1.03 1.61 1.03 2.72 0 3.88-2.34 4.74-4.57 4.99.36.32.68.95.68 1.92 0 1.38-.01 2.49-.01 2.83 0 .27.18.6.69.49A10.22 10.22 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z" fill="currentColor"/></svg>
+                    </span>
+                    <div class="profile-content">
+                        <a href="https://github.com/hemanthvamsikrishna" target="_blank">GitHub</a>
+                    </div>
                 </div>
+                <div class="profile-caption">Ideas I couldn't ignore, so I built them</div>
             </div>
+            
             <div class="profile-card">
-                <span class="icon-link" aria-hidden="true"> 
-                    <svg viewBox="0 0 24 24" fill="none"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3.5 9h3v12h-3V9zm6 0h2.879v1.64h.041C13.04 9.62 14.37 9 15.88 9 19.2 9 20 11.19 20 14.36V21h-3v-6.07c0-1.45-.03-3.31-2.02-3.31-2.03 0-2.34 1.58-2.34 3.21V21H9.5V9z" fill="currentColor"/></svg>
-                </span>
-                <div>
-                    <div style="font-weight:600">LinkedIn</div>
-                    <a href="#" target="_blank">linkedin.com/in/your-handle</a>
+                <div class="profile-header">
+                    <span class="icon-link" aria-hidden="true"> 
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3.5 9h3v12h-3V9zm6 0h2.879v1.64h.041C13.04 9.62 14.37 9 15.88 9 19.2 9 20 11.19 20 14.36V21h-3v-6.07c0-1.45-.03-3.31-2.02-3.31-2.03 0-2.34 1.58-2.34 3.21V21H9.5V9z" fill="currentColor"/></svg>
+                    </span>
+                    <div class="profile-content">
+                        <a href="https://linkedin.com/in/your-handle" target="_blank">LinkedIn</a>
+                    </div>
                 </div>
+                <div class="profile-caption">Let's connect professionally</div>
             </div>
+            
             <div class="profile-card">
-                <span class="icon-link" aria-hidden="true"> 
-                    <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/><path d="M8.5 14c1 .9 2.3 1.5 3.5 1.5S14.5 14.9 15.5 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                </span>
-                <div>
-                    <div style="font-weight:600">Hugging Face</div>
-                    <a href="#" target="_blank">huggingface.co/your-handle</a>
+                <div class="profile-header">
+                    <span class="icon-link" aria-hidden="true"> 
+                        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/><path d="M8.5 14c1 .9 2.3 1.5 3.5 1.5S14.5 14.9 15.5 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </span>
+                    <div class="profile-content">
+                        <a href="https://huggingface.co/hemanthvamsikrishna" target="_blank">Hugging Face</a>
+                    </div>
                 </div>
+                <div class="profile-caption">Solutions I've engineered</div>
             </div>
+            
             <div class="profile-card">
-                <span class="icon-link" aria-hidden="true"> 
-                    <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="5" height="14" fill="currentColor"/><path d="M10 7l3.5 5L10 17V7Z" fill="currentColor"/><path d="M15 7h2v10h-2z" fill="currentColor"/></svg>
-                </span>
-                <div>
-                    <div style="font-weight:600">Medium</div>
-                    <a href="#" target="_blank">medium.com/@your-handle</a>
+                <div class="profile-header">
+                    <span class="icon-link" aria-hidden="true"> 
+                        <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="5" height="14" fill="currentColor"/><path d="M10 7l3.5 5L10 17V7Z" fill="currentColor"/><path d="M15 7h2v10h-2z" fill="currentColor"/></svg>
+                    </span>
+                    <div class="profile-content">
+                        <a href="https://medium.com/@hemanthvamsikrishna" target="_blank">Medium</a>
+                    </div>
                 </div>
+                <div class="profile-caption">Yes, I do write tech articles</div>
             </div>
         </div>
     </section>
@@ -425,11 +1445,50 @@
     <!-- Connect / Footer -->
     <footer id="connect">
         <p style="color: var(--text-light); font-size: .9rem; margin-bottom: 1rem;">💌 Currently accepting coffee chats, not job offers</p>
-        <a href="mailto:your.email@university.edu" style="color: var(--primary); text-decoration: none; font-weight: 500;">your.email@university.edu</a>
+        <a href="/cdn-cgi/l/email-protection#e39a8c9691cd868e828a8fa3968d8a958691908a979acd868796" style="color: var(--primary); text-decoration: none; font-weight: 500;"><span class="__cf_email__" data-cfemail="fb82948e89d59e969a9297bb8e95928d9e8988928f82d59e9f8e">[email&#160;protected]</span></a>
         <p style="color: var(--text-light); font-size: .8rem; margin-top: 2rem;">Building the future from Lee's Summit, Missouri 🚀</p>
     </footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // ============================================
+        // MEDIUM ARTICLES CONFIGURATION
+        // ============================================
+        // Simply add your Medium article URLs here and the page will automatically
+        // fetch the banner images, titles, and descriptions from each article
+        const MEDIUM_ARTICLES = [
+            'https://medium.com/@hemanthvamsikrishna/are-humans-going-next-level-on-kardashev-scale-with-ai-data-centers-in-space-93efb2995893',
+            'https://medium.com/@hemanthvamsikrishna/how-to-design-a-neural-network-the-complete-guide-5f31b06681ba',
+            'https://medium.com/@hemanthvamsikrishna/how-i-accidentally-discovered-the-perfect-roadmap-to-learn-artificial-intelligence-b338aa5d1331',
+        ];
+        
+        // Set to true to automatically load articles from URLs above
+        const AUTO_FETCH_ARTICLES = false; // Set to true when you add real URLs
+        
+        // ============================================
+        
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        // Check for saved theme preference or default to system preference
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme) {
+            html.setAttribute('data-theme', savedTheme);
+        } else if (systemPrefersDark) {
+            html.setAttribute('data-theme', 'dark');
+        }
+        
+        // Toggle theme
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+        
         // Navbar scroll effect
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('navbar');
@@ -450,9 +1509,297 @@
 
         // Hero parallax
         window.addEventListener('scroll', ()=>{
-            const scrolled = window.pageYOffset; const hero = document.querySelector('.hero-content');
-            if(hero && scrolled < window.innerHeight){ hero.style.transform = `translateY(${scrolled*0.3}px)`; hero.style.opacity = 1 - (scrolled / window.innerHeight); }
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero-content');
+            if(hero) hero.style.transform = `translateY(${scrolled * 0.4}px)`;
         });
+
+        // Article Auto-Scroll Functionality
+        const scrollWrapper = document.getElementById('articleScrollWrapper');
+        const scrollLeft = document.getElementById('scrollLeft');
+        const scrollRight = document.getElementById('scrollRight');
+        
+        let autoScrollInterval;
+        let isAutoScrolling = true;
+        
+        // Function to fetch article metadata from URL
+        async function fetchArticleMetadata(url) {
+            try {
+                // Using a CORS proxy + Open Graph scraper
+                const apiUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+                const response = await fetch(apiUrl);
+                const html = await response.text();
+                
+                // Parse Open Graph tags
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                const getMetaContent = (property) => {
+                    const meta = doc.querySelector(`meta[property="${property}"]`) || 
+                                 doc.querySelector(`meta[name="${property}"]`);
+                    return meta ? meta.getAttribute('content') : null;
+                };
+                
+                return {
+                    title: getMetaContent('og:title') || doc.querySelector('title')?.textContent,
+                    description: getMetaContent('og:description') || getMetaContent('description'),
+                    image: getMetaContent('og:image'),
+                    author: getMetaContent('article:author') || getMetaContent('author'),
+                    publishedTime: getMetaContent('article:published_time')
+                };
+            } catch (error) {
+                console.error('Error fetching metadata:', error);
+                return null;
+            }
+        }
+        
+        // Function to populate article card with fetched data
+        async function populateArticleCard(card, url) {
+            const metadata = await fetchArticleMetadata(url);
+            
+            if (metadata) {
+                // Update banner image
+                const banner = card.querySelector('.article-banner');
+                if (metadata.image && banner) {
+                    const img = banner.querySelector('img');
+                    if (img) {
+                        img.src = metadata.image;
+                        img.alt = metadata.title || 'Article banner';
+                    }
+                }
+                
+                // Update title if fetched
+                const titleEl = card.querySelector('.article-title');
+                if (metadata.title && titleEl && !titleEl.hasAttribute('data-custom')) {
+                    titleEl.textContent = metadata.title;
+                }
+                
+                // Update description if fetched and no custom excerpt
+                const excerptEl = card.querySelector('.article-excerpt');
+                if (metadata.description && excerptEl && !excerptEl.hasAttribute('data-custom')) {
+                    excerptEl.textContent = metadata.description;
+                }
+            }
+        }
+        
+        // Auto-populate articles on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (!AUTO_FETCH_ARTICLES || MEDIUM_ARTICLES.length === 0) {
+                // Use static articles if auto-fetch is disabled
+                const articleCards = document.querySelectorAll('.article-card');
+                articleCards.forEach(card => {
+                    const url = card.getAttribute('href');
+                    if (url && url !== '#' && url.startsWith('http')) {
+                        // Optionally fetch metadata even for static cards
+                        // populateArticleCard(card, url);
+                    }
+                });
+                return;
+            }
+            
+            // Clear the container and show loading
+            const wrapper = scrollWrapper;
+            if (!wrapper) return;
+            
+            wrapper.innerHTML = '<div style="flex: 0 0 380px; display: flex; align-items: center; justify-content: center; height: 300px; color: var(--text-light);">Loading articles...</div>';
+            
+            // Fetch all articles
+            const articlePromises = MEDIUM_ARTICLES.map(url => fetchArticleMetadata(url));
+            const articles = await Promise.all(articlePromises);
+            
+            // Clear loading and create cards
+            wrapper.innerHTML = '';
+            
+            articles.forEach((metadata, index) => {
+                if (metadata) {
+                    const card = createArticleCard(metadata);
+                    wrapper.innerHTML += card;
+                } else {
+                    console.warn(`Failed to load article ${index + 1}`);
+                }
+            });
+            
+            // Start auto-scroll after loading
+            startAutoScroll();
+        });
+        
+        // Function to create article card HTML from metadata
+        function createArticleCard(metadata) {
+            const { title, description, image, url } = metadata;
+            
+            const truncatedDesc = description && description.length > 180 
+                ? description.substring(0, 180) + '...' 
+                : description || 'Click to read more on Medium';
+            
+            return `
+                <a class="article-card" href="${url}" target="_blank">
+                    <div class="article-banner">
+                        ${image ? `<img src="${image}" alt="${title}" onerror="this.parentElement.classList.add('gradient-fallback'); this.parentElement.innerHTML='✨';">` : '<div class="gradient-fallback">✨</div>'}
+                    </div>
+                    <div class="article-content">
+                        <div class="article-meta">
+                            <span>Medium Article</span>
+                        </div>
+                        <div class="article-title">${title || 'Untitled Article'}</div>
+                        <p class="article-excerpt">${truncatedDesc}</p>
+                        <span class="read-more">Read on Medium →</span>
+                    </div>
+                </a>
+            `;
+        }
+        
+        // Auto-scroll function
+        function startAutoScroll() {
+            if (scrollWrapper) {
+                autoScrollInterval = setInterval(() => {
+                    if (isAutoScrolling) {
+                        const maxScroll = scrollWrapper.scrollWidth - scrollWrapper.clientWidth;
+                        const currentScroll = scrollWrapper.scrollLeft;
+                        
+                        // If we've reached the end, scroll back to start
+                        if (currentScroll >= maxScroll - 10) {
+                            scrollWrapper.scrollTo({ left: 0, behavior: 'smooth' });
+                        } else {
+                            scrollWrapper.scrollBy({ left: 400, behavior: 'smooth' });
+                        }
+                    }
+                }, 3000); // Auto-scroll every 3 seconds
+            }
+        }
+        
+        // Manual scroll controls
+        if (scrollLeft && scrollWrapper) {
+            scrollLeft.addEventListener('click', () => {
+                isAutoScrolling = false;
+                scrollWrapper.scrollBy({ left: -400, behavior: 'smooth' });
+                setTimeout(() => { isAutoScrolling = true; }, 5000); // Resume auto-scroll after 5 seconds
+            });
+        }
+        
+        if (scrollRight && scrollWrapper) {
+            scrollRight.addEventListener('click', () => {
+                isAutoScrolling = false;
+                scrollWrapper.scrollBy({ left: 400, behavior: 'smooth' });
+                setTimeout(() => { isAutoScrolling = true; }, 5000); // Resume auto-scroll after 5 seconds
+            });
+        }
+        
+        // Pause auto-scroll on hover
+        if (scrollWrapper) {
+            scrollWrapper.addEventListener('mouseenter', () => {
+                isAutoScrolling = false;
+            });
+            
+            scrollWrapper.addEventListener('mouseleave', () => {
+                isAutoScrolling = true;
+            });
+            
+            // Start auto-scrolling when page loads
+            startAutoScroll();
+        }
+        
+        // Publications scroll controls (similar to articles)
+        const pubScrollWrapper = document.getElementById('publicationScrollWrapper');
+        const scrollLeftPub = document.getElementById('scrollLeftPub');
+        const scrollRightPub = document.getElementById('scrollRightPub');
+        
+        if (scrollLeftPub && pubScrollWrapper) {
+            scrollLeftPub.addEventListener('click', () => {
+                pubScrollWrapper.scrollBy({ left: -400, behavior: 'smooth' });
+            });
+        }
+        
+        if (scrollRightPub && pubScrollWrapper) {
+            scrollRightPub.addEventListener('click', () => {
+                pubScrollWrapper.scrollBy({ left: 400, behavior: 'smooth' });
+            });
+        }
+        
+        // Startup Story Slider
+        const startupSlider = document.getElementById('startupSlider');
+        const sliderPrev = document.getElementById('sliderPrev');
+        const sliderNext = document.getElementById('sliderNext');
+        const sliderDots = document.querySelectorAll('.slider-dot');
+        
+        let currentSlide = 0;
+        const totalSlides = 2;
+        let autoSlideInterval;
+        
+        function updateSlider() {
+            if (startupSlider) {
+                startupSlider.style.transform = `translateX(-${currentSlide * 100}%)`;
+                
+                // Update dots
+                sliderDots.forEach((dot, index) => {
+                    if (index === currentSlide) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
+        }
+        
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlider();
+        }
+        
+        function goToSlide(slideIndex) {
+            currentSlide = slideIndex;
+            updateSlider();
+        }
+        
+        // Auto-slide every 5 seconds
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(nextSlide, 5000);
+        }
+        
+        function stopAutoSlide() {
+            clearInterval(autoSlideInterval);
+        }
+        
+        // Event listeners
+        if (sliderNext) {
+            sliderNext.addEventListener('click', () => {
+                nextSlide();
+                stopAutoSlide();
+                startAutoSlide(); // Restart auto-slide
+            });
+        }
+        
+        if (sliderPrev) {
+            sliderPrev.addEventListener('click', () => {
+                prevSlide();
+                stopAutoSlide();
+                startAutoSlide();
+            });
+        }
+        
+        sliderDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                goToSlide(index);
+                stopAutoSlide();
+                startAutoSlide();
+            });
+        });
+        
+        // Pause auto-slide on hover
+        if (startupSlider) {
+            const sliderContainer = document.querySelector('.startup-slider-container');
+            if (sliderContainer) {
+                sliderContainer.addEventListener('mouseenter', stopAutoSlide);
+                sliderContainer.addEventListener('mouseleave', startAutoSlide);
+            }
+            
+            // Start auto-slide
+            startAutoSlide();
+        }
     </script>
 </body>
 </html>
