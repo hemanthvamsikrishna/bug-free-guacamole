@@ -339,95 +339,48 @@
         
         /* Featured Platforms Badge - Ultra Minimal */
         .featured-platforms {
-            display: inline-flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-top: 3rem;
-            padding: 0;
-            background: none;
-            border: none;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        .platform-badge {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            text-decoration: none;
-            color: var(--primary);
-            transition: all 0.3s ease;
-            padding: 0.5rem 0.9rem;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            min-width: 160px;
-        }
-        
-        .platform-badge:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            border-color: var(--primary);
-        }
-        
-        .platform-badge svg {
-            width: 18px;
-            height: 18px;
+            gap: 1.25rem;
+            margin-top: 4rem;
+            justify-content: center;
+            flex-wrap: wrap;
             opacity: 0.8;
-            transition: opacity 0.3s ease;
-            flex-shrink: 0;
         }
         
-        .platform-badge:hover svg {
+        .platform-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            text-decoration: none;
+            color: var(--text-light);
+            transition: all 0.2s ease;
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+        
+        .platform-link:hover {
+            color: var(--primary);
             opacity: 1;
         }
         
-        .platform-badge-text {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            min-width: 0;
-            flex: 1;
+        .platform-link svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
         }
         
-        .platform-label {
-            font-size: 0.65rem;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-            opacity: 0.7;
-            color: var(--primary);
-            line-height: 1.3;
-            word-wrap: break-word;
-            width: 100%;
-        }
-        
-        .platform-name {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--primary);
-            white-space: nowrap;
+        .platform-link span {
+            font-weight: 500;
         }
         
         .platforms-divider {
-            width: 1px;
-            height: 24px;
-            background: var(--border);
-            flex-shrink: 0;
+            display: none;
         }
         
         /* Dark mode enhancements for hero section */
         [data-theme="dark"] .hero::before {
             opacity: 0.5;
-        }
-        
-        [data-theme="dark"] .platform-badge {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        [data-theme="dark"] .platform-badge:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
         }
         
         [data-theme="dark"] .tagline {
@@ -830,132 +783,181 @@
         /* Startup Story Slider */
         /* Startup Journey Cards */
         /* Startup Story Slider */
+        /* Startup Journey - Accordion Style */
         .startup-story {
             background: var(--bg-primary);
             padding: 5rem 5%;
-            overflow: hidden;
-            position: relative;
         }
         
-        .startup-slider-container {
-            position: relative;
+        .startup-accordion {
             max-width: 900px;
             margin: 0 auto;
-            padding: 0 60px;
-        }
-        
-        .startup-slider {
             display: flex;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-direction: column;
+            gap: 1.5rem;
         }
         
-        .startup-slide {
-            min-width: 100%;
-            padding: 0 1rem;
-        }
-        
-        .slide-card {
+        .accordion-item {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 24px;
+            border-radius: 16px;
             overflow: hidden;
             transition: all 0.3s ease;
         }
         
-        .slide-image-container {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 21/9;
-            overflow: hidden;
-            background: var(--bg-secondary);
+        .accordion-item:hover {
+            border-color: var(--primary);
         }
         
-        .slide-images {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .slide-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-        
-        .slide-image.active {
-            opacity: 1;
-        }
-        
-        .slide-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-        
-        .image-nav {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            transform: translateY(-50%);
+        .accordion-header {
             display: flex;
+            align-items: center;
             justify-content: space-between;
-            padding: 0 1rem;
-            z-index: 5;
-            pointer-events: none;
+            padding: 2rem 2.5rem;
+            cursor: pointer;
+            gap: 2rem;
         }
         
-        .image-nav-btn {
-            pointer-events: all;
-            width: 36px;
-            height: 36px;
+        .accordion-preview {
+            flex: 1;
+        }
+        
+        .accordion-meta {
+            font-size: 0.85rem;
+            color: var(--primary);
+            opacity: 0.7;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+        
+        .accordion-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+            font-weight: 400;
+            line-height: 1.3;
+        }
+        
+        .accordion-excerpt {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        .accordion-toggle {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            color: #000;
-            font-size: 24px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0;
         }
         
-        .slide-image-container:hover .image-nav-btn {
+        .accordion-toggle:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .accordion-toggle:hover svg {
+            stroke: #fff;
+        }
+        
+        .accordion-toggle svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-item.expanded .accordion-toggle svg {
+            transform: rotate(180deg);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        
+        .accordion-item.expanded .accordion-content {
+            max-height: 2000px;
+        }
+        
+        .accordion-images {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            background: var(--bg-secondary);
+        }
+        
+        .accordion-image-slider {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .accordion-image-slider img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .accordion-image-slider img.active {
             opacity: 1;
         }
         
-        .image-nav-btn:hover {
-            background: #fff;
-            transform: scale(1.1);
-        }
-        
-        [data-theme="dark"] .image-nav-btn {
-            background: rgba(0, 0, 0, 0.7);
-            color: #fff;
-        }
-        
-        [data-theme="dark"] .image-nav-btn:hover {
-            background: rgba(0, 0, 0, 0.9);
-        }
-        
-        .image-indicators {
+        .image-controls {
             position: absolute;
             bottom: 1rem;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 8px;
-            z-index: 5;
+            align-items: center;
+            gap: 1rem;
+            z-index: 10;
         }
         
-        .image-dot {
+        .img-nav {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .img-nav:hover {
+            background: #fff;
+            transform: scale(1.1);
+        }
+        
+        .img-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
@@ -964,37 +966,64 @@
             transition: all 0.3s ease;
         }
         
-        .image-dot.active {
-            background: rgba(255, 255, 255, 1);
+        .dot.active {
+            background: #fff;
             width: 24px;
             border-radius: 4px;
         }
         
-        .image-dot:hover {
-            background: rgba(255, 255, 255, 0.8);
+        .accordion-story {
+            padding: 2.5rem;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-light);
         }
         
-        .slide-image-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.4) 100%);
+        .accordion-story p {
+            margin-bottom: 1.25rem;
         }
         
-        [data-theme="dark"] .slide-image-overlay {
-            background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.6) 100%);
+        .accordion-story strong {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .accordion-header {
+                padding: 1.5rem 1.75rem;
+                gap: 1rem;
+            }
+            
+            .accordion-title {
+                font-size: 1.25rem;
+            }
+            
+            .accordion-excerpt {
+                font-size: 0.9rem;
+            }
+            
+            .accordion-images {
+                height: 250px;
+            }
+            
+            .accordion-story {
+                padding: 2rem 1.75rem;
+                font-size: 0.9rem;
+            }
         }
         
         .slide-content {
-            padding: 2.5rem 3rem 3rem;
+            flex: 1;
+            padding: 2.5rem 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         
         .startup-meta {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: var(--primary);
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
             opacity: 0.7;
             font-weight: 500;
             text-transform: uppercase;
@@ -1003,22 +1032,26 @@
         
         .slide-title {
             font-family: 'Instrument Serif', serif;
-            font-size: clamp(1.75rem, 4vw, 2.25rem);
-            margin-bottom: 1.5rem;
+            font-size: clamp(1.5rem, 3vw, 1.85rem);
+            margin-bottom: 1.25rem;
             font-weight: 400;
-            line-height: 1.2;
+            line-height: 1.25;
             color: var(--primary);
         }
         
         .slide-body {
-            font-size: 1.05rem;
-            line-height: 1.8;
-            color: var(--primary);
+            font-size: 0.95rem;
+            line-height: 1.65;
+            color: var(--text-light);
         }
         
         .slide-body p {
-            margin-bottom: 1.2rem;
-            color: var(--primary);
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+        
+        .slide-body p:last-of-type {
+            margin-bottom: 0;
         }
         
         .slide-body strong {
@@ -1027,14 +1060,15 @@
         }
         
         .slide-lesson {
-            margin-top: 2rem;
-            padding: 1.5rem 1.75rem;
+            margin-top: 1.5rem;
+            padding: 1.25rem 1.5rem;
             background: var(--bg-secondary);
-            border-left: 4px solid var(--primary);
-            border-radius: 12px;
+            border-left: 3px solid var(--primary);
+            border-radius: 8px;
             font-style: italic;
-            color: var(--primary);
-            line-height: 1.7;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            line-height: 1.6;
         }
         
         [data-theme="dark"] .slide-lesson {
@@ -1141,8 +1175,31 @@
                 height: 18px;
             }
             
+            .slide-card {
+                flex-direction: column;
+                min-height: auto;
+            }
+            
+            .slide-image-container {
+                flex: 0 0 auto;
+                height: 250px;
+            }
+            
             .slide-content {
-                padding: 1.5rem 1.25rem 2rem;
+                padding: 2rem 1.5rem;
+            }
+            
+            .slide-title {
+                font-size: 1.5rem;
+            }
+            
+            .slide-body {
+                font-size: 0.9rem;
+            }
+            
+            .slide-lesson {
+                font-size: 0.85rem;
+                padding: 1rem 1.25rem;
             }
         }
 
@@ -1290,30 +1347,60 @@
                 display: none;
             }
             
-            .platform-badge {
-                width: 100%;
-                max-width: 280px;
-                padding: 0.6rem 1rem;
-                justify-content: flex-start;
-            }
-            
-            .platform-badge svg {
-                width: 18px;
-                height: 18px;
-            }
-            
-            .platform-label {
-                font-size: 0.65rem;
-            }
-            
-            .platform-name {
-                font-size: 0.85rem;
-            }
-            
             }
         }
         
         @media (max-width: 640px) {
+            .hero {
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0;
+            }
+            
+            .hero-content {
+                padding: 0 1.5rem;
+                width: 100%;
+            }
+            
+            .hero h1 {
+                font-size: clamp(1.4rem, 5.5vw, 1.8rem);
+                line-height: 1.35;
+                margin-bottom: 1rem;
+            }
+            
+            .subtitle {
+                font-size: clamp(0.85rem, 2.8vw, 0.95rem);
+                line-height: 1.6;
+                margin-bottom: 1.5rem;
+            }
+            
+            .featured-platforms {
+                margin-top: 2.5rem;
+                gap: 1rem;
+            }
+            
+            .platform-link {
+                font-size: 0.75rem;
+                opacity: 0.5;
+            }
+            
+            .platform-link svg {
+                width: 14px;
+                height: 14px;
+            }
+            
+            .tagline {
+                font-size: 0.85rem;
+                padding: 0.45rem 1rem;
+            }
+            
+            .hero-btn {
+                font-size: 0.9rem;
+                padding: 0.65rem 1.5rem;
+            }
+            
             .article-card {
                 flex: 0 0 280px;
             }
@@ -1420,51 +1507,42 @@
                 </div>
             </div>
 
-            <!-- Featured Platforms - Minimal (3 platforms) -->
+            <!-- Featured Platforms - Simple Icon Links -->
             <div class="featured-platforms">
-                <a href="https://github.com/hemanthvamsikrishna" target="_blank" class="platform-badge">
+                <a href="https://github.com/hemanthvamsikrishna" target="_blank" class="platform-link" aria-label="GitHub">
                     <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 2C6.48 2 2 6.58 2 12.22c0 4.51 2.87 8.33 6.84 9.68.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.13-4.56-5 0-1.11.39-2.01 1.03-2.72-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.04a9.26 9.26 0 0 1 5 0c1.9-1.31 2.74-1.04 2.74-1.04.56 1.42.21 2.47.1 2.73.64.71 1.03 1.61 1.03 2.72 0 3.88-2.34 4.74-4.57 4.99.36.32.68.95.68 1.92 0 1.38-.01 2.49-.01 2.83 0 .27.18.6.69.49A10.22 10.22 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z"/>
                     </svg>
-                    <div class="platform-badge-text">
-                        <span class="platform-label">Ideas I couldn't ignore</span>
-                        <span class="platform-name">GitHub</span>
-                    </div>
+                    <span>GitHub</span>
                 </a>
-                <div class="platforms-divider"></div>
-                <a href="https://linkedin.com/in/your-handle" target="_blank" class="platform-badge">
+                <a href="https://linkedin.com/in/your-handle" target="_blank" class="platform-link" aria-label="LinkedIn">
                     <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3.5 9h3v12h-3V9zm6 0h2.879v1.64h.041C13.04 9.62 14.37 9 15.88 9 19.2 9 20 11.19 20 14.36V21h-3v-6.07c0-1.45-.03-3.31-2.02-3.31-2.03 0-2.34 1.58-2.34 3.21V21H9.5V9z"/>
                     </svg>
-                    <div class="platform-badge-text">
-                        <span class="platform-label">Let's connect</span>
-                        <span class="platform-name">LinkedIn</span>
-                    </div>
+                    <span>LinkedIn</span>
                 </a>
-                <div class="platforms-divider"></div>
-                <a href="https://huggingface.co/hemanthvamsikrishna" target="_blank" class="platform-badge">
+                <a href="https://x.com/hemanthvamsy" target="_blank" class="platform-link" aria-label="X (Twitter)">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                    <span>X</span>
+                </a>
+                <a href="https://huggingface.co/hemanthvamsikrishna" target="_blank" class="platform-link" aria-label="Hugging Face">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                         <circle cx="12" cy="12" r="10"/>
                         <circle cx="9" cy="10" r="1" fill="currentColor"/>
                         <circle cx="15" cy="10" r="1" fill="currentColor"/>
                         <path d="M8.5 14c1 .9 2.3 1.5 3.5 1.5S14.5 14.9 15.5 14" stroke-linecap="round"/>
                     </svg>
-                    <div class="platform-badge-text">
-                        <span class="platform-label">Solutions I've engineered</span>
-                        <span class="platform-name">Hugging Face</span>
-                    </div>
+                    <span>Hugging Face</span>
                 </a>
-                <div class="platforms-divider"></div>
-                <a href="https://medium.com/@hemanthvamsikrishna" target="_blank" class="platform-badge">
+                <a href="https://medium.com/@hemanthvamsikrishna" target="_blank" class="platform-link" aria-label="Medium">
                     <svg viewBox="0 0 24 24" fill="currentColor">
                         <rect x="3" y="5" width="5" height="14"/>
                         <path d="M10 7l3.5 5L10 17V7Z"/>
                         <path d="M15 7h2v10h-2z"/>
                     </svg>
-                    <div class="platform-badge-text">
-                        <span class="platform-label">Yes, I write tech articles</span>
-                        <span class="platform-name">Medium</span>
-                    </div>
+                    <span>Medium</span>
                 </a>
             </div>
 
@@ -1775,107 +1853,83 @@
     <section id="startups" class="startup-story">
         <h2 class="section-title">My Startup Journey</h2>
         
-        <div class="startup-slider-container">
-            <div class="startup-slider" id="startupSlider">
-                <!-- Slide 1: Vaaraahi Farms -->
-                <div class="startup-slide">
-                    <div class="slide-card">
-                        <div class="slide-image-container">
-                            <div class="slide-images" data-startup="vaaraahi">
-                                <div class="slide-image active">
-                                    <img src="images/vaaraahi-farms-1.jpg" alt="Vaaraahi Farms 1" />
-                                    <div class="slide-image-overlay"></div>
-                                </div>
-                                <div class="slide-image">
-                                    <img src="images/vaaraahi-farms-2.jpg" alt="Vaaraahi Farms 2" />
-                                    <div class="slide-image-overlay"></div>
-                                </div>
-                                <div class="slide-image">
-                                    <img src="images/vaaraahi-farms-3.jpg" alt="Vaaraahi Farms 3" />
-                                    <div class="slide-image-overlay"></div>
-                                </div>
-                            </div>
-                            <div class="image-nav">
-                                <button class="image-nav-btn prev" data-startup="vaaraahi">‹</button>
-                                <button class="image-nav-btn next" data-startup="vaaraahi">›</button>
-                            </div>
-                            <div class="image-indicators">
-                                <span class="image-dot active" data-startup="vaaraahi" data-index="0"></span>
-                                <span class="image-dot" data-startup="vaaraahi" data-index="1"></span>
-                                <span class="image-dot" data-startup="vaaraahi" data-index="2"></span>
-                            </div>
+        <div class="startup-accordion">
+            <!-- Startup 1: Vaaraahi Farms -->
+            <div class="accordion-item" data-startup="vaaraahi">
+                <div class="accordion-header">
+                    <div class="accordion-preview">
+                        <div class="accordion-meta">2020 - 2021 · AgTech</div>
+                        <h3 class="accordion-title">Vaaraahi Farms: AI-Powered Vertical Farming</h3>
+                        <p class="accordion-excerpt">Merged farming with AI to revolutionize food production—1 acre's yield in 1/10th the space using vertical hydroponics and aquaponics.</p>
+                    </div>
+                    <button class="accordion-toggle" aria-label="Expand story">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-images">
+                        <div class="accordion-image-slider" data-startup="vaaraahi">
+                            <img src="images/vaaraahi-farms-1.jpg" alt="Vaaraahi Farms 1" class="active" />
+                            <img src="images/vaaraahi-farms-2.jpg" alt="Vaaraahi Farms 2" />
+                            <img src="images/vaaraahi-farms-3.jpg" alt="Vaaraahi Farms 3" />
                         </div>
-                        <div class="slide-content">
-                            <div class="startup-meta">2020 - 2021 · AgTech</div>
-                            <h3 class="slide-title">Vaaraahi Farms: AI-Powered Vertical Farming</h3>
-                            <div class="slide-body">
-                                <p>In my final semester of college (2020), I launched a second startup that merged my passion for farming with artificial intelligence to revolutionize food production. We developed an <strong>AI-powered vertical hydroponics and aquaponics system</strong> capable of producing 1 acre's yield in just 1/10th the space, using no soil, minimal water, and fully stacked indoor farming.</p>
-                                <p>Our system used AI models trained on real-time environmental and nutrient data to optimize crop cycles, predict growth stages, and dynamically adjust lighting, water flow, and nutrient mixes for each plant type. Crops included spinach, iceberg, and romaine lettuce, grown under customized indoor grow lights. We integrated IoT sensors to monitor temperature, humidity, pH, and nutrient levels—feeding continuous data into the AI engine for adaptive decision-making.</p>
-                                <p>On the aquaponics side, we raised korameenu (murrel fish), creating a <strong>closed-loop system</strong> where fish waste enriched the crops. The result: a fully automated, AI + IoT-driven smart farming platform that maximized efficiency, minimized waste, and brought sustainability into the future—all prototyped while still in college.</p>
-                                <p class="slide-lesson"><strong>The lesson:</strong> Building breakthrough technology in college is possible, but scaling hardware-intensive AgTech requires capital, distribution channels, and market timing that go beyond the prototype stage.</p>
+                        <div class="image-controls">
+                            <button class="img-nav prev" data-startup="vaaraahi">‹</button>
+                            <div class="img-dots">
+                                <span class="dot active" data-index="0"></span>
+                                <span class="dot" data-index="1"></span>
+                                <span class="dot" data-index="2"></span>
                             </div>
+                            <button class="img-nav next" data-startup="vaaraahi">›</button>
                         </div>
                     </div>
-                </div>
-
-                <!-- Slide 2: Hive Quality Network -->
-                <div class="startup-slide">
-                    <div class="slide-card">
-                        <div class="slide-image-container">
-                            <div class="slide-images" data-startup="jamaivu">
-                                <div class="slide-image active">
-                                    <img src="images/jamaivu-machines-1.jpg" alt="Jamaivu Machines 1" />
-                                    <div class="slide-image-overlay"></div>
-                                </div>
-                                <div class="slide-image">
-                                    <img src="images/jamaivu-machines-2.jpg" alt="Jamaivu Machines 2" />
-                                    <div class="slide-image-overlay"></div>
-                                </div>
-                                <div class="slide-image">
-                                    <img src="images/jamaivu-machines-3.jpg" alt="Jamaivu Machines 3" />
-                                    <div class="slide-image-overlay"></div>
-                                </div>
-                            </div>
-                            <div class="image-nav">
-                                <button class="image-nav-btn prev" data-startup="jamaivu">‹</button>
-                                <button class="image-nav-btn next" data-startup="jamaivu">›</button>
-                            </div>
-                            <div class="image-indicators">
-                                <span class="image-dot active" data-startup="jamaivu" data-index="0"></span>
-                                <span class="image-dot" data-startup="jamaivu" data-index="1"></span>
-                                <span class="image-dot" data-startup="jamaivu" data-index="2"></span>
-                            </div>
-                        </div>
-                        <div class="slide-content">
-                            <div class="startup-meta">2018 - 2019 · Mobility Tech</div>
-                            <h3 class="slide-title">Jamaivu Machines: Electric Wheelchair Revolution</h3>
-                            <div class="slide-body">
-                                <p>Back in 2018, while I was still in college, I started a hustle that turned into a full-blown mobility startup. We built a super cool <strong>electric add-on for wheelchairs</strong>—basically a single-wheel attachment powered by a 36V/48V lithium-ion battery and hub motor that could hit speeds of up to 25 km/h.</p>
-                                <p>Just clamp it onto a regular wheelchair and boom—you've got a <strong>detachable 3-wheeled electric ride</strong>. No need to buy a bulky electric wheelchair. I led the whole product build from scratch: design, prototyping, testing, and getting real feedback from users.</p>
-                                <p>The goal was simple: make mobility smarter, more affordable, and way more fun for people who need it. It was my first real taste of building something that could actually change lives.</p>
-                                <p class="slide-lesson"><strong>The lesson:</strong> Building something that genuinely helps people is incredibly rewarding, but hardware startups need manufacturing partnerships, regulatory approvals, and sustainable unit economics to scale beyond the prototype.</p>
-                            </div>
-                        </div>
+                    <div class="accordion-story">
+                        <p>In my final semester of college (2020), I launched a second startup that merged my passion for farming with artificial intelligence to revolutionize food production. We developed an <strong>AI-powered vertical hydroponics and aquaponics system</strong> capable of producing 1 acre's yield in just 1/10th the space, using no soil, minimal water, and fully stacked indoor farming.</p>
+                        <p>Our system used AI models trained on real-time environmental and nutrient data to optimize crop cycles, predict growth stages, and dynamically adjust lighting, water flow, and nutrient mixes for each plant type. Crops included spinach, iceberg, and romaine lettuce, grown under customized indoor grow lights.</p>
+                        <p>On the aquaponics side, we raised korameenu (murrel fish), creating a <strong>closed-loop system</strong> where fish waste enriched the crops. The result: a fully automated, AI + IoT-driven smart farming platform that maximized efficiency, minimized waste, and brought sustainability into the future—all prototyped while still in college.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Slider arrows -->
-            <button class="slider-arrow left" id="sliderPrev" aria-label="Previous startup">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M15 18l-6-6 6-6"/>
-                </svg>
-            </button>
-            <button class="slider-arrow right" id="sliderNext" aria-label="Next startup">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M9 18l6-6-6-6"/>
-                </svg>
-            </button>
-
-            <!-- Slider dots -->
-            <div class="slider-controls">
-                <button class="slider-dot active" data-slide="0" aria-label="View Vaaraahi Farms"></button>
-                <button class="slider-dot" data-slide="1" aria-label="View Jamaivu Machines"></button>
+            <!-- Startup 2: Jamaivu Machines -->
+            <div class="accordion-item" data-startup="jamaivu">
+                <div class="accordion-header">
+                    <div class="accordion-preview">
+                        <div class="accordion-meta">2018 - 2019 · Mobility Tech</div>
+                        <h3 class="accordion-title">Jamaivu Machines: Electric Wheelchair Revolution</h3>
+                        <p class="accordion-excerpt">Built an electric add-on for wheelchairs—a detachable single-wheel attachment hitting 25 km/h. Made mobility smarter and more affordable.</p>
+                    </div>
+                    <button class="accordion-toggle" aria-label="Expand story">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="accordion-content">
+                    <div class="accordion-images">
+                        <div class="accordion-image-slider" data-startup="jamaivu">
+                            <img src="images/jamaivu-machines-1.jpg" alt="Jamaivu Machines 1" class="active" />
+                            <img src="images/jamaivu-machines-2.jpg" alt="Jamaivu Machines 2" />
+                            <img src="images/jamaivu-machines-3.jpg" alt="Jamaivu Machines 3" />
+                        </div>
+                        <div class="image-controls">
+                            <button class="img-nav prev" data-startup="jamaivu">‹</button>
+                            <div class="img-dots">
+                                <span class="dot active" data-index="0"></span>
+                                <span class="dot" data-index="1"></span>
+                                <span class="dot" data-index="2"></span>
+                            </div>
+                            <button class="img-nav next" data-startup="jamaivu">›</button>
+                        </div>
+                    </div>
+                    <div class="accordion-story">
+                        <p>Back in 2018, while I was still in college, I started a hustle that turned into a full-blown mobility startup. We built a super cool <strong>electric add-on for wheelchairs</strong>—basically a single-wheel attachment powered by a 36V/48V lithium-ion battery and hub motor that could hit speeds of up to 25 km/h.</p>
+                        <p>Just clamp it onto a regular wheelchair and boom—you've got a <strong>detachable 3-wheeled electric ride</strong>. No need to buy a bulky electric wheelchair. I led the whole product build from scratch: design, prototyping, testing, and getting real feedback from users.</p>
+                        <p>The goal was simple: make mobility smarter, more affordable, and way more fun for people who need it. It was my first real taste of building something that could actually change lives.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1893,7 +1947,7 @@
                     <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3.5 9h3v12h-3V9zm6 0h2.879v1.64h.041C13.04 9.62 14.37 9 15.88 9 19.2 9 20 11.19 20 14.36V21h-3v-6.07c0-1.45-.03-3.31-2.02-3.31-2.03 0-2.34 1.58-2.34 3.21V21H9.5V9z"/>
                 </svg>
             </a>
-            <a href="https://x.com/your-handle" target="_blank" class="social-icon" aria-label="X (Twitter)">
+            <a href="https://x.com/hemanthvamsy" target="_blank" class="social-icon" aria-label="X (Twitter)">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                 </svg>
@@ -1921,6 +1975,7 @@
         <p style="color: var(--text-light); font-size: .9rem; margin-bottom: 1rem;">💼 Open to opportunities, shipping AI, and good coffee conversations</p>
         <a href="mailto:hemanthvamsikrishna@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 500;">hemanthvamsikrishna@gmail.com</a>
         <p style="color: var(--text-light); font-size: .8rem; margin-top: 2rem;">No AI was harmed in designing this website 🤖</p>
+        <p style="color: var(--text-light); font-size: .75rem; margin-top: 1.5rem; opacity: 0.6;">© 2025 Hemanth Vamsi Krishna. All rights reserved.</p>
     </footer>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
@@ -2206,125 +2261,80 @@
             });
         }
         
-        // Startup Story Slider
-        const startupSlider = document.getElementById('startupSlider');
-        const sliderPrev = document.getElementById('sliderPrev');
-        const sliderNext = document.getElementById('sliderNext');
-        const sliderDots = document.querySelectorAll('.slider-dot');
+        // Startup Story Accordion
+        const accordionItems = document.querySelectorAll('.accordion-item');
         
-        let currentSlide = 0;
-        const totalSlides = 2;
-        let autoSlideInterval;
-        
-        function updateSlider() {
-            startupSlider.style.transform = `translateX(-${currentSlide * 100}%)`;
-            sliderDots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentSlide);
-            });
-        }
-        
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            updateSlider();
-        }
-        
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-            updateSlider();
-        }
-        
-        function startAutoSlide() {
-            autoSlideInterval = setInterval(nextSlide, 5000);
-        }
-        
-        function stopAutoSlide() {
-            clearInterval(autoSlideInterval);
-        }
-        
-        if (sliderNext) {
-            sliderNext.addEventListener('click', () => {
-                nextSlide();
-                stopAutoSlide();
-                startAutoSlide();
-            });
-        }
-        
-        if (sliderPrev) {
-            sliderPrev.addEventListener('click', () => {
-                prevSlide();
-                stopAutoSlide();
-                startAutoSlide();
-            });
-        }
-        
-        sliderDots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                currentSlide = index;
-                updateSlider();
-                stopAutoSlide();
-                startAutoSlide();
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            const toggle = item.querySelector('.accordion-toggle');
+            
+            header.addEventListener('click', () => {
+                const isExpanded = item.classList.contains('expanded');
+                
+                // Close all other accordions
+                accordionItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('expanded');
+                    }
+                });
+                
+                // Toggle current accordion
+                item.classList.toggle('expanded');
             });
         });
         
-        // Start auto-sliding
-        startAutoSlide();
-        
-        // Pause on hover
-        if (startupSlider) {
-            startupSlider.addEventListener('mouseenter', stopAutoSlide);
-            startupSlider.addEventListener('mouseleave', startAutoSlide);
-        }
-        
-        // Image carousel within each startup slide
+        // Image carousel within each accordion
         const imageCarousels = {};
         
-        document.querySelectorAll('.slide-images').forEach(container => {
-            const startup = container.getAttribute('data-startup');
-            const images = container.querySelectorAll('.slide-image');
-            const dots = document.querySelectorAll(`.image-dot[data-startup="${startup}"]`);
-            const prevBtn = document.querySelector(`.image-nav-btn.prev[data-startup="${startup}"]`);
-            const nextBtn = document.querySelector(`.image-nav-btn.next[data-startup="${startup}"]`);
+        document.querySelectorAll('.accordion-image-slider').forEach(slider => {
+            const startup = slider.getAttribute('data-startup');
+            const images = slider.querySelectorAll('img');
+            const prevBtn = document.querySelector(`.img-nav.prev[data-startup="${startup}"]`);
+            const nextBtn = document.querySelector(`.img-nav.next[data-startup="${startup}"]`);
+            const dots = document.querySelectorAll(`.dot[data-index]`);
             
             imageCarousels[startup] = {
                 currentIndex: 0,
                 totalImages: images.length
             };
             
-            function updateImageCarousel(startup) {
-                const carousel = imageCarousels[startup];
-                const container = document.querySelector(`.slide-images[data-startup="${startup}"]`);
-                const images = container.querySelectorAll('.slide-image');
-                const dots = document.querySelectorAll(`.image-dot[data-startup="${startup}"]`);
-                
+            function updateImages() {
                 images.forEach((img, index) => {
-                    img.classList.toggle('active', index === carousel.currentIndex);
+                    img.classList.toggle('active', index === imageCarousels[startup].currentIndex);
                 });
-                
                 dots.forEach((dot, index) => {
-                    dot.classList.toggle('active', index === carousel.currentIndex);
+                    if (dot.closest('.accordion-item').getAttribute('data-startup') === startup) {
+                        dot.classList.toggle('active', index === imageCarousels[startup].currentIndex);
+                    }
                 });
             }
             
             if (prevBtn) {
-                prevBtn.addEventListener('click', () => {
+                prevBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
                     imageCarousels[startup].currentIndex = 
                         (imageCarousels[startup].currentIndex - 1 + imageCarousels[startup].totalImages) % imageCarousels[startup].totalImages;
-                    updateImageCarousel(startup);
+                    updateImages();
                 });
             }
             
             if (nextBtn) {
-                nextBtn.addEventListener('click', () => {
+                nextBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
                     imageCarousels[startup].currentIndex = 
                         (imageCarousels[startup].currentIndex + 1) % imageCarousels[startup].totalImages;
-                    updateImageCarousel(startup);
+                    updateImages();
                 });
             }
             
             dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    imageCarousels[startup].currentIndex = index;
-                    updateImageCarousel(startup);
+                dot.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const parentItem = dot.closest('.accordion-item');
+                    if (parentItem && parentItem.getAttribute('data-startup') === startup) {
+                        imageCarousels[startup].currentIndex = index;
+                        updateImages();
+                    }
                 });
             });
         });
