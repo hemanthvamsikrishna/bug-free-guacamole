@@ -170,7 +170,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            border: 1px solid var(--border);
+            border: 1.5px solid var(--border);
             background: var(--card-bg);
             display: flex;
             align-items: center;
@@ -180,9 +180,20 @@
             position: relative;
         }
         
+        [data-theme="dark"] .theme-toggle {
+            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
         .theme-toggle:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(0,0,0,.1);
+        }
+        
+        [data-theme="dark"] .theme-toggle:hover {
+            box-shadow: 0 8px 20px rgba(255,255,255,.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
         }
         
         .theme-toggle svg {
@@ -190,6 +201,7 @@
             height: 20px;
             position: absolute;
             transition: all 0.3s ease;
+            color: var(--primary);
         }
         
         .sun-icon {
@@ -225,9 +237,23 @@
             position: relative; 
             overflow: hidden; 
         }
-        .hero-content { text-align: center; z-index: 2; animation: fadeInUp 1s ease-out; max-width: 900px; padding: 0 5%; }
-        .hero h1 { font-family: 'Instrument Serif', serif; font-size: clamp(1.75rem, 5vw, 3.25rem); font-weight: 400; line-height: 1.2; margin-bottom: 1rem; letter-spacing: -0.02em; }
-        .subtitle { font-family: 'Inter', sans-serif; font-size: clamp(0.85rem, 1.3vw, 0.95rem); color: var(--text-light); font-weight: 400; margin-bottom: 2.5rem; letter-spacing: 0.01em; line-height: 1.5; }
+        
+        /* Add a subtle overlay for better text readability */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            opacity: 0.3;
+            z-index: 1;
+        }
+        
+        .hero-content { text-align: center; z-index: 2; animation: fadeInUp 1s ease-out; max-width: 900px; padding: 0 5%; position: relative; }
+        .hero h1 { font-family: 'Instrument Serif', serif; font-size: clamp(1.75rem, 5vw, 3.25rem); font-weight: 400; line-height: 1.2; margin-bottom: 1rem; letter-spacing: -0.02em; color: var(--primary); }
+        .subtitle { font-family: 'Inter', sans-serif; font-size: clamp(0.85rem, 1.3vw, 0.95rem); color: var(--primary); font-weight: 400; margin-bottom: 2.5rem; letter-spacing: 0.01em; line-height: 1.5; opacity: 0.8; }
         
         /* Hero Actions Container */
         .hero-actions {
@@ -240,12 +266,13 @@
         
         .tagline { 
             display: inline-block; 
-            background: var(--gradient-1); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-            background-clip: text; 
+            padding: 0.5rem 1.2rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            color: var(--primary);
             font-weight: 500; 
-            font-size: 1rem; 
+            font-size: 0.9rem; 
             margin: 0;
             letter-spacing: 0.3px;
         }
@@ -314,11 +341,13 @@
         .featured-platforms {
             display: inline-flex;
             align-items: center;
-            gap: 3rem;
+            gap: 1.5rem;
             margin-top: 3rem;
             padding: 0;
             background: none;
             border: none;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         
         .platform-badge {
@@ -326,21 +355,27 @@
             align-items: center;
             gap: 0.5rem;
             text-decoration: none;
-            color: var(--text-light);
+            color: var(--primary);
             transition: all 0.3s ease;
-            padding: 0;
+            padding: 0.5rem 0.9rem;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            min-width: 160px;
         }
         
         .platform-badge:hover {
-            color: var(--primary);
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-color: var(--primary);
         }
         
         .platform-badge svg {
-            width: 20px;
-            height: 20px;
-            opacity: 0.6;
+            width: 18px;
+            height: 18px;
+            opacity: 0.8;
             transition: opacity 0.3s ease;
+            flex-shrink: 0;
         }
         
         .platform-badge:hover svg {
@@ -351,24 +386,53 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+            min-width: 0;
+            flex: 1;
         }
         
         .platform-label {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            opacity: 0.6;
+            letter-spacing: 0.3px;
+            opacity: 0.7;
+            color: var(--primary);
+            line-height: 1.3;
+            word-wrap: break-word;
+            width: 100%;
         }
         
         .platform-name {
-            font-size: 0.9rem;
-            font-weight: 500;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            white-space: nowrap;
         }
         
         .platforms-divider {
             width: 1px;
-            height: 30px;
-            background: rgba(0,0,0,0.08);
+            height: 24px;
+            background: var(--border);
+            flex-shrink: 0;
+        }
+        
+        /* Dark mode enhancements for hero section */
+        [data-theme="dark"] .hero::before {
+            opacity: 0.5;
+        }
+        
+        [data-theme="dark"] .platform-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        [data-theme="dark"] .platform-badge:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        [data-theme="dark"] .tagline {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
         }
 
         /* Top social row (new) */
@@ -423,10 +487,36 @@
         /* Skills */
         .skills { background: linear-gradient(135deg,#667eea15 0%,#764ba215 100%); border-radius: 30px; }
         .skill-groups { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
-        .skill-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 1.2rem 1.2rem 1rem; min-height: 120px; display: flex; flex-direction: column; }
+        .skill-card { 
+            background: var(--card-bg); 
+            border: 1px solid var(--border); 
+            border-radius: 16px; 
+            padding: 1.2rem 1.2rem 1rem; 
+            min-height: 120px; 
+            display: flex; 
+            flex-direction: column;
+            will-change: auto;
+        }
         .skill-card h4 { font-size: 1.05rem; margin-bottom: .8rem; font-weight: 500; }
-        .pill-row { display: flex; flex-wrap: wrap; gap: .5rem; align-content: flex-start; flex: 1; }
-        .pill { padding: .35rem .7rem; background: #f3f3f3; border-radius: 999px; font-size: .85rem; color: var(--text-light); white-space: nowrap; }
+        .pill-row { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: .6rem; 
+            row-gap: .6rem; 
+            align-items: flex-start; 
+            flex: 1;
+            contain: layout;
+        }
+        .pill { 
+            padding: .35rem .7rem; 
+            background: #f3f3f3; 
+            border-radius: 999px; 
+            font-size: .85rem; 
+            color: var(--text-light); 
+            white-space: nowrap; 
+            line-height: 1.4;
+            contain: paint;
+        }
         
         [data-theme="dark"] .pill {
             background: rgba(255, 255, 255, 0.08);
@@ -435,21 +525,123 @@
         
         @media (max-width: 768px) {
             .skill-groups { grid-template-columns: 1fr; }
+            .pill-row { gap: .5rem; row-gap: .5rem; }
+            .pill { font-size: .8rem; padding: .3rem .65rem; }
+            .skill-card { min-height: auto; }
         }
 
         /* Projects / Lab */
-        .lab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px,1fr)); gap: 2rem; }
-        .project-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 2rem; transition: all .3s; cursor: pointer; position: relative; overflow: hidden; }
-        .project-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--gradient-1); transform: translateX(-100%); transition: transform .3s; }
-        .project-card:hover::before { transform: translateX(0); }
-        .project-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,.1); }
-        .project-title { font-size: 1.3rem; font-weight: 500; margin-bottom: .8rem; }
-        .project-desc { color: var(--text-light); line-height: 1.6; margin-bottom: 1.1rem; }
-        .project-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
-        .tag { padding: .3rem .8rem; background: #f0f0f0; border-radius: 20px; font-size: .85rem; color: var(--text-light); }
-        .project-links { display: flex; gap: .8rem; }
-        .btn-link { display:inline-flex; align-items:center; gap:.5rem; padding:.55rem .9rem; border:1px solid var(--border); border-radius: 999px; text-decoration:none; font-size:.9rem; color: var(--primary); transition: transform .2s, box-shadow .2s, border-color .2s; }
-        .btn-link:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,.08); border-color: rgba(0,0,0,.15); }
+        /* Projects - Horizontal Scroll */
+        #lab {
+            padding: 5rem 5%;
+        }
+        
+        .projects-scroll-container { 
+            position: relative; 
+            width: 100%; 
+            overflow: hidden;
+            padding: 1rem 0;
+        }
+        
+        .projects-scroll-wrapper {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+            padding-bottom: 1rem;
+        }
+        
+        .projects-scroll-wrapper::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+        
+        .project-card { 
+            background: var(--card-bg); 
+            border: 1px solid var(--border); 
+            border-radius: 20px; 
+            padding: 2rem; 
+            transition: all .3s; 
+            position: relative; 
+            overflow: hidden;
+            min-width: 380px;
+            max-width: 380px;
+            flex-shrink: 0;
+        }
+        
+        .project-card::before { 
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 3px; 
+            background: var(--gradient-1); 
+            transform: translateX(-100%); 
+            transition: transform .3s; 
+        }
+        
+        .project-card:hover::before { 
+            transform: translateX(0); 
+        }
+        
+        .project-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 30px rgba(0,0,0,.1); 
+        }
+        
+        .project-title { 
+            font-size: 1.3rem; 
+            font-weight: 500; 
+            margin-bottom: .8rem; 
+        }
+        
+        .project-desc { 
+            color: var(--text-light); 
+            line-height: 1.6; 
+            margin-bottom: 1.1rem; 
+            font-size: 0.95rem;
+        }
+        
+        .project-tags { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: .5rem; 
+            margin-bottom: 1rem; 
+        }
+        
+        .tag { 
+            padding: .3rem .8rem; 
+            background: #f0f0f0; 
+            border-radius: 20px; 
+            font-size: .85rem; 
+            color: var(--text-light); 
+        }
+        
+        .project-links { 
+            display: flex; 
+            gap: .8rem; 
+        }
+        
+        .btn-link { 
+            display:inline-flex; 
+            align-items:center; 
+            gap:.5rem; 
+            padding:.55rem .9rem; 
+            border:1px solid var(--border); 
+            border-radius: 999px; 
+            text-decoration:none; 
+            font-size:.9rem; 
+            color: var(--primary); 
+            transition: transform .2s, box-shadow .2s, border-color .2s; 
+        }
+        
+        .btn-link:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 10px 20px rgba(0,0,0,.08); 
+            border-color: rgba(0,0,0,.15); 
+        }
 
         /* Articles (Medium) */
         .articles { background: var(--bg-tertiary); border-radius: 30px; padding: 4rem 5%; overflow: hidden; }
@@ -636,132 +828,229 @@
         }
         
         /* Startup Story Slider */
+        /* Startup Journey Cards */
+        /* Startup Story Slider */
         .startup-story {
-            background: var(--bg-tertiary);
-            border-radius: 30px;
-            padding: 5rem 0;
+            background: var(--bg-primary);
+            padding: 5rem 5%;
             overflow: hidden;
             position: relative;
-        }
-        
-        .startup-story .section-title {
-            text-align: center;
-            margin-bottom: 4rem;
-            padding: 0 5%;
         }
         
         .startup-slider-container {
             position: relative;
-            width: 100%;
-            height: 600px;
-            overflow: hidden;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 60px;
         }
         
         .startup-slider {
             display: flex;
             transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            height: 100%;
         }
         
         .startup-slide {
             min-width: 100%;
+            padding: 0 1rem;
+        }
+        
+        .slide-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .slide-image-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 21/9;
+            overflow: hidden;
+            background: var(--bg-secondary);
+        }
+        
+        .slide-images {
+            position: relative;
+            width: 100%;
             height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 10%;
-            gap: 4rem;
         }
         
         .slide-image {
-            flex: 0 0 45%;
-            height: 500px;
-            background: var(--gradient-1);
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 20px 60px rgba(0,0,0,.12);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .slide-image.active {
+            opacity: 1;
         }
         
         .slide-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
         }
         
-        .slide-image.placeholder {
+        .image-nav {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            padding: 0 1rem;
+            z-index: 5;
+            pointer-events: none;
+        }
+        
+        .image-nav-btn {
+            pointer-events: all;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            color: #000;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
-            font-family: 'Instrument Serif', serif;
-            color: rgba(255,255,255,0.4);
+            opacity: 0;
+        }
+        
+        .slide-image-container:hover .image-nav-btn {
+            opacity: 1;
+        }
+        
+        .image-nav-btn:hover {
+            background: #fff;
+            transform: scale(1.1);
+        }
+        
+        [data-theme="dark"] .image-nav-btn {
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+        }
+        
+        [data-theme="dark"] .image-nav-btn:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+        
+        .image-indicators {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 5;
+        }
+        
+        .image-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .image-dot.active {
+            background: rgba(255, 255, 255, 1);
+            width: 24px;
+            border-radius: 4px;
+        }
+        
+        .image-dot:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+        
+        .slide-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.4) 100%);
+        }
+        
+        [data-theme="dark"] .slide-image-overlay {
+            background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.6) 100%);
         }
         
         .slide-content {
-            flex: 1;
-            max-width: 600px;
+            padding: 2.5rem 3rem 3rem;
+        }
+        
+        .startup-meta {
+            font-size: 0.9rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            opacity: 0.7;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .slide-title {
             font-family: 'Instrument Serif', serif;
-            font-size: clamp(2rem, 4vw, 3rem);
+            font-size: clamp(1.75rem, 4vw, 2.25rem);
             margin-bottom: 1.5rem;
             font-weight: 400;
             line-height: 1.2;
+            color: var(--primary);
         }
         
         .slide-body {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             line-height: 1.8;
-            color: var(--text-light);
+            color: var(--primary);
         }
         
         .slide-body p {
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
+            color: var(--primary);
         }
         
         .slide-body strong {
+            font-weight: 600;
             color: var(--primary);
-            font-weight: 500;
         }
         
-        /* Slider Controls */
-        .slider-controls {
-            position: absolute;
-            bottom: 3rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 1rem;
-            z-index: 10;
+        .slide-lesson {
+            margin-top: 2rem;
+            padding: 1.5rem 1.75rem;
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--primary);
+            border-radius: 12px;
+            font-style: italic;
+            color: var(--primary);
+            line-height: 1.7;
         }
         
-        .slider-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(0,0,0,0.2);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
+        [data-theme="dark"] .slide-lesson {
+            background: rgba(255, 255, 255, 0.04);
         }
         
-        .slider-dot.active {
-            background: var(--primary);
-            width: 32px;
-            border-radius: 6px;
-        }
-        
+        /* Slider controls */
         .slider-arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             background: var(--card-bg);
-            border: 1px solid var(--border);
+            border: 1.5px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -771,21 +1060,90 @@
         }
         
         .slider-arrow:hover {
+            background: var(--primary);
+            border-color: var(--primary);
             transform: translateY(-50%) scale(1.1);
-            box-shadow: 0 10px 25px rgba(0,0,0,.1);
+        }
+        
+        .slider-arrow:hover svg {
+            color: #fff;
         }
         
         .slider-arrow.left {
-            left: 2rem;
+            left: 0;
         }
         
         .slider-arrow.right {
-            right: 2rem;
+            right: 0;
         }
         
         .slider-arrow svg {
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
+            color: var(--primary);
+            transition: color 0.3s ease;
+        }
+        
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 2.5rem;
+        }
+        
+        .slider-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .slider-dot.active {
+            background: var(--primary);
+            width: 28px;
+            border-radius: 5px;
+        }
+        
+        .slider-dot:hover {
+            background: var(--primary);
+            opacity: 0.7;
+        }
+        
+        @media (max-width: 768px) {
+            .slide-content {
+                padding: 2rem 1.5rem 2.5rem;
+            }
+            
+            .startup-slider-container {
+                padding: 0 50px;
+            }
+            
+            .slide-image {
+                aspect-ratio: 16/9;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .startup-slider-container {
+                padding: 0 40px;
+            }
+            
+            .slider-arrow {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .slider-arrow svg {
+                width: 18px;
+                height: 18px;
+            }
+            
+            .slide-content {
+                padding: 1.5rem 1.25rem 2rem;
+            }
         }
 
         /* Vision */
@@ -796,22 +1154,53 @@
         .cta-button:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,.2); }
 
         /* Profiles section */
-        .profiles-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); gap:1rem; }
-        .profile-card { display:flex; flex-direction: column; gap:.9rem; border:1px solid var(--border); border-radius:16px; padding:1.3rem 1.4rem; background: var(--card-bg); transition: all 0.3s ease; }
-        .profile-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,.08); border-color: rgba(0,0,0,.12); }
+        /* Profiles - Minimal Icon Row */
+        .profiles-minimal {
+            padding: 2rem 5%;
+        }
         
-        .profile-header { display: flex; align-items: center; gap: 0.9rem; }
-        .profile-content { flex: 1; }
-        .profile-content a { text-decoration:none; color: var(--primary); font-weight:600; font-size: 1.05rem; transition: opacity 0.3s ease; }
-        .profile-content a:hover { opacity: 0.6; }
+        .social-icons-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
         
-        .profile-caption { 
-            font-size: 0.88rem; 
-            color: var(--text-light); 
-            line-height: 1.5;
-            font-style: italic;
-            margin-top: 0.3rem;
-            opacity: 0.85;
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+            background: var(--primary);
+        }
+        
+        .social-icon:hover svg {
+            color: #fff;
+            stroke: #fff;
+        }
+        
+        .social-icon svg {
+            width: 22px;
+            height: 22px;
+            transition: all 0.3s ease;
+        }
+        
+        [data-theme="dark"] .social-icon:hover {
+            box-shadow: 0 6px 16px rgba(255,255,255,0.1);
         }
 
         /* Footer */
@@ -892,12 +1281,35 @@
             
             /* Featured platforms responsive */
             .featured-platforms {
+                gap: 0.8rem;
                 flex-direction: column;
-                gap: 1.5rem;
+                align-items: center;
             }
             
             .platforms-divider {
                 display: none;
+            }
+            
+            .platform-badge {
+                width: 100%;
+                max-width: 280px;
+                padding: 0.6rem 1rem;
+                justify-content: flex-start;
+            }
+            
+            .platform-badge svg {
+                width: 18px;
+                height: 18px;
+            }
+            
+            .platform-label {
+                font-size: 0.65rem;
+            }
+            
+            .platform-name {
+                font-size: 0.85rem;
+            }
+            
             }
         }
         
@@ -953,7 +1365,6 @@
                     <li><a href="#articles">Articles</a></li>
                     <li><a href="#conferences">Publications</a></li>
                     <li><a href="#startups">Startups</a></li>
-                    <li><a href="#vision">Vision</a></li>
                     <li><a href="#profiles">Profiles</a></li>
                     <li><a href="#connect">Connect</a></li>
                 </ul>
@@ -987,11 +1398,11 @@
         </div>
         <div class="hero-content">
             <h1>My two failed startups taught me<br />what no MBA ever could</h1>
-            <p class="subtitle">Currently Finishing my Master's in Artificial Intelligence — building depth in knowledge and preparing for a smarter comeback.</p>
+            <p class="subtitle">Wrapping up my Master's in Artificial Intelligence in May 2026. Spent the last year building end-to-end AI systems - everything from transformer architectures and RAG pipelines to production NLP and computer vision models. Now I'm focused on solving real problems with AI.</p>
             
             <!-- Redesigned CTA Section -->
             <div class="hero-actions">
-                <p class="tagline">✨ Currently brewing something AI</p>
+                <p class="tagline">✨ Currently cooking something AI</p>
                 <div class="hero-cta-buttons">
                     <a href="#lab" class="hero-btn">
                         <span>View My Work</span>
@@ -1016,12 +1427,22 @@
                         <path d="M12 2C6.48 2 2 6.58 2 12.22c0 4.51 2.87 8.33 6.84 9.68.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.13-4.56-5 0-1.11.39-2.01 1.03-2.72-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.04a9.26 9.26 0 0 1 5 0c1.9-1.31 2.74-1.04 2.74-1.04.56 1.42.21 2.47.1 2.73.64.71 1.03 1.61 1.03 2.72 0 3.88-2.34 4.74-4.57 4.99.36.32.68.95.68 1.92 0 1.38-.01 2.49-.01 2.83 0 .27.18.6.69.49A10.22 10.22 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z"/>
                     </svg>
                     <div class="platform-badge-text">
-                        <span class="platform-label">Code lives on</span>
+                        <span class="platform-label">Ideas I couldn't ignore</span>
                         <span class="platform-name">GitHub</span>
                     </div>
                 </a>
                 <div class="platforms-divider"></div>
-                <a href="https://huggingface.co/your-handle" target="_blank" class="platform-badge">
+                <a href="https://linkedin.com/in/your-handle" target="_blank" class="platform-badge">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3.5 9h3v12h-3V9zm6 0h2.879v1.64h.041C13.04 9.62 14.37 9 15.88 9 19.2 9 20 11.19 20 14.36V21h-3v-6.07c0-1.45-.03-3.31-2.02-3.31-2.03 0-2.34 1.58-2.34 3.21V21H9.5V9z"/>
+                    </svg>
+                    <div class="platform-badge-text">
+                        <span class="platform-label">Let's connect</span>
+                        <span class="platform-name">LinkedIn</span>
+                    </div>
+                </a>
+                <div class="platforms-divider"></div>
+                <a href="https://huggingface.co/hemanthvamsikrishna" target="_blank" class="platform-badge">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                         <circle cx="12" cy="12" r="10"/>
                         <circle cx="9" cy="10" r="1" fill="currentColor"/>
@@ -1029,7 +1450,7 @@
                         <path d="M8.5 14c1 .9 2.3 1.5 3.5 1.5S14.5 14.9 15.5 14" stroke-linecap="round"/>
                     </svg>
                     <div class="platform-badge-text">
-                        <span class="platform-label">Models shared on</span>
+                        <span class="platform-label">Solutions I've engineered</span>
                         <span class="platform-name">Hugging Face</span>
                     </div>
                 </a>
@@ -1041,7 +1462,7 @@
                         <path d="M15 7h2v10h-2z"/>
                     </svg>
                     <div class="platform-badge-text">
-                        <span class="platform-label">Articles on</span>
+                        <span class="platform-label">Yes, I write tech articles</span>
                         <span class="platform-name">Medium</span>
                     </div>
                 </a>
@@ -1088,7 +1509,7 @@
             </div>
             <div class="timeline-item">
                 <div class="timeline-date">Oct 2020 - June 2021</div>
-                <div class="timeline-title">Startup Founder and AI/ML Engineer (Self Employed - Full Time)</div>
+                <div class="timeline-title">Startup Founder and AI/ML Engineer (Full Time)</div>
                 <div class="timeline-company">Vaaraahi Farms (GST Registered) · Andhra Pradesh, India</div>
                 <div class="timeline-desc">
                     <strong>Technology Leadership:</strong> Founded a registered services business offering technology-driven IoT and ML/data analytics solutions to agriculture-focused clients. Built regression, anomaly-detection, and forecasting models to predict nutrient imbalance, detect system faults, and optimize growing conditions in controlled-environment farms.
@@ -1096,6 +1517,20 @@
                     <strong>Predictive Maintenance:</strong> Implemented predictive maintenance algorithms that identified pump degradation, aeration failures, and chemical drift patterns using IoT telemetry, reducing downtime and enhancing system reliability.
                     <br><br>
                     <strong>ML Analytics:</strong> Developed ML-driven solutions for practical on-ground problems such as predicting lettuce tip-burn before it became visible, forecasting ammonia spikes in aquaponics to prevent fish mortality, estimating optimal harvest timing using microclimate patterns, and detecting abnormal pH drift caused by microbial activity resulting in proactive interventions and higher system stability.
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">Aug 2024 – Present</div>
+                <div class="timeline-title">Graduate Student Employee (Part-Time)</div>
+                <div class="timeline-company">University of Central Missouri · Warrensburg, Missouri</div>
+                <div class="timeline-desc">
+                    <strong>Data Collection & Validation:</strong> Collected, validated, and cleaned institutional library datasets from multiple source systems to support operational reporting and usage analysis.
+                    <br><br>
+                    <strong>Exploratory Data Analysis:</strong> Conducted exploratory data analysis (EDA) to identify resource demand trends, usage patterns, and data quality gaps across services.
+                    <br><br>
+                    <strong>Data Visualization & Reporting:</strong> Developed visualizations and analytical summaries to communicate insights and support data-driven planning decisions.
+                    <br><br>
+                    <strong>Stakeholder Collaboration:</strong> Collaborated with stakeholders to translate reporting requirements into structured, analysis-ready datasets and actionable insights.
                 </div>
             </div>
         </div>
@@ -1129,39 +1564,56 @@
     <!-- Projects / Lab -->
     <section id="lab">
         <h2 class="section-title">Projects</h2>
-        <div class="lab-grid">
-            <div class="project-card">
-                <h3 class="project-title">RNN & Transformer Architecture from Scratch</h3>
-                <p class="project-desc">Complete implementation of RNN and Transformer architectures built from scratch in Python. Includes attention mechanisms, positional encoding, and multi-head attention—pure NumPy implementations for deep understanding of modern NLP architectures.</p>
-                <div class="project-tags"><span class="tag">Python</span><span class="tag">Transformers</span><span class="tag">RNN</span><span class="tag">Attention</span><span class="tag">NumPy</span></div>
-                <div class="project-links">
-                    <a class="btn-link" href="https://github.com/hemanthvamsikrishna/RNN-Transformer-Architecture-from-scratch" target="_blank" aria-label="View on GitHub">View on GitHub →</a>
+        
+        <div class="projects-scroll-container">
+            <div class="projects-scroll-wrapper" id="projectsScrollWrapper">
+                <div class="project-card">
+                    <h3 class="project-title">RNN & Transformer Architecture from Scratch</h3>
+                    <p class="project-desc">Complete implementation of RNN and Transformer architectures built from scratch in Python. Includes attention mechanisms, positional encoding, and multi-head attention—pure NumPy implementations for deep understanding of modern NLP architectures.</p>
+                    <div class="project-tags"><span class="tag">Python</span><span class="tag">Transformers</span><span class="tag">RNN</span><span class="tag">Attention</span><span class="tag">NumPy</span></div>
+                    <div class="project-links">
+                        <a class="btn-link" href="https://github.com/hemanthvamsikrishna/RNN-Transformer-Architecture-from-scratch" target="_blank" aria-label="View on GitHub">View on GitHub →</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3 class="project-title">CNN Architecture from Scratch</h3>
+                    <p class="project-desc">Ground-up implementation of Convolutional Neural Networks without deep learning frameworks. Built convolution layers, pooling, backpropagation, and optimization algorithms to understand the mathematical foundations of computer vision models.</p>
+                    <div class="project-tags"><span class="tag">Python</span><span class="tag">CNN</span><span class="tag">Computer Vision</span><span class="tag">NumPy</span><span class="tag">Backpropagation</span></div>
+                    <div class="project-links">
+                        <a class="btn-link" href="https://github.com/hemanthvamsikrishna/CNN-Architecture-from-Scratch" target="_blank">View on GitHub →</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3 class="project-title">Building Neural Network from Scratch</h3>
+                    <p class="project-desc">Foundational neural network implementation from first principles. Custom gradient descent, activation functions, forward/backward propagation, and loss functions—all built without ML libraries to master the core mechanics of deep learning.</p>
+                    <div class="project-tags"><span class="tag">Python</span><span class="tag">Neural Networks</span><span class="tag">Gradient Descent</span><span class="tag">NumPy</span></div>
+                    <div class="project-links">
+                        <a class="btn-link" href="https://github.com/hemanthvamsikrishna/Building-Neural-Network-From-Scratch" target="_blank">View on GitHub →</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3 class="project-title">QHIVE - Quality Hive Network</h3>
+                    <p class="project-desc">Distributed AI-driven framework for defect pattern mining and cross-plant rule discovery in manufacturing. Multi-agent architecture enabling collaborative model learning and real-time defect detection across simulated manufacturing networks.</p>
+                    <div class="project-tags"><span class="tag">Python</span><span class="tag">Distributed AI</span><span class="tag">Computer Vision</span><span class="tag">Manufacturing</span><span class="tag">Quality Control</span></div>
+                    <div class="project-links">
+                        <a class="btn-link" href="https://github.com/hemanthvamsikrishna/QHIVE" target="_blank">View on GitHub →</a>
+                    </div>
                 </div>
             </div>
-            <div class="project-card">
-                <h3 class="project-title">CNN Architecture from Scratch</h3>
-                <p class="project-desc">Ground-up implementation of Convolutional Neural Networks without deep learning frameworks. Built convolution layers, pooling, backpropagation, and optimization algorithms to understand the mathematical foundations of computer vision models.</p>
-                <div class="project-tags"><span class="tag">Python</span><span class="tag">CNN</span><span class="tag">Computer Vision</span><span class="tag">NumPy</span><span class="tag">Backpropagation</span></div>
-                <div class="project-links">
-                    <a class="btn-link" href="https://github.com/hemanthvamsikrishna/CNN-Architecture-from-Scratch" target="_blank">View on GitHub →</a>
-                </div>
-            </div>
-            <div class="project-card">
-                <h3 class="project-title">Building Neural Network from Scratch</h3>
-                <p class="project-desc">Foundational neural network implementation from first principles. Custom gradient descent, activation functions, forward/backward propagation, and loss functions—all built without ML libraries to master the core mechanics of deep learning.</p>
-                <div class="project-tags"><span class="tag">Python</span><span class="tag">Neural Networks</span><span class="tag">Gradient Descent</span><span class="tag">NumPy</span></div>
-                <div class="project-links">
-                    <a class="btn-link" href="https://github.com/hemanthvamsikrishna/Building-Neural-Network-From-Scratch" target="_blank">View on GitHub →</a>
-                </div>
-            </div>
-            <div class="project-card">
-                <h3 class="project-title">QHIVE - Quality Hive Network</h3>
-                <p class="project-desc">Distributed AI-driven framework for defect pattern mining and cross-plant rule discovery in manufacturing. Multi-agent architecture enabling collaborative model learning and real-time defect detection across simulated manufacturing networks.</p>
-                <div class="project-tags"><span class="tag">Python</span><span class="tag">Distributed AI</span><span class="tag">Computer Vision</span><span class="tag">Manufacturing</span><span class="tag">Quality Control</span></div>
-                <div class="project-links">
-                    <a class="btn-link" href="https://github.com/hemanthvamsikrishna/QHIVE" target="_blank">View on GitHub →</a>
-                </div>
-            </div>
+        </div>
+
+        <!-- Scroll controls -->
+        <div class="scroll-controls">
+            <button class="scroll-btn" id="scrollLeftProjects" aria-label="Scroll left">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </button>
+            <button class="scroll-btn" id="scrollRightProjects" aria-label="Scroll right">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </button>
         </div>
     </section>
 
@@ -1319,7 +1771,7 @@
         </div>
     </section>
 
-    <!-- Startup Story Slider -->
+    <!-- Startup Journey -->
     <section id="startups" class="startup-story">
         <h2 class="section-title">My Startup Journey</h2>
         
@@ -1327,32 +1779,82 @@
             <div class="startup-slider" id="startupSlider">
                 <!-- Slide 1: Vaaraahi Farms -->
                 <div class="startup-slide">
-                    <div class="slide-image placeholder">
-                        🌱
-                        <!-- Replace with actual image: <img src="path-to-image.jpg" alt="Vaaraahi Farms"> -->
-                    </div>
-                    <div class="slide-content">
-                        <h3 class="slide-title">Vaaraahi Farms: Growing Tech in Soil</h3>
-                        <div class="slide-body">
-                            <p>In 2020, I launched <strong>Vaaraahi Farms</strong>, an AI-driven hydroponics system that integrated IoT sensors with automated growing environments. The vision was ambitious: democratize urban farming through intelligent automation.</p>
-                            <p>We built a working prototype, integrated real-time sensor networks, and developed predictive models for crop yield optimization. But reality hit hard—<strong>customer acquisition costs outpaced revenue</strong>, and scaling hardware proved more capital-intensive than anticipated.</p>
-                            <p>The lesson? <strong>Technology alone doesn't create value</strong>. Understanding market readiness, distribution channels, and unit economics matters just as much as the innovation itself.</p>
+                    <div class="slide-card">
+                        <div class="slide-image-container">
+                            <div class="slide-images" data-startup="vaaraahi">
+                                <div class="slide-image active">
+                                    <img src="images/vaaraahi-farms-1.jpg" alt="Vaaraahi Farms 1" />
+                                    <div class="slide-image-overlay"></div>
+                                </div>
+                                <div class="slide-image">
+                                    <img src="images/vaaraahi-farms-2.jpg" alt="Vaaraahi Farms 2" />
+                                    <div class="slide-image-overlay"></div>
+                                </div>
+                                <div class="slide-image">
+                                    <img src="images/vaaraahi-farms-3.jpg" alt="Vaaraahi Farms 3" />
+                                    <div class="slide-image-overlay"></div>
+                                </div>
+                            </div>
+                            <div class="image-nav">
+                                <button class="image-nav-btn prev" data-startup="vaaraahi">‹</button>
+                                <button class="image-nav-btn next" data-startup="vaaraahi">›</button>
+                            </div>
+                            <div class="image-indicators">
+                                <span class="image-dot active" data-startup="vaaraahi" data-index="0"></span>
+                                <span class="image-dot" data-startup="vaaraahi" data-index="1"></span>
+                                <span class="image-dot" data-startup="vaaraahi" data-index="2"></span>
+                            </div>
+                        </div>
+                        <div class="slide-content">
+                            <div class="startup-meta">2020 - 2021 · AgTech</div>
+                            <h3 class="slide-title">Vaaraahi Farms: AI-Powered Vertical Farming</h3>
+                            <div class="slide-body">
+                                <p>In my final semester of college (2020), I launched a second startup that merged my passion for farming with artificial intelligence to revolutionize food production. We developed an <strong>AI-powered vertical hydroponics and aquaponics system</strong> capable of producing 1 acre's yield in just 1/10th the space, using no soil, minimal water, and fully stacked indoor farming.</p>
+                                <p>Our system used AI models trained on real-time environmental and nutrient data to optimize crop cycles, predict growth stages, and dynamically adjust lighting, water flow, and nutrient mixes for each plant type. Crops included spinach, iceberg, and romaine lettuce, grown under customized indoor grow lights. We integrated IoT sensors to monitor temperature, humidity, pH, and nutrient levels—feeding continuous data into the AI engine for adaptive decision-making.</p>
+                                <p>On the aquaponics side, we raised korameenu (murrel fish), creating a <strong>closed-loop system</strong> where fish waste enriched the crops. The result: a fully automated, AI + IoT-driven smart farming platform that maximized efficiency, minimized waste, and brought sustainability into the future—all prototyped while still in college.</p>
+                                <p class="slide-lesson"><strong>The lesson:</strong> Building breakthrough technology in college is possible, but scaling hardware-intensive AgTech requires capital, distribution channels, and market timing that go beyond the prototype stage.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Slide 2: Hive Quality Network -->
                 <div class="startup-slide">
-                    <div class="slide-image placeholder">
-                        🔍
-                        <!-- Replace with actual image: <img src="path-to-image.jpg" alt="Hive Quality Network"> -->
-                    </div>
-                    <div class="slide-content">
-                        <h3 class="slide-title">Hive Quality Network: Distributed Intelligence</h3>
-                        <div class="slide-body">
-                            <p>Learning from Vaaraahi, I pivoted to <strong>Hive Quality Network</strong>—a distributed defect detection platform for manufacturing. Computer vision meets edge computing, designed to scale across multiple production lines.</p>
-                            <p>We achieved <strong>98.7% accuracy</strong> on defect classification and reduced false positives by 60%. The tech worked brilliantly. But enterprise sales cycles are measured in quarters, not weeks, and we couldn't sustain runway.</p>
-                            <p>Second failure, deeper lesson: <strong>Build for a market you can reach</strong>. The best product means nothing if you can't get it in front of the right buyers at the right time.</p>
+                    <div class="slide-card">
+                        <div class="slide-image-container">
+                            <div class="slide-images" data-startup="jamaivu">
+                                <div class="slide-image active">
+                                    <img src="images/jamaivu-machines-1.jpg" alt="Jamaivu Machines 1" />
+                                    <div class="slide-image-overlay"></div>
+                                </div>
+                                <div class="slide-image">
+                                    <img src="images/jamaivu-machines-2.jpg" alt="Jamaivu Machines 2" />
+                                    <div class="slide-image-overlay"></div>
+                                </div>
+                                <div class="slide-image">
+                                    <img src="images/jamaivu-machines-3.jpg" alt="Jamaivu Machines 3" />
+                                    <div class="slide-image-overlay"></div>
+                                </div>
+                            </div>
+                            <div class="image-nav">
+                                <button class="image-nav-btn prev" data-startup="jamaivu">‹</button>
+                                <button class="image-nav-btn next" data-startup="jamaivu">›</button>
+                            </div>
+                            <div class="image-indicators">
+                                <span class="image-dot active" data-startup="jamaivu" data-index="0"></span>
+                                <span class="image-dot" data-startup="jamaivu" data-index="1"></span>
+                                <span class="image-dot" data-startup="jamaivu" data-index="2"></span>
+                            </div>
+                        </div>
+                        <div class="slide-content">
+                            <div class="startup-meta">2018 - 2019 · Mobility Tech</div>
+                            <h3 class="slide-title">Jamaivu Machines: Electric Wheelchair Revolution</h3>
+                            <div class="slide-body">
+                                <p>Back in 2018, while I was still in college, I started a hustle that turned into a full-blown mobility startup. We built a super cool <strong>electric add-on for wheelchairs</strong>—basically a single-wheel attachment powered by a 36V/48V lithium-ion battery and hub motor that could hit speeds of up to 25 km/h.</p>
+                                <p>Just clamp it onto a regular wheelchair and boom—you've got a <strong>detachable 3-wheeled electric ride</strong>. No need to buy a bulky electric wheelchair. I led the whole product build from scratch: design, prototyping, testing, and getting real feedback from users.</p>
+                                <p>The goal was simple: make mobility smarter, more affordable, and way more fun for people who need it. It was my first real taste of building something that could actually change lives.</p>
+                                <p class="slide-lesson"><strong>The lesson:</strong> Building something that genuinely helps people is incredibly rewarding, but hardware startups need manufacturing partnerships, regulatory approvals, and sustainable unit economics to scale beyond the prototype.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1373,80 +1875,52 @@
             <!-- Slider dots -->
             <div class="slider-controls">
                 <button class="slider-dot active" data-slide="0" aria-label="View Vaaraahi Farms"></button>
-                <button class="slider-dot" data-slide="1" aria-label="View Hive Quality Network"></button>
+                <button class="slider-dot" data-slide="1" aria-label="View Jamaivu Machines"></button>
             </div>
         </div>
-    </section>
-
-    <!-- Vision -->
-    <section id="vision" class="vision">
-        <h2 class="section-title">The Vision</h2>
-        <div class="vision-text">
-            I'm not here to build another SaaS tool or productivity app. I'm here to create the kind of technology that makes people say <strong>"How is this even possible?"</strong><br /><br />
-            The idea keeping me up at night? It's bigger than a product—it's a paradigm shift. And when it launches, it won't just disrupt markets. <strong>It'll create new ones.</strong>
-        </div>
-        <a href="#connect" class="cta-button">Let's Build Something Legendary</a>
     </section>
 
     <!-- Profiles (optional section for platforms) -->
-    <section id="profiles">
-        <h2 class="section-title">Profiles & Platforms</h2>
-        <div class="profiles-grid">
-            <div class="profile-card">
-                <div class="profile-header">
-                    <span class="icon-link" aria-hidden="true"> 
-                        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.58 2 12.22c0 4.51 2.87 8.33 6.84 9.68.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.13-4.56-5 0-1.11.39-2.01 1.03-2.72-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.04a9.26 9.26 0 0 1 5 0c1.9-1.31 2.74-1.04 2.74-1.04.56 1.42.21 2.47.1 2.73.64.71 1.03 1.61 1.03 2.72 0 3.88-2.34 4.74-4.57 4.99.36.32.68.95.68 1.92 0 1.38-.01 2.49-.01 2.83 0 .27.18.6.69.49A10.22 10.22 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z" fill="currentColor"/></svg>
-                    </span>
-                    <div class="profile-content">
-                        <a href="https://github.com/hemanthvamsikrishna" target="_blank">GitHub</a>
-                    </div>
-                </div>
-                <div class="profile-caption">Ideas I couldn't ignore, so I built them</div>
-            </div>
-            
-            <div class="profile-card">
-                <div class="profile-header">
-                    <span class="icon-link" aria-hidden="true"> 
-                        <svg viewBox="0 0 24 24" fill="none"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3.5 9h3v12h-3V9zm6 0h2.879v1.64h.041C13.04 9.62 14.37 9 15.88 9 19.2 9 20 11.19 20 14.36V21h-3v-6.07c0-1.45-.03-3.31-2.02-3.31-2.03 0-2.34 1.58-2.34 3.21V21H9.5V9z" fill="currentColor"/></svg>
-                    </span>
-                    <div class="profile-content">
-                        <a href="https://linkedin.com/in/your-handle" target="_blank">LinkedIn</a>
-                    </div>
-                </div>
-                <div class="profile-caption">Let's connect professionally</div>
-            </div>
-            
-            <div class="profile-card">
-                <div class="profile-header">
-                    <span class="icon-link" aria-hidden="true"> 
-                        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/><path d="M8.5 14c1 .9 2.3 1.5 3.5 1.5S14.5 14.9 15.5 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                    </span>
-                    <div class="profile-content">
-                        <a href="https://huggingface.co/hemanthvamsikrishna" target="_blank">Hugging Face</a>
-                    </div>
-                </div>
-                <div class="profile-caption">Solutions I've engineered</div>
-            </div>
-            
-            <div class="profile-card">
-                <div class="profile-header">
-                    <span class="icon-link" aria-hidden="true"> 
-                        <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="5" height="14" fill="currentColor"/><path d="M10 7l3.5 5L10 17V7Z" fill="currentColor"/><path d="M15 7h2v10h-2z" fill="currentColor"/></svg>
-                    </span>
-                    <div class="profile-content">
-                        <a href="https://medium.com/@hemanthvamsikrishna" target="_blank">Medium</a>
-                    </div>
-                </div>
-                <div class="profile-caption">Yes, I do write tech articles</div>
-            </div>
+    <section id="profiles" class="profiles-minimal">
+        <div class="social-icons-row">
+            <a href="https://github.com/hemanthvamsikrishna" target="_blank" class="social-icon" aria-label="GitHub">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.58 2 12.22c0 4.51 2.87 8.33 6.84 9.68.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.13-4.56-5 0-1.11.39-2.01 1.03-2.72-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.04a9.26 9.26 0 0 1 5 0c1.9-1.31 2.74-1.04 2.74-1.04.56 1.42.21 2.47.1 2.73.64.71 1.03 1.61 1.03 2.72 0 3.88-2.34 4.74-4.57 4.99.36.32.68.95.68 1.92 0 1.38-.01 2.49-.01 2.83 0 .27.18.6.69.49A10.22 10.22 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z"/>
+                </svg>
+            </a>
+            <a href="https://linkedin.com/in/your-handle" target="_blank" class="social-icon" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3.5 9h3v12h-3V9zm6 0h2.879v1.64h.041C13.04 9.62 14.37 9 15.88 9 19.2 9 20 11.19 20 14.36V21h-3v-6.07c0-1.45-.03-3.31-2.02-3.31-2.03 0-2.34 1.58-2.34 3.21V21H9.5V9z"/>
+                </svg>
+            </a>
+            <a href="https://x.com/your-handle" target="_blank" class="social-icon" aria-label="X (Twitter)">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+            </a>
+            <a href="https://huggingface.co/hemanthvamsikrishna" target="_blank" class="social-icon" aria-label="Hugging Face">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10"/>
+                    <circle cx="9" cy="10" r="1" fill="currentColor"/>
+                    <circle cx="15" cy="10" r="1" fill="currentColor"/>
+                    <path d="M8.5 14c1 .9 2.3 1.5 3.5 1.5S14.5 14.9 15.5 14" stroke-linecap="round"/>
+                </svg>
+            </a>
+            <a href="https://medium.com/@hemanthvamsikrishna" target="_blank" class="social-icon" aria-label="Medium">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <rect x="3" y="5" width="5" height="14"/>
+                    <path d="M10 7l3.5 5L10 17V7Z"/>
+                    <path d="M15 7h2v10h-2z"/>
+                </svg>
+            </a>
         </div>
     </section>
 
     <!-- Connect / Footer -->
     <footer id="connect">
-        <p style="color: var(--text-light); font-size: .9rem; margin-bottom: 1rem;">💌 Currently accepting coffee chats, not job offers</p>
-        <a href="/cdn-cgi/l/email-protection#e39a8c9691cd868e828a8fa3968d8a958691908a979acd868796" style="color: var(--primary); text-decoration: none; font-weight: 500;"><span class="__cf_email__" data-cfemail="fb82948e89d59e969a9297bb8e95928d9e8988928f82d59e9f8e">[email&#160;protected]</span></a>
-        <p style="color: var(--text-light); font-size: .8rem; margin-top: 2rem;">Building the future from Lee's Summit, Missouri 🚀</p>
+        <p style="color: var(--text-light); font-size: .9rem; margin-bottom: 1rem;">💼 Open to opportunities, shipping AI, and good coffee conversations</p>
+        <a href="mailto:hemanthvamsikrishna@gmail.com" style="color: var(--primary); text-decoration: none; font-weight: 500;">hemanthvamsikrishna@gmail.com</a>
+        <p style="color: var(--text-light); font-size: .8rem; margin-top: 2rem;">No AI was harmed in designing this website 🤖</p>
     </footer>
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
@@ -1715,6 +2189,23 @@
             });
         }
         
+        // Projects scroll controls
+        const projectsScrollWrapper = document.getElementById('projectsScrollWrapper');
+        const scrollLeftProjects = document.getElementById('scrollLeftProjects');
+        const scrollRightProjects = document.getElementById('scrollRightProjects');
+        
+        if (scrollLeftProjects && projectsScrollWrapper) {
+            scrollLeftProjects.addEventListener('click', () => {
+                projectsScrollWrapper.scrollBy({ left: -400, behavior: 'smooth' });
+            });
+        }
+        
+        if (scrollRightProjects && projectsScrollWrapper) {
+            scrollRightProjects.addEventListener('click', () => {
+                projectsScrollWrapper.scrollBy({ left: 400, behavior: 'smooth' });
+            });
+        }
+        
         // Startup Story Slider
         const startupSlider = document.getElementById('startupSlider');
         const sliderPrev = document.getElementById('sliderPrev');
@@ -1726,18 +2217,10 @@
         let autoSlideInterval;
         
         function updateSlider() {
-            if (startupSlider) {
-                startupSlider.style.transform = `translateX(-${currentSlide * 100}%)`;
-                
-                // Update dots
-                sliderDots.forEach((dot, index) => {
-                    if (index === currentSlide) {
-                        dot.classList.add('active');
-                    } else {
-                        dot.classList.remove('active');
-                    }
-                });
-            }
+            startupSlider.style.transform = `translateX(-${currentSlide * 100}%)`;
+            sliderDots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
         }
         
         function nextSlide() {
@@ -1750,12 +2233,6 @@
             updateSlider();
         }
         
-        function goToSlide(slideIndex) {
-            currentSlide = slideIndex;
-            updateSlider();
-        }
-        
-        // Auto-slide every 5 seconds
         function startAutoSlide() {
             autoSlideInterval = setInterval(nextSlide, 5000);
         }
@@ -1764,12 +2241,11 @@
             clearInterval(autoSlideInterval);
         }
         
-        // Event listeners
         if (sliderNext) {
             sliderNext.addEventListener('click', () => {
                 nextSlide();
                 stopAutoSlide();
-                startAutoSlide(); // Restart auto-slide
+                startAutoSlide();
             });
         }
         
@@ -1783,23 +2259,76 @@
         
         sliderDots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
-                goToSlide(index);
+                currentSlide = index;
+                updateSlider();
                 stopAutoSlide();
                 startAutoSlide();
             });
         });
         
-        // Pause auto-slide on hover
+        // Start auto-sliding
+        startAutoSlide();
+        
+        // Pause on hover
         if (startupSlider) {
-            const sliderContainer = document.querySelector('.startup-slider-container');
-            if (sliderContainer) {
-                sliderContainer.addEventListener('mouseenter', stopAutoSlide);
-                sliderContainer.addEventListener('mouseleave', startAutoSlide);
+            startupSlider.addEventListener('mouseenter', stopAutoSlide);
+            startupSlider.addEventListener('mouseleave', startAutoSlide);
+        }
+        
+        // Image carousel within each startup slide
+        const imageCarousels = {};
+        
+        document.querySelectorAll('.slide-images').forEach(container => {
+            const startup = container.getAttribute('data-startup');
+            const images = container.querySelectorAll('.slide-image');
+            const dots = document.querySelectorAll(`.image-dot[data-startup="${startup}"]`);
+            const prevBtn = document.querySelector(`.image-nav-btn.prev[data-startup="${startup}"]`);
+            const nextBtn = document.querySelector(`.image-nav-btn.next[data-startup="${startup}"]`);
+            
+            imageCarousels[startup] = {
+                currentIndex: 0,
+                totalImages: images.length
+            };
+            
+            function updateImageCarousel(startup) {
+                const carousel = imageCarousels[startup];
+                const container = document.querySelector(`.slide-images[data-startup="${startup}"]`);
+                const images = container.querySelectorAll('.slide-image');
+                const dots = document.querySelectorAll(`.image-dot[data-startup="${startup}"]`);
+                
+                images.forEach((img, index) => {
+                    img.classList.toggle('active', index === carousel.currentIndex);
+                });
+                
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === carousel.currentIndex);
+                });
             }
             
-            // Start auto-slide
-            startAutoSlide();
-        }
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    imageCarousels[startup].currentIndex = 
+                        (imageCarousels[startup].currentIndex - 1 + imageCarousels[startup].totalImages) % imageCarousels[startup].totalImages;
+                    updateImageCarousel(startup);
+                });
+            }
+            
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    imageCarousels[startup].currentIndex = 
+                        (imageCarousels[startup].currentIndex + 1) % imageCarousels[startup].totalImages;
+                    updateImageCarousel(startup);
+                });
+            }
+            
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    imageCarousels[startup].currentIndex = index;
+                    updateImageCarousel(startup);
+                });
+            });
+        });
+        
     </script>
 </body>
 </html>
