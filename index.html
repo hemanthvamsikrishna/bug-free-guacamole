@@ -419,6 +419,32 @@
 
         /* Journey */
         
+        /* Hero Photo Section - 16:9 full-width */
+        .hero-photo-section {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            padding: 0;
+            background: #000;
+        }
+        
+        .hero-photo {
+            width: 100%;
+            height: auto;
+            display: block;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            object-position: center;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-photo {
+                aspect-ratio: 4 / 3;
+            }
+        }
         
         .journey { background: var(--bg-tertiary); border-radius: 30px; padding: 4rem; }
         .timeline { position: relative; padding-left: 2rem; }
@@ -1488,11 +1514,6 @@
             <div class="shape"></div><div class="shape"></div><div class="shape"></div>
         </div>
         <div class="hero-content">
-            <!-- Circular photo on top -->
-            <div class="hero-avatar">
-                <img src="images/hemanth-hero.png" alt="Hemanth Vamsikrishna" />
-            </div>
-            
             <!-- Heading at top -->
             <h1>My two failed startups taught me what no MBA ever could</h1>
             
@@ -1574,6 +1595,11 @@
             </div>
         </div>
     </section>
+    <!-- Full-width Photo Section -->
+    <section class="hero-photo-section">
+        <img src="images/hemanth-hero.png" alt="Hemanth Vamsikrishna" class="hero-photo" />
+    </section>
+
     <!-- Story -->
     <!-- Journey -->
     <section id="journey" class="journey">
