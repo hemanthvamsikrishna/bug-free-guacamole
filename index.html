@@ -1366,11 +1366,15 @@
         
         @media (max-width: 640px) {
             .hero {
-                height: 100vh;
+                min-height: 100vh;
+                height: auto;
                 display: flex;
                 align-items: center;
                 justify-content: flex-start;
-                padding: 0 0 0 1.5rem;
+                padding-top: 6rem;
+                padding-bottom: 3rem;
+                padding-left: 1.5rem;
+                padding-right: 0;
                 position: relative;
                 background-position: right center;
             }
@@ -1385,6 +1389,7 @@
                 width: 100%;
                 max-width: 100%;
                 text-align: left;
+                overflow: visible;
             }
             
             /* Hide subtitle on mobile - it takes up too much space */
@@ -1460,6 +1465,12 @@
             .hero-cta-buttons {
                 gap: 1rem;
                 flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+            }
+            
+            .hero-btn {
+                width: fit-content;
             }
             
             .btn-divider {
