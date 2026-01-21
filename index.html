@@ -1365,13 +1365,14 @@
         }
         
         @media (max-width: 640px) {
+            /* FIX 1: Account for fixed navbar */
             .hero {
-                min-height: 100vh;
+                min-height: calc(100vh - 72px);
                 height: auto;
                 display: flex;
-                align-items: center;
+                align-items: flex-start;
                 justify-content: flex-start;
-                padding-top: 6rem;
+                padding-top: 7.5rem;
                 padding-bottom: 3rem;
                 padding-left: 1.5rem;
                 padding-right: 0;
@@ -1384,12 +1385,14 @@
                 background: linear-gradient(90deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.75) 40%, rgba(0, 0, 0, 0.3) 100%);
             }
             
+            /* FIX 2: Prevent heading clipping */
             .hero-content {
                 padding: 0 1rem 0 0;
                 width: 100%;
                 max-width: 100%;
                 text-align: left;
                 overflow: visible;
+                margin-top: 0;
             }
             
             /* Hide subtitle on mobile - it takes up too much space */
@@ -1397,9 +1400,11 @@
                 display: none;
             }
             
+            /* FIX 3: Clean CTA alignment */
             .hero-actions {
                 align-items: flex-start;
                 margin-top: 0.5rem;
+                gap: 0.9rem;
             }
             
             .featured-platforms {
@@ -1412,10 +1417,6 @@
                 line-height: 1.2;
                 margin-bottom: 0.5rem;
                 color: #fff;
-            }
-            
-            .hero-actions {
-                gap: 0.9rem;
             }
             
             .tagline {
