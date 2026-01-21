@@ -197,6 +197,7 @@
             text-align: center; 
             max-width: 800px; 
             padding: 0 1.5rem;
+            padding-top: 4rem;
             position: relative;
             z-index: 2;
         }
@@ -423,6 +424,37 @@
         .story-visual::after { content: "AI"; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 8rem; font-family: 'Instrument Serif', serif; color: #fff; opacity: .2; }
 
         /* Journey */
+        
+        /* Hero Photo Section - 16:9 aspect ratio */
+        .hero-photo-section {
+            width: 100%;
+            background: var(--bg-primary);
+            padding: 0;
+            margin: 0;
+        }
+        
+        .hero-photo-container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .hero-photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-photo-container {
+                aspect-ratio: 4 / 3;
+            }
+        }
         
         .journey { background: var(--bg-tertiary); border-radius: 30px; padding: 4rem; }
         .timeline { position: relative; padding-left: 2rem; }
@@ -1573,6 +1605,13 @@
             </div>
         </div>
     </section>
+    <!-- Full-width Photo Section -->
+    <section class="hero-photo-section">
+        <div class="hero-photo-container">
+            <img src="images/hemanth-hero.png" alt="Hemanth Vamsikrishna" />
+        </div>
+    </section>
+
     <!-- Story -->
     <!-- Journey -->
     <section id="journey" class="journey">
