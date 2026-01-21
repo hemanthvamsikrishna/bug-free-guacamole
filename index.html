@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Hemanth Vamsikrishna - AI Engineer & Researcher</title>
     <meta name="description" content="Building AI systems from first principles. MS in AI @ UCM. Former Systems Engineer @ TCS. Deep learning, NLP, computer vision." />
     
@@ -58,6 +58,13 @@
             background: var(--bg-primary);
             position: relative;
             transition: background-color 0.3s ease, color 0.3s ease;
+            width: 100%;
+            max-width: 100vw;
+        }
+        
+        html {
+            overflow-x: hidden;
+            width: 100%;
         }
         
         /* Subtle Background Pattern */
