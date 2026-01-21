@@ -1365,17 +1365,13 @@
         }
         
         @media (max-width: 640px) {
-            /* FIX 1: Account for fixed navbar */
+            /* Hero container */
             .hero {
-                min-height: calc(100vh - 72px);
-                height: auto;
+                height: 100vh;
                 display: flex;
-                align-items: flex-start;
-                justify-content: flex-start;
-                padding-top: 7.5rem;
-                padding-bottom: 3rem;
-                padding-left: 1.5rem;
-                padding-right: 0;
+                justify-content: center;
+                align-items: center;
+                padding: 0;
                 position: relative;
                 background-position: right center;
             }
@@ -1385,14 +1381,14 @@
                 background: linear-gradient(90deg, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.75) 40%, rgba(0, 0, 0, 0.3) 100%);
             }
             
-            /* FIX 2: Prevent heading clipping */
+            /* Scale the entire hero content */
             .hero-content {
-                padding: 0 1rem 0 0;
-                width: 100%;
+                transform: scale(0.88);
+                transform-origin: center top;
                 max-width: 100%;
-                text-align: left;
+                padding: 0 1rem;
+                text-align: center;
                 overflow: visible;
-                margin-top: 0;
             }
             
             /* Hide subtitle on mobile - it takes up too much space */
@@ -1400,23 +1396,39 @@
                 display: none;
             }
             
-            /* FIX 3: Clean CTA alignment */
-            .hero-actions {
-                align-items: flex-start;
-                margin-top: 0.5rem;
-                gap: 0.9rem;
-            }
-            
-            .featured-platforms {
-                justify-content: flex-start;
-                margin-top: 1.25rem;
-            }
-            
             .hero h1 {
                 font-size: clamp(1.5rem, 6vw, 2rem);
                 line-height: 1.2;
                 margin-bottom: 0.5rem;
                 color: #fff;
+            }
+            
+            /* Keep everything centered */
+            .hero-actions {
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                margin-top: 0.5rem;
+                gap: 0.9rem;
+            }
+            
+            .hero-cta-buttons {
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+            
+            .btn-divider {
+                display: none;
+            }
+            
+            .featured-platforms {
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                margin-top: 1.25rem;
             }
             
             .tagline {
