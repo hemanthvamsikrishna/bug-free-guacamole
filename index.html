@@ -1,2387 +1,832 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Hemanth Vamsikrishna - AI Engineer & Researcher</title>
-    <meta name="description" content="Building AI systems from first principles. MS in AI @ UCM. Former Systems Engineer @ TCS. Deep learning, NLP, computer vision." />
-    
-    <!-- Open Graph / Social Media Meta Tags -->
-    <meta property="og:title" content="Hemanth Vamsikrishna - AI Engineer & Researcher" />
-    <meta property="og:description" content="Building AI systems from first principles. MS in AI @ UCM. Former Systems Engineer @ TCS." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://hemanthvamsikrishna.com" />
-    
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Hemanth Vamsikrishna - AI Engineer & Researcher" />
-    <meta name="twitter:description" content="Building AI systems from first principles. MS in AI @ UCM. Former Systems Engineer @ TCS." />
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --primary: #000; 
-            --accent: #FF6B6B;
-            --gradient-1: linear-gradient(135deg,#667eea 0%,#764ba2 100%);
-            --gradient-2: linear-gradient(135deg,#f093fb 0%,#f5576c 100%);
-            --text-light: #666; 
-            --border: rgba(0,0,0,0.08);
-            --bg-primary: #fff;
-            --bg-secondary: rgba(250, 250, 252, 0.4);
-            --bg-tertiary: #fafafa;
-            --nav-bg: rgba(255,255,255,0.95);
-            --card-bg: #fff;
-            --hero-gradient: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(250,250,252,0.5) 100%);
-        }
-        
-        /* Dark Mode Variables */
-        [data-theme="dark"] {
-            --primary: #fff;
-            --text-light: #a0a0a0;
-            --border: rgba(255,255,255,0.1);
-            --bg-primary: #0a0a0a;
-            --bg-secondary: rgba(20, 20, 22, 0.6);
-            --bg-tertiary: #141416;
-            --nav-bg: rgba(10,10,10,0.95);
-            --card-bg: #141416;
-            --hero-gradient: linear-gradient(180deg, rgba(10,10,10,1) 0%, rgba(20,20,22,0.5) 100%);
-        }
-        
-        body { 
-            font-family: 'Inter', sans-serif; 
-            line-height: 1.6; 
-            color: var(--primary); 
-            overflow-x: hidden; 
-            background: var(--bg-primary);
-            position: relative;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            width: 100%;
-            max-width: 100vw;
-        }
-        
-        html {
-            overflow-x: hidden;
-            width: 100%;
-        }
-        
-        /* Subtle Background Pattern */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.03;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(118, 75, 162, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(102, 126, 234, 0.08) 0%, transparent 70%);
-            transition: opacity 0.3s ease;
-        }
-        
-        [data-theme="dark"] body::before {
-            opacity: 0.05;
-        }
-        
-        /* Subtle Noise Texture */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.015;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
-        
-        [data-theme="dark"] body::after {
-            opacity: 0.02;
-        }
-        
-        html { scroll-behavior: smooth; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hemanth Vamsi Krishna — AI Engineer & Researcher</title>
+<meta name="description" content="Building AI systems from first principles. MS in AI @ UCM. Former Systems Engineer @ TCS. Deep learning, NLP, computer vision." />
 
-        /* Navigation */
-        nav { position: fixed; top: 0; width: 100%; padding: 1.5rem 5%; background: var(--nav-bg); backdrop-filter: blur(10px); z-index: 1000; transition: all 0.3s ease; border-bottom: 1px solid transparent; }
-        nav.scrolled { border-bottom: 1px solid var(--border); }
-        .nav-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
-        .logo { 
-            font-family: 'Instrument Serif', serif; 
-            font-size: 1.5rem; 
-            font-weight: 400; 
-            white-space: nowrap;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 0.1rem;
-        }
-        
-        /* Dynamic name container */
-        .logo-name-wrapper {
-            position: relative;
-            display: inline-block;
-            min-width: 120px;
-            height: 2rem;
-            overflow: visible;
-        }
-        
-        .logo-name {
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            animation: nameRotate 16s infinite;
-            font-family: 'Instrument Serif', serif;
-            font-weight: 400;
-        }
-        
-        /* Stagger animations for each language */
-        .logo-name:nth-child(1) { animation-delay: 0s; }
-        .logo-name:nth-child(2) { animation-delay: 2s; }
-        .logo-name:nth-child(3) { animation-delay: 4s; }
-        .logo-name:nth-child(4) { animation-delay: 6s; }
-        .logo-name:nth-child(5) { animation-delay: 8s; }
-        .logo-name:nth-child(6) { animation-delay: 10s; }
-        .logo-name:nth-child(7) { animation-delay: 12s; }
-        .logo-name:nth-child(8) { animation-delay: 14s; }
-        
-        @keyframes nameRotate {
-            0%, 10% { opacity: 1; transform: translateY(0); }
-            12.5%, 100% { opacity: 0; transform: translateY(-10px); }
-        }
-        
-        /* Pronunciation and meaning */
-        .logo-meta {
-            font-size: 0.75rem;
-            color: var(--text-light);
-            font-weight: 300;
-            font-family: 'Inter', sans-serif;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            opacity: 0.6;
-            margin-top: -0.2rem;
-        }
-        
-        .logo-pronunciation {
-            font-style: italic;
-        }
-        
-        .logo-divider {
-            opacity: 0.4;
-        }
-        
-        .logo-meaning {
-            font-weight: 400;
-        }
-        .nav-right { display: flex; align-items: center; gap: 1.5rem; }
-        .nav-links { display: flex; gap: 1.2rem; list-style: none; }
-        .nav-links a { color: var(--primary); text-decoration: none; font-weight: 400; font-size: .95rem; transition: opacity .3s; }
-        .nav-links a:hover { opacity: .6; }
-        
-        /* Theme Toggle */
-        .mobile-menu { display: none; flex-direction: column; gap: 4px; cursor: pointer; }
-        .mobile-menu span { width: 25px; height: 2px; background: var(--primary); transition: all .3s; }
+<meta property="og:title" content="Hemanth Vamsi Krishna — AI Engineer & Researcher" />
+<meta property="og:description" content="Building AI systems from first principles. MS in AI @ UCM. Former Systems Engineer @ TCS." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://hemanthvamsikrishna.com" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Hemanth Vamsi Krishna — AI Engineer & Researcher" />
+<meta name="twitter:description" content="Building AI systems from first principles. MS in AI @ UCM. Former Systems Engineer @ TCS." />
 
-        /* Hero */
-        .hero { 
-            min-height: 100vh;
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            position: relative; 
-            padding: 2rem 5%;
-        }
-        
-        .hero-content { 
-            text-align: center; 
-            max-width: 800px; 
-            padding: 0 1.5rem;
-            padding-top: 4rem;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .hero-avatar {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin: 0 auto 2rem;
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            background: #f0f0f0;
-        }
-        
-        .hero-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-        
-        .hero h1 { 
-            font-family: 'Instrument Serif', serif; 
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 400; 
-            line-height: 1.2; 
-            margin-bottom: 2rem;
-            color: #000000 !important;
-            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
-            opacity: 1 !important;
-            visibility: visible !important;
-        }
-        
-        .subtitle { 
-            font-family: 'Inter', sans-serif; 
-            font-size: clamp(0.95rem, 1.5vw, 1.1rem);
-            color: #666;
-            font-weight: 400; 
-            margin-bottom: 0;
-            line-height: 1.7;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        /* Hero Actions Container */
-        .hero-actions {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .tagline { 
-            display: inline-block; 
-            padding: 0.5rem 1.2rem;
-            background: rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: 999px;
-            color: #000;
-            font-weight: 500; 
-            font-size: 0.9rem; 
-            margin: 0;
-            letter-spacing: 0.3px;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-        /* Hero CTA Buttons */
-        .hero-cta-buttons {
-            display: inline-flex;
-            align-items: center;
-            gap: 1.2rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        .btn-divider {
-            color: var(--text-light);
-            font-size: 0.9rem;
-            font-weight: 300;
-            opacity: 0.5;
-        }
-        
-        .hero-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0;
-            background: none;
-            border: none;
-            text-decoration: none;
-            font-weight: 400;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            color: #000;
-            position: relative;
-        }
-        
-        .hero-btn::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: #000;
-            transition: width 0.3s ease;
-        }
-        
-        .hero-btn:hover::after {
-            width: 100%;
-        }
-        
-        .hero-btn:hover {
-            opacity: 0.7;
-        }
-        
-        .btn-divider {
-            color: rgba(0, 0, 0, 0.3);
-            font-size: 0.9rem;
-            font-weight: 300;
-            opacity: 0.7;
-        }
-        
-        .hero-btn svg {
-            width: 14px;
-            height: 14px;
-            transition: transform 0.3s ease;
-        }
-        
-        .hero-btn:hover svg {
-            transform: translateX(3px);
-        }
-        
-        /* Featured Platforms Badge - Ultra Minimal */
-        .featured-platforms {
-            display: flex;
-            align-items: center;
-            gap: 1.25rem;
-            margin-top: 3rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            opacity: 0.8;
-        }
-        
-        .platform-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            text-decoration: none;
-            color: rgba(0, 0, 0, 0.6);
-            transition: all 0.2s ease;
-            font-size: 0.8rem;
-            opacity: 0.7;
-        }
-        
-        .platform-link:hover {
-            color: #000;
-            opacity: 1;
-        }
-        
-        .platform-link svg {
-            width: 16px;
-            height: 16px;
-            flex-shrink: 0;
-        }
-        
-        .platform-link span {
-            font-weight: 500;
-        }
-        
-        .platforms-divider {
-            display: none;
-        }
-        
-        /* Dark mode enhancements for hero section */
-        [data-theme="dark"] .hero::before {
-            opacity: 0.5;
-        }
-        
-        [data-theme="dark"] .tagline {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.1);
-        }
+<style>
+  :root{
+    --ink:#14132B;
+    --violet:#6C5CE7;
+    --coral:#FF5470;
+    --sun:#FFC857;
+    --mint:#2FD9C4;
+    --paper:#F7F4EE;
+    --paper-dim:#EDE9DF;
+    --ink-soft:rgba(20,19,43,0.62);
+    --ink-faint:rgba(20,19,43,0.14);
+    --max:1240px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;}
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 6vw;}
+  ::selection{background:var(--violet);color:#fff;}
 
-        /* Top social row (new) */
-        .social-hero { display: inline-flex; gap: .9rem; align-items: center; margin-top: .8rem; }
-        .icon-link { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border: 1px solid var(--border); border-radius: 999px; text-decoration: none; transition: transform .2s, box-shadow .2s, border-color .2s; background: var(--card-bg); }
-        .icon-link:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,.08); border-color: rgba(0,0,0,.15); }
-        .icon-link svg { width: 22px; height: 22px; display: block; }
-        .social-label { font-size: .85rem; color: var(--text-light); margin-top: .6rem; }
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;width:100%;z-index:1000;
+    padding:1.4rem 6vw;
+    display:flex;align-items:center;justify-content:space-between;
+    background:rgba(247,244,238,0.0);
+    transition:background .3s ease, box-shadow .3s ease, padding .3s ease;
+  }
+  nav.scrolled{background:rgba(247,244,238,0.92);backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--ink-faint);padding:1rem 6vw;}
+  .wordmark{font-weight:700;font-size:1.15rem;letter-spacing:-0.02em;line-height:1.15;}
+  .wordmark span{color:var(--coral);}
+  .wordmark-pronunciation{display:block;font-size:.7rem;font-weight:400;font-style:italic;color:var(--ink-soft);opacity:.5;letter-spacing:0;}
+  .nav-links{display:flex;gap:1.9rem;list-style:none;}
+  .nav-links a{text-decoration:none;font-size:.92rem;font-weight:500;color:var(--ink);position:relative;}
+  .nav-links a::after{content:'';position:absolute;left:0;bottom:-4px;height:2px;width:0;background:var(--violet);transition:width .25s ease;}
+  .nav-links a:hover::after{width:100%;}
+  .mobile-menu{display:none;flex-direction:column;gap:5px;cursor:pointer;}
+  .mobile-menu span{width:24px;height:2px;background:var(--ink);}
 
-        /* Floating shapes */
-        .floating-shapes { position: absolute; width: 100%; height: 100%; top: 0; left: 0; z-index: 1; opacity: 0.06; }
-        .shape { position: absolute; border-radius: 50%; background: var(--gradient-1); animation: float 20s infinite ease-in-out; filter: blur(40px); }
-        .shape:nth-child(1){ width: 400px; height: 400px; top: -150px; right: -150px; animation-delay: 0s; }
-        .shape:nth-child(2){ width: 300px; height: 300px; bottom: -100px; left: -100px; animation-delay: 5s; background: var(--gradient-2); }
-        .shape:nth-child(3){ width: 250px; height: 250px; top: 50%; left: 50%; animation-delay: 10s; }
-        @keyframes float { 0%,100%{ transform: translate(0,0) scale(1);} 33%{ transform: translate(30px,-30px) scale(1.1);} 66%{ transform: translate(-20px,20px) scale(.9);} }
+  /* HERO */
+  .hero{
+    min-height:100vh;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:9rem 6vw 4rem;
+    position:relative;
+  }
+  .hero-eyebrow{
+    display:inline-flex;align-items:center;gap:.35rem;
+    font-size:.85rem;color:var(--ink-soft);margin-bottom:1.6rem;
+  }
+  .hero-eyebrow b{color:var(--ink);font-weight:600;}
+  .lang-cycle{position:relative;display:inline-block;min-width:56px;height:1.3em;}
+  .lang-name{position:absolute;left:0;top:0;opacity:0;animation:langRotate 16s infinite;font-weight:600;color:var(--violet);}
+  .lang-name:nth-child(1){animation-delay:0s;}
+  .lang-name:nth-child(2){animation-delay:2s;}
+  .lang-name:nth-child(3){animation-delay:4s;}
+  .lang-name:nth-child(4){animation-delay:6s;}
+  .lang-name:nth-child(5){animation-delay:8s;}
+  .lang-name:nth-child(6){animation-delay:10s;}
+  .lang-name:nth-child(7){animation-delay:12s;}
+  .lang-name:nth-child(8){animation-delay:14s;}
+  @keyframes langRotate{0%,10%{opacity:1;transform:translateY(0);}12.5%,100%{opacity:0;transform:translateY(-8px);}}
 
-        /* Sections */
-        section { 
-            padding: 5rem 5%; 
-            max-width: 1400px; 
-            margin: 0 auto; 
-            position: relative;
-        }
-        
-        /* Alternating subtle section backgrounds */
-        section:nth-child(even) {
-            background: rgba(250, 250, 252, 0.4);
-        }
-        
-        .section-title { font-family: 'Instrument Serif', serif; font-size: clamp(2rem,5vw,3rem); margin-bottom: 3rem; font-weight: 400; }
+  .hero h1{
+    font-size:clamp(2.4rem,6.4vw,5.2rem);
+    font-weight:700;
+    line-height:1.04;
+    letter-spacing:-0.02em;
+    max-width:15ch;
+  }
+  .hero h1 .underline{
+    background:linear-gradient(transparent 62%, var(--sun) 62%);
+    padding:0 .05em;
+  }
+  .hero-sub{
+    margin-top:2rem;
+    max-width:56ch;
+    font-size:1.08rem;
+    color:var(--ink-soft);
+  }
+  .hero-actions{display:flex;flex-wrap:wrap;align-items:center;gap:1rem;margin-top:2.6rem;}
+  .btn-solid{
+    display:inline-flex;align-items:center;gap:.5rem;
+    background:var(--ink);color:var(--paper);
+    padding:.9rem 1.5rem;border-radius:999px;
+    text-decoration:none;font-weight:600;font-size:.95rem;
+    transition:transform .2s ease, background .2s ease;
+  }
+  .btn-solid:hover{transform:translateY(-2px);background:var(--violet);}
+  .btn-outline{
+    display:inline-flex;align-items:center;gap:.5rem;
+    border:1.5px solid var(--ink-faint);
+    padding:.9rem 1.5rem;border-radius:999px;
+    text-decoration:none;font-weight:600;font-size:.95rem;color:var(--ink);
+    transition:transform .2s ease, border-color .2s ease;
+  }
+  .btn-outline:hover{transform:translateY(-2px);border-color:var(--ink);}
+  .hero-platforms{display:flex;flex-wrap:wrap;gap:1.4rem;margin-top:3.4rem;}
+  .platform-link{display:inline-flex;align-items:center;gap:.45rem;text-decoration:none;color:var(--ink-soft);font-size:.85rem;font-weight:500;transition:color .2s ease;}
+  .platform-link:hover{color:var(--ink);}
+  .platform-link svg{width:16px;height:16px;}
 
-        /* Story */
-        .story { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; min-height: 60vh; }
-        .story-text { font-size: 1.1rem; line-height: 1.8; color: var(--text-light); }
-        .story-text span { color: var(--primary); font-weight: 500; }
-        .story-visual { position: relative; height: 400px; background: var(--gradient-1); border-radius: 20px; overflow: hidden; }
-        .story-visual::after { content: "AI"; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 8rem; font-family: 'Instrument Serif', serif; color: #fff; opacity: .2; }
+  .hero-photo{width:100%;max-height:520px;object-fit:cover;}
+  .hero-heading-row{display:flex;align-items:center;justify-content:space-between;gap:2.4rem;flex-wrap:wrap-reverse;}
+  .hero-avatar{
+    width:220px;height:220px;border-radius:50%;flex-shrink:0;overflow:hidden;position:relative;
+    background:var(--paper-dim);border:2px dashed var(--ink-faint);
+  }
+  .hero-avatar img{width:100%;height:100%;object-fit:cover;display:block;}
+  .hero-avatar-fallback{
+    display:none;position:absolute;inset:0;align-items:center;justify-content:center;color:var(--ink-soft);
+  }
+  .hero-avatar-fallback svg{width:64px;height:64px;}
+  @media (max-width:860px){.hero-avatar{width:150px;height:150px;}.hero-avatar-fallback svg{width:44px;height:44px;}}
 
-        /* Journey */
-        
-        /* Hero Photo Section - 21:9 aspect ratio */
-        .hero-photo-section {
-            width: 100%;
-            aspect-ratio: 21 / 9;
-            position: relative;
-            overflow: hidden;
-            background: #000000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .hero-photo {
-            width: 100%;
-            height: 100%;
-            display: block;
-            object-fit: cover;
-            object-position: center;
-        }
-        
-        @media (max-width: 768px) {
-            .hero-photo-section {
-                aspect-ratio: 16 / 9;
-            }
-        }
-        
-        body {
-            background: #ffffff;
-        }
-        
-        .hero {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        }
-        
-        .journey { background: var(--bg-tertiary); border-radius: 30px; padding: 4rem; }
-        .timeline { position: relative; padding-left: 2rem; }
-        .timeline::before { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 2px; background: var(--gradient-1); }
-        .timeline-item { margin-bottom: 3rem; position: relative; opacity: 0; animation: fadeInLeft .6s ease-out forwards; }
-        .timeline-item:nth-child(1){ animation-delay: .2s;} .timeline-item:nth-child(2){ animation-delay: .4s;} .timeline-item:nth-child(3){ animation-delay: .6s;}
-        .timeline-item::before { content: ''; position: absolute; left: -2.4rem; top: .5rem; width: 10px; height: 10px; border-radius: 50%; background: var(--card-bg); border: 2px solid #667eea; }
-        .timeline-date { font-size: .9rem; color: var(--text-light); margin-bottom: .5rem; }
-        .timeline-title { font-size: 1.3rem; font-weight: 500; margin-bottom: .3rem; }
-        .timeline-company { font-size: 1rem; color: var(--text-light); margin-bottom: .8rem; font-weight: 400; }
-        .timeline-desc { color: var(--text-light); line-height: 1.6; }
+  /* SECTION SHELL */
+  section{padding:6rem 6vw;position:relative;}
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:2rem;margin-bottom:3rem;flex-wrap:wrap;}
+  .section-title{font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:700;letter-spacing:-0.01em;}
+  .section-index{font-size:.85rem;color:var(--ink-soft);font-weight:500;}
 
-        /* Skills */
-        .skills { background: linear-gradient(135deg,#667eea15 0%,#764ba215 100%); border-radius: 30px; }
-        .skill-groups { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
-        .skill-card { 
-            background: var(--card-bg); 
-            border: 1px solid var(--border); 
-            border-radius: 16px; 
-            padding: 1.2rem 1.2rem 1rem; 
-            min-height: 120px; 
-            display: flex; 
-            flex-direction: column;
-            will-change: auto;
-        }
-        .skill-card h4 { font-size: 1.05rem; margin-bottom: .8rem; font-weight: 500; }
-        .pill-row { 
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: .6rem; 
-            row-gap: .6rem; 
-            align-items: flex-start; 
-            flex: 1;
-            contain: layout;
-        }
-        .pill { 
-            padding: .35rem .7rem; 
-            background: #f3f3f3; 
-            border-radius: 999px; 
-            font-size: .85rem; 
-            color: var(--text-light); 
-            white-space: nowrap; 
-            line-height: 1.4;
-            contain: paint;
-        }
-        
-        [data-theme="dark"] .pill {
-            background: rgba(255, 255, 255, 0.08);
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        @media (max-width: 768px) {
-            .skill-groups { grid-template-columns: 1fr; }
-            .pill-row { gap: .5rem; row-gap: .5rem; }
-            .pill { font-size: .8rem; padding: .3rem .65rem; }
-            .skill-card { min-height: auto; }
-        }
+  /* WORK EXPERIENCE — era rail */
+  .work{background:var(--ink);color:var(--paper);}
+  .work .section-title{color:var(--paper);}
+  .work .section-index{color:rgba(247,244,238,.55);}
+  .era{
+    display:grid;grid-template-columns:220px 1fr;gap:2.6rem;
+    padding:2.6rem 0;border-top:1px solid rgba(247,244,238,.14);
+  }
+  .era:last-child{border-bottom:1px solid rgba(247,244,238,.14);}
+  .era-years{font-size:1.3rem;font-weight:700;color:var(--sun);}
+  .era-role{font-size:1.35rem;font-weight:600;margin-bottom:.3rem;}
+  .era-company{color:rgba(247,244,238,.6);font-size:.95rem;margin-bottom:1.2rem;}
+  .era-desc{color:rgba(247,244,238,.82);line-height:1.75;max-width:74ch;}
+  .era-desc strong{color:var(--mint);font-weight:600;}
+  .era-toggle{
+    display:inline-flex;align-items:center;gap:.4rem;margin-top:1.1rem;
+    background:none;border:none;color:var(--sun);font-weight:600;font-size:.9rem;cursor:pointer;
+    font-family:'Inter',sans-serif;
+  }
+  .era-desc.collapsed{
+    max-height:5.6em;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,#000 60%,transparent 100%);mask-image:linear-gradient(180deg,#000 60%,transparent 100%);
+  }
+  .era-subrole + .era-subrole{margin-top:2.2rem;padding-top:2.2rem;border-top:1px dashed rgba(247,244,238,.18);}
+  .era-concurrent{font-size:.78rem;font-weight:600;color:var(--mint);margin-left:.5rem;}
 
-        /* Projects / Lab */
-        /* Projects - Horizontal Scroll */
-        #lab {
-            padding: 5rem 5%;
-        }
-        
-        .projects-scroll-container { 
-            position: relative; 
-            width: 100%; 
-            overflow: hidden;
-            padding: 1rem 0;
-        }
-        
-        .projects-scroll-wrapper {
-            display: flex;
-            gap: 1.5rem;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE/Edge */
-            padding-bottom: 1rem;
-        }
-        
-        .projects-scroll-wrapper::-webkit-scrollbar {
-            display: none; /* Chrome/Safari */
-        }
-        
-        .project-card { 
-            background: var(--card-bg); 
-            border: 1px solid var(--border); 
-            border-radius: 20px; 
-            padding: 2rem; 
-            transition: all .3s; 
-            position: relative; 
-            overflow: hidden;
-            min-width: 380px;
-            max-width: 380px;
-            flex-shrink: 0;
-        }
-        
-        .project-card::before { 
-            content: ''; 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 3px; 
-            background: var(--gradient-1); 
-            transform: translateX(-100%); 
-            transition: transform .3s; 
-        }
-        
-        .project-card:hover::before { 
-            transform: translateX(0); 
-        }
-        
-        .project-card:hover { 
-            transform: translateY(-5px); 
-            box-shadow: 0 10px 30px rgba(0,0,0,.1); 
-        }
-        
-        .project-title { 
-            font-size: 1.3rem; 
-            font-weight: 500; 
-            margin-bottom: .8rem; 
-        }
-        
-        .project-desc { 
-            color: var(--text-light); 
-            line-height: 1.6; 
-            margin-bottom: 1.1rem; 
-            font-size: 0.95rem;
-        }
-        
-        .project-tags { 
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: .5rem; 
-            margin-bottom: 1rem; 
-        }
-        
-        .tag { 
-            padding: .3rem .8rem; 
-            background: #f0f0f0; 
-            border-radius: 20px; 
-            font-size: .85rem; 
-            color: var(--text-light); 
-        }
-        
-        .project-links { 
-            display: flex; 
-            gap: .8rem; 
-        }
-        
-        .btn-link { 
-            display:inline-flex; 
-            align-items:center; 
-            gap:.5rem; 
-            padding:.55rem .9rem; 
-            border:1px solid var(--border); 
-            border-radius: 999px; 
-            text-decoration:none; 
-            font-size:.9rem; 
-            color: var(--primary); 
-            transition: transform .2s, box-shadow .2s, border-color .2s; 
-        }
-        
-        .btn-link:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 10px 20px rgba(0,0,0,.08); 
-            border-color: rgba(0,0,0,.15); 
-        }
+  /* SKILLS — asymmetric clusters */
+  .skills-grid{display:flex;flex-wrap:wrap;gap:1.6rem;}
+  .skill-cluster{
+    flex:1 1 260px;background:#fff;border-radius:20px;padding:1.6rem;
+    border-top:4px solid var(--accent, var(--violet));
+  }
+  .skill-cluster h4{font-size:1rem;font-weight:600;margin-bottom:1rem;}
+  .chip-row{display:flex;flex-wrap:wrap;gap:.5rem;}
+  .chip{
+    padding:.35rem .8rem;border-radius:999px;font-size:.82rem;font-weight:500;
+    background:color-mix(in srgb, var(--accent, var(--violet)) 12%, white);
+    color:var(--ink);
+  }
+  .industry-row{display:flex;flex-wrap:wrap;gap:.9rem;}
+  .industry-chip{
+    padding:.7rem 1.3rem;border-radius:999px;font-weight:600;font-size:.95rem;
+    background:color-mix(in srgb, var(--accent, var(--violet)) 14%, white);
+    border:1.5px solid color-mix(in srgb, var(--accent, var(--violet)) 35%, white);
+    color:var(--ink);
+  }
 
-        /* Articles (Medium) */
-        .articles { background: var(--bg-tertiary); border-radius: 30px; padding: 4rem 5%; overflow: hidden; }
-        
-        /* Horizontal scrolling container */
-        .articles-scroll-container { 
-            position: relative; 
-            width: 100%; 
-            overflow: hidden;
-            padding: 1rem 0;
-        }
-        
-        .article-scroll-wrapper {
-            display: flex;
-            gap: 1.5rem;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE/Edge */
-            padding-bottom: 1rem;
-        }
-        
-        .article-scroll-wrapper::-webkit-scrollbar {
-            display: none; /* Chrome/Safari */
-        }
-        
-        /* Article cards with banner */
-        .article-card { 
-            flex: 0 0 380px;
-            background: var(--card-bg); 
-            border: 1px solid var(--border); 
-            border-radius: 16px; 
-            overflow: hidden;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .article-card:hover { 
-            transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(0,0,0,.12);
-            border-color: rgba(0,0,0,.15);
-        }
-        
-        /* Banner image */
-        .article-banner {
-            width: 100%;
-            height: 200px;
-            background: var(--gradient-1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .article-banner img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-        
-        .article-card:hover .article-banner img {
-            transform: scale(1.05);
-        }
-        
-        /* Fallback gradient for articles without images */
-        .article-banner.gradient-fallback {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            font-family: 'Instrument Serif', serif;
-            color: rgba(255,255,255,0.3);
-        }
-        
-        /* Article content */
-        .article-content {
-            padding: 1.5rem;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .article-meta { 
-            font-size: 0.85rem; 
-            color: var(--text-light); 
-            margin-bottom: 0.6rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .article-title { 
-            font-weight: 600; 
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
-            color: var(--primary);
-        }
-        
-        .article-subtitle {
-            font-size: 0.95rem;
-            color: var(--text-light);
-            margin-bottom: 0.8rem;
-            font-style: italic;
-            line-height: 1.5;
-        }
-        
-        .article-excerpt { 
-            color: var(--text-light); 
-            margin-bottom: 1rem;
-            line-height: 1.6;
-            flex: 1;
-            font-size: 0.95rem;
-        }
-        
-        .read-more { 
-            text-decoration: none; 
-            font-weight: 500;
-            color: #667eea;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-            font-size: 0.9rem;
-            transition: gap 0.2s ease;
-        }
-        
-        .read-more:hover {
-            gap: 0.6rem;
-        }
-        
-        /* Scroll controls */
-        .scroll-controls {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-        
-        .scroll-btn {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            border: 1px solid var(--border);
-            background: var(--card-bg);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-        
-        .scroll-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,.1);
-            border-color: rgba(0,0,0,.15);
-        }
-        
-        .scroll-btn svg {
-            width: 20px;
-            height: 20px;
-        }
+  /* PROJECTS — numbered editorial list */
+  .proj-row{
+    display:grid;grid-template-columns:70px 1fr auto;gap:1.6rem;align-items:start;
+    padding:2rem 0;border-top:1px solid var(--ink-faint);
+  }
+  .proj-list{border-bottom:1px solid var(--ink-faint);}
+  .proj-num{font-size:1.1rem;font-weight:700;color:var(--coral);font-family:'Space Grotesk',sans-serif;}
+  .proj-title{font-size:1.3rem;font-weight:600;margin-bottom:.5rem;}
+  .proj-desc{color:var(--ink-soft);max-width:62ch;margin-bottom:.9rem;}
+  .proj-tags{display:flex;flex-wrap:wrap;gap:.5rem;}
+  .proj-tags span{font-size:.78rem;color:var(--ink-soft);background:var(--paper-dim);padding:.25rem .6rem;border-radius:6px;}
+  .proj-link{align-self:center;white-space:nowrap;text-decoration:none;font-weight:600;font-size:.9rem;color:var(--ink);border-bottom:2px solid var(--sun);padding-bottom:2px;}
 
-        /* Conferences */
-        .conf-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(320px,1fr)); gap:1.5rem; }
-        .conf-card { border:1px solid var(--border); border-radius:16px; padding:1.3rem 1.4rem; background: var(--card-bg); }
-        .conf-title { font-weight:600; margin-bottom:.35rem; }
-        .conf-meta { font-size:.9rem; color: var(--text-light); margin-bottom:.6rem; }
-        .conf-desc { color: var(--text-light); margin-bottom: 1rem; }
-        .conf-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: opacity 0.3s ease;
-        }
-        .conf-link:hover {
-            opacity: 0.6;
-        }
-        
-        /* Startup Story Slider */
-        /* Startup Journey Cards */
-        /* Startup Story Slider */
-        /* Startup Journey - Accordion Style */
-        .startup-story {
-            background: var(--bg-primary);
-            padding: 5rem 5%;
-        }
-        
-        .startup-accordion {
-            max-width: 900px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-        
-        .accordion-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .accordion-item:hover {
-            border-color: var(--primary);
-        }
-        
-        .accordion-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 2rem 2.5rem;
-            cursor: pointer;
-            gap: 2rem;
-        }
-        
-        .accordion-preview {
-            flex: 1;
-        }
-        
-        .accordion-meta {
-            font-size: 0.85rem;
-            color: var(--primary);
-            opacity: 0.7;
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 500;
-        }
-        
-        .accordion-title {
-            font-family: 'Instrument Serif', serif;
-            font-size: 1.5rem;
-            margin-bottom: 0.75rem;
-            color: var(--primary);
-            font-weight: 400;
-            line-height: 1.3;
-        }
-        
-        .accordion-excerpt {
-            font-size: 0.95rem;
-            color: var(--text-light);
-            line-height: 1.6;
-            margin: 0;
-        }
-        
-        .accordion-toggle {
-            flex-shrink: 0;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .accordion-toggle:hover {
-            background: var(--primary);
-            border-color: var(--primary);
-        }
-        
-        .accordion-toggle:hover svg {
-            stroke: #fff;
-        }
-        
-        .accordion-toggle svg {
-            width: 20px;
-            height: 20px;
-            stroke: var(--primary);
-            transition: all 0.3s ease;
-        }
-        
-        .accordion-item.expanded .accordion-toggle svg {
-            transform: rotate(180deg);
-        }
-        
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease;
-        }
-        
-        .accordion-item.expanded .accordion-content {
-            max-height: 2000px;
-        }
-        
-        .accordion-images {
-            position: relative;
-            width: 100%;
-            height: 350px;
-            overflow: hidden;
-            background: var(--bg-secondary);
-        }
-        
-        .accordion-image-slider {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .accordion-image-slider img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-        
-        .accordion-image-slider img.active {
-            opacity: 1;
-        }
-        
-        .image-controls {
-            position: absolute;
-            bottom: 1rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 10;
-        }
-        
-        .img-nav {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: var(--primary);
-            transition: all 0.3s ease;
-        }
-        
-        .img-nav:hover {
-            background: #fff;
-            transform: scale(1.1);
-        }
-        
-        .img-dots {
-            display: flex;
-            gap: 0.5rem;
-        }
-        
-        .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .dot.active {
-            background: #fff;
-            width: 24px;
-            border-radius: 4px;
-        }
-        
-        .accordion-story {
-            padding: 2.5rem;
-            font-size: 0.95rem;
-            line-height: 1.7;
-            color: var(--text-light);
-        }
-        
-        .accordion-story p {
-            margin-bottom: 1.25rem;
-        }
-        
-        .accordion-story strong {
-            color: var(--primary);
-            font-weight: 600;
-        }
-        
-        @media (max-width: 768px) {
-            .accordion-header {
-                padding: 1.5rem 1.75rem;
-                gap: 1rem;
-            }
-            
-            .accordion-title {
-                font-size: 1.25rem;
-            }
-            
-            .accordion-excerpt {
-                font-size: 0.9rem;
-            }
-            
-            .accordion-images {
-                height: 250px;
-            }
-            
-            .accordion-story {
-                padding: 2rem 1.75rem;
-                font-size: 0.9rem;
-            }
-        }
-        
-        .slide-content {
-            flex: 1;
-            padding: 2.5rem 3rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .startup-meta {
-            font-size: 0.85rem;
-            color: var(--primary);
-            margin-bottom: 0.75rem;
-            opacity: 0.7;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .slide-title {
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(1.5rem, 3vw, 1.85rem);
-            margin-bottom: 1.25rem;
-            font-weight: 400;
-            line-height: 1.25;
-            color: var(--primary);
-        }
-        
-        .slide-body {
-            font-size: 0.95rem;
-            line-height: 1.65;
-            color: var(--text-light);
-        }
-        
-        .slide-body p {
-            margin-bottom: 1rem;
-            color: var(--text-light);
-        }
-        
-        .slide-body p:last-of-type {
-            margin-bottom: 0;
-        }
-        
-        .slide-body strong {
-            font-weight: 600;
-            color: var(--primary);
-        }
-        
-        .slide-lesson {
-            margin-top: 1.5rem;
-            padding: 1.25rem 1.5rem;
-            background: var(--bg-secondary);
-            border-left: 3px solid var(--primary);
-            border-radius: 8px;
-            font-style: italic;
-            font-size: 0.9rem;
-            color: var(--text-light);
-            line-height: 1.6;
-        }
-        
-        [data-theme="dark"] .slide-lesson {
-            background: rgba(255, 255, 255, 0.04);
-        }
-        
-        /* Slider controls */
-        .slider-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: var(--card-bg);
-            border: 1.5px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 10;
-        }
-        
-        .slider-arrow:hover {
-            background: var(--primary);
-            border-color: var(--primary);
-            transform: translateY(-50%) scale(1.1);
-        }
-        
-        .slider-arrow:hover svg {
-            color: #fff;
-        }
-        
-        .slider-arrow.left {
-            left: 0;
-        }
-        
-        .slider-arrow.right {
-            right: 0;
-        }
-        
-        .slider-arrow svg {
-            width: 20px;
-            height: 20px;
-            color: var(--primary);
-            transition: color 0.3s ease;
-        }
-        
-        .slider-controls {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 2.5rem;
-        }
-        
-        .slider-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--border);
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .slider-dot.active {
-            background: var(--primary);
-            width: 28px;
-            border-radius: 5px;
-        }
-        
-        .slider-dot:hover {
-            background: var(--primary);
-            opacity: 0.7;
-        }
-        
-        @media (max-width: 768px) {
-            .slide-content {
-                padding: 2rem 1.5rem 2.5rem;
-            }
-            
-            .startup-slider-container {
-                padding: 0 50px;
-            }
-            
-            .slide-image {
-                aspect-ratio: 16/9;
-            }
-        }
-        
-        @media (max-width: 640px) {
-            .startup-slider-container {
-                padding: 0 40px;
-            }
-            
-            .slider-arrow {
-                width: 40px;
-                height: 40px;
-            }
-            
-            .slider-arrow svg {
-                width: 18px;
-                height: 18px;
-            }
-            
-            .slide-card {
-                flex-direction: column;
-                min-height: auto;
-            }
-            
-            .slide-image-container {
-                flex: 0 0 auto;
-                height: 250px;
-            }
-            
-            .slide-content {
-                padding: 2rem 1.5rem;
-            }
-            
-            .slide-title {
-                font-size: 1.5rem;
-            }
-            
-            .slide-body {
-                font-size: 0.9rem;
-            }
-            
-            .slide-lesson {
-                font-size: 0.85rem;
-                padding: 1rem 1.25rem;
-            }
-        }
+  /* SCROLL CARDS (articles / publications) */
+  .scroll-shell{position:relative;}
+  .scroll-track{display:flex;gap:1.4rem;overflow-x:auto;scroll-behavior:smooth;scrollbar-width:none;padding-bottom:.5rem;}
+  .scroll-track::-webkit-scrollbar{display:none;}
+  .card{
+    flex:0 0 340px;background:#fff;border-radius:4px;overflow:hidden;text-decoration:none;color:var(--ink);
+    border-top:5px solid var(--accent, var(--violet));
+    transition:transform .25s ease;
+    display:flex;flex-direction:column;
+  }
+  .card:hover{transform:translateY(-6px);}
+  .card-banner{height:170px;overflow:hidden;background:var(--paper-dim);}
+  .card-banner img{width:100%;height:100%;object-fit:cover;}
+  .card-body{padding:1.4rem;display:flex;flex-direction:column;gap:.6rem;flex:1;}
+  .card-meta{font-size:.78rem;color:var(--ink-soft);font-weight:500;}
+  .card-title{font-size:1.05rem;font-weight:600;line-height:1.35;}
+  .card-excerpt{font-size:.88rem;color:var(--ink-soft);flex:1;}
+  .card-cta{font-size:.85rem;font-weight:600;color:var(--coral);}
+  .scroll-controls{display:flex;gap:.7rem;margin-top:1.4rem;}
+  .scroll-btn{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--ink-faint);background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s ease;}
+  .scroll-btn:hover{border-color:var(--ink);}
+  .scroll-btn svg{width:16px;height:16px;}
 
-        /* Vision */
-        .vision { text-align: center; padding: 8rem 5%; background: linear-gradient(135deg,#667eea15 0%,#764ba215 100%); border-radius: 30px; }
-        .vision-text { font-size: 1.3rem; line-height: 1.8; max-width: 800px; margin: 0 auto 3rem; color: var(--text-light); }
-        .vision-text strong { color: var(--primary); font-weight: 500; }
-        .cta-button { display: inline-block; padding: 1rem 2.5rem; background: var(--primary); color: #fff; text-decoration: none; border-radius: 50px; font-weight: 500; transition: all .3s; position: relative; overflow: hidden; }
-        .cta-button:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,.2); }
+  /* STARTUPS — editorial alternating feature */
+  .journey-feature{
+    display:grid;grid-template-columns:1fr 1fr;gap:3.2rem;align-items:center;
+    padding:3.6rem 0;border-top:1px solid var(--ink-faint);
+  }
+  .journey-feature:last-child{border-bottom:1px solid var(--ink-faint);}
+  .journey-feature .journey-text{order:1;}
+  .journey-feature .journey-images{order:2;}
+  .journey-feature.reverse .journey-text{order:2;}
+  .journey-feature.reverse .journey-images{order:1;}
+  .journey-meta{font-size:.85rem;font-weight:600;color:var(--accent, var(--violet));margin-bottom:.7rem;}
+  .journey-text h3{font-size:1.7rem;font-weight:700;margin-bottom:1.1rem;letter-spacing:-0.01em;}
+  .journey-text p{color:var(--ink-soft);line-height:1.75;}
+  .journey-text p+p{margin-top:1rem;}
+  .journey-text strong{color:var(--ink);font-weight:600;}
+  .journey-images{
+    display:grid;grid-template-columns:1.2fr 1fr;grid-template-rows:1fr 1fr;
+    gap:.7rem;height:340px;
+  }
+  .journey-images img{width:100%;height:100%;object-fit:cover;border-radius:16px;cursor:zoom-in;transition:opacity .2s ease;}
+  .journey-images img:hover{opacity:.88;}
+  .journey-images .img-main{grid-row:1 / 3;}
 
-        /* Profiles section */
-        /* Profiles - Minimal Icon Row */
-        .profiles-minimal {
-            padding: 2rem 5%;
-        }
-        
-        .social-icons-row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-        
-        .social-icon {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            color: var(--primary);
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        
-        .social-icon:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
-            border-color: var(--primary);
-            background: var(--primary);
-        }
-        
-        .social-icon:hover svg {
-            color: #fff;
-            stroke: #fff;
-        }
-        
-        .social-icon svg {
-            width: 22px;
-            height: 22px;
-            transition: all 0.3s ease;
-        }
-        
-        [data-theme="dark"] .social-icon:hover {
-            box-shadow: 0 6px 16px rgba(255,255,255,0.1);
-        }
+  /* LIGHTBOX */
+  .lightbox{
+    position:fixed;inset:0;background:rgba(20,19,43,.92);z-index:2000;
+    display:none;align-items:center;justify-content:center;padding:5vw;
+  }
+  .lightbox.active{display:flex;}
+  .lightbox img{max-width:92vw;max-height:86vh;border-radius:12px;object-fit:contain;}
+  .lightbox-close{
+    position:absolute;top:1.6rem;right:1.6rem;width:44px;height:44px;border-radius:50%;
+    background:rgba(255,255,255,.14);border:none;color:#fff;font-size:1.5rem;line-height:1;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+  }
 
-        /* Footer */
-        footer { text-align:center; padding: 3rem 5%; border-top: 1px solid var(--border); }
-        .social-links { display:flex; justify-content:center; gap:2rem; margin-bottom:2rem; }
-        .social-links a { color: var(--primary); text-decoration:none; font-size:.95rem; transition: opacity .3s; }
-        .social-links a:hover { opacity: .6; }
+  /* CONNECT */
+  .connect{background:var(--ink);color:var(--paper);text-align:left;}
+  .connect .section-title{color:var(--paper);}
+  .connect-row{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:2rem;}
+  .connect-email{font-size:clamp(1.1rem,2vw,1.5rem);font-weight:700;color:var(--sun);text-decoration:none;word-break:break-word;}
+  .connect-socials{display:flex;gap:1.1rem;}
+  .connect-socials a{width:44px;height:44px;border-radius:50%;border:1px solid rgba(247,244,238,.2);display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--paper);transition:background .2s ease;}
+  .connect-socials a:hover{background:rgba(247,244,238,.12);}
+  .connect-socials svg{width:19px;height:19px;}
+  .connect-foot{margin-top:3rem;font-size:.8rem;color:rgba(247,244,238,.5);display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;}
 
-        /* Animations */
-        @keyframes fadeInUp { from{ opacity:0; transform: translateY(30px);} to{ opacity:1; transform: translateY(0);} }
-        @keyframes fadeInLeft { from{ opacity:0; transform: translateX(-30px);} to{ opacity:1; transform: translateX(0);} }
-
-        /* Responsive */
-        @media (max-width: 980px) {
-            .nav-links { position: fixed; top: 0; right: -100%; width: 70%; height: 100vh; background: var(--card-bg); flex-direction: column; padding: 5rem 2rem; box-shadow: -5px 0 20px rgba(0,0,0,.1); transition: right .3s; }
-            .nav-links.active { right: 0; }
-            .mobile-menu { display: flex; z-index: 1001; }
-            .story { grid-template-columns: 1fr; gap: 2rem; }
-            .story-visual { height: 300px; }
-            .journey { padding: 2rem; }
-            section { padding: 3rem 5%; }
-            .vision { padding: 4rem 5%; }
-            
-            /* Article cards responsive */
-            .article-card {
-                flex: 0 0 300px;
-            }
-            
-            .article-banner {
-                height: 160px;
-            }
-            
-            .article-content {
-                padding: 1.2rem;
-            }
-            
-            .article-title {
-                font-size: 1.05rem;
-            }
-            
-            .article-subtitle {
-                font-size: 0.88rem;
-            }
-            
-            .article-excerpt {
-                font-size: 0.88rem;
-            }
-            
-            /* Startup slider responsive */
-            .startup-slide {
-                flex-direction: column;
-                padding: 2rem 5%;
-                gap: 2rem;
-            }
-            
-            .slide-image {
-                flex: 0 0 auto;
-                width: 100%;
-                height: 300px;
-            }
-            
-            .slide-content {
-                text-align: center;
-            }
-            
-            .slider-arrow {
-                width: 40px;
-                height: 40px;
-            }
-            
-            .slider-arrow.left {
-                left: 1rem;
-            }
-            
-            .slider-arrow.right {
-                right: 1rem;
-            }
-            
-            /* Featured platforms responsive */
-            .featured-platforms {
-                gap: 0.8rem;
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .platforms-divider {
-                display: none;
-            }
-            
-            }
-        }
-        
-        @media (max-width: 640px) {
-            .hero {
-                min-height: 100vh;
-                padding: 4rem 1.5rem 3rem;
-            }
-            
-            .hero-content {
-                padding: 0;
-            }
-            
-            .hero-avatar {
-                width: 100px;
-                height: 100px;
-                margin-bottom: 1.25rem;
-            }
-            
-            .hero h1 {
-                font-size: clamp(1.5rem, 6vw, 2rem);
-                margin-bottom: 1rem;
-            }
-            
-            .subtitle {
-                font-size: 0.95rem;
-                margin-bottom: 2rem;
-            }
-            
-            .hero-actions {
-                gap: 1rem;
-            }
-            
-            .featured-platforms {
-                margin-top: 2rem;
-                gap: 1rem;
-            }
-            
-            .tagline {
-                font-size: 0.85rem;
-                padding: 0.45rem 1rem;
-            }
-            
-            .hero-btn {
-                font-size: 0.9rem;
-            }
-            
-            .featured-platforms {
-                display: flex;
-                gap: 0.9rem;
-                opacity: 0.75;
-                gap: 1rem;
-            }
-            
-            .platform-link {
-                font-size: 0.75rem;
-                opacity: 0.5;
-            }
-            
-            .platform-link svg {
-                width: 14px;
-                height: 14px;
-            }
-            
-            .tagline {
-                font-size: 0.85rem;
-                padding: 0.45rem 1rem;
-            }
-            
-            .hero-btn {
-                font-size: 0.9rem;
-                padding: 0.65rem 1.5rem;
-            }
-            
-            .article-card {
-                flex: 0 0 280px;
-            }
-            
-            .articles {
-                padding: 3rem 5%;
-            }
-            
-            .hero-cta-buttons {
-                gap: 1rem;
-                flex-direction: column;
-                align-items: flex-start;
-                width: 100%;
-            }
-            
-            .hero-btn {
-                width: fit-content;
-            }
-            
-            .btn-divider {
-                display: none;
-            }
-            
-            .startup-slider-container {
-                height: auto;
-                min-height: 500px;
-            }
-        }
-    </style>
+  @media (max-width:860px){
+    .nav-links{
+      position:fixed;top:0;right:-100%;height:100vh;width:70%;
+      background:var(--paper);flex-direction:column;justify-content:center;
+      align-items:flex-start;padding:2rem 2rem;gap:1.6rem;
+      transition:right .3s ease;box-shadow:-10px 0 30px rgba(0,0,0,.08);
+    }
+    .nav-links.active{right:0;}
+    .mobile-menu{display:flex;}
+    .era{grid-template-columns:1fr;}
+    .proj-row{grid-template-columns:40px 1fr;}
+    .proj-link{grid-column:1/-1;}
+    .journey-feature{grid-template-columns:1fr;}
+    .journey-feature .journey-text,.journey-feature .journey-images{order:initial;}
+    .journey-images{height:260px;}
+  }
+</style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <div class="logo-name-wrapper">
-                    <span class="logo-name">Hemanth</span>
-                    <span class="logo-name">हेमन्त</span>
-                    <span class="logo-name">హేమంత్</span>
-                    <span class="logo-name">Hemanth</span>
-                    <span class="logo-name">赫曼特</span>
-                    <span class="logo-name">ヘマント</span>
-                    <span class="logo-name">Hemanth</span>
-                    <span class="logo-name">Гемант</span>
-                </div>
-                <span class="logo-meta">
-                    <span class="logo-pronunciation">/ˈheɪ.mənθ/</span>
-                </span>
-            </div>
-            <div class="nav-right">
-                <ul class="nav-links" id="navLinks">
-                    <li><a href="#journey">Experience</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#lab">Projects</a></li>
-                    <li><a href="#articles">Articles</a></li>
-                    <li><a href="#conferences">Publications</a></li>
-                    <li><a href="#startups">Startups</a></li>
-                    <li><a href="#profiles">Profiles</a></li>
-                    <li><a href="#connect">Connect</a></li>
-                </ul>
-                <div class="mobile-menu" id="mobileMenu" aria-label="Open navigation menu" role="button" tabindex="0">
-                    <span></span><span></span><span></span>
-                </div>
-            </div>
+
+<nav id="navbar">
+  <div class="wordmark">Hemanth<span>.</span><span class="wordmark-pronunciation">/ˈheɪ.mənθ/</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#journey">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#lab">Projects</a></li>
+    <li><a href="#articles">Articles</a></li>
+    <li><a href="#conferences">Publications</a></li>
+    <li><a href="#startups">Startups</a></li>
+    <li><a href="#connect">Connect</a></li>
+  </ul>
+  <div class="mobile-menu" id="mobileMenu" role="button" tabindex="0" aria-label="Open navigation menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" aria-label="Intro">
+  <div class="hero-eyebrow">
+    <span class="lang-cycle">
+      <span class="lang-name">Hemanth</span>
+      <span class="lang-name">हेमन्त</span>
+      <span class="lang-name">హేమంత్</span>
+      <span class="lang-name">Hemanth</span>
+      <span class="lang-name">赫曼特</span>
+      <span class="lang-name">ヘマント</span>
+      <span class="lang-name">Hemanth</span>
+      <span class="lang-name">Гемант</span>
+    </span>
+    <span>· AI Engineer & Researcher · United States 🇺🇸</span>
+  </div>
+
+  <div class="hero-heading-row">
+    <h1>My two failed startups taught me what no <span class="underline">MBA</span> ever could</h1>
+    <div class="hero-avatar">
+      <img src="images/profile.jpg" alt="Hemanth Vamsi Krishna" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+      <div class="hero-avatar-fallback">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <p class="hero-sub">I completed my Master's in Artificial Intelligence in 2026 and I'm now actively looking for my next full-time role in AI/ML. In the meantime, I'm volunteering as a Computer Vision & Intelligence Systems Engineer at Q's Ministry, leading the architecture for an offline, on-premise vision-and-agentic-AI assistant — from camera pipeline to on-device reasoning.</p>
+
+  <div class="hero-actions">
+    <a href="#lab" class="btn-solid">View my work</a>
+    <a href="#startups" class="btn-outline">Read my story</a>
+  </div>
+
+  <div class="hero-platforms">
+    <a href="https://github.com/hemanthvamsikrishna" target="_blank" class="platform-link" aria-label="GitHub">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.22c0 4.51 2.87 8.33 6.84 9.68.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.13-4.56-5 0-1.11.39-2.01 1.03-2.72-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.04a9.26 9.26 0 0 1 5 0c1.9-1.31 2.74-1.04 2.74-1.04.56 1.42.21 2.47.1 2.73.64.71 1.03 1.61 1.03 2.72 0 3.88-2.34 4.74-4.57 4.99.36.32.68.95.68 1.92 0 1.38-.01 2.49-.01 2.83 0 .27.18.6.69.49A10.22 10.22 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z"/></svg>
+      <span>GitHub</span>
+    </a>
+    <a href="https://www.linkedin.com/in/hemanthvamsikrishna/" target="_blank" class="platform-link" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3.5 9h3v12h-3V9zm6 0h2.879v1.64h.041C13.04 9.62 14.37 9 15.88 9 19.2 9 20 11.19 20 14.36V21h-3v-6.07c0-1.45-.03-3.31-2.02-3.31-2.03 0-2.34 1.58-2.34 3.21V21H9.5V9z"/></svg>
+      <span>LinkedIn</span>
+    </a>
+    <a href="https://x.com/hemanthvamsy" target="_blank" class="platform-link" aria-label="X (Twitter)">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      <span>X</span>
+    </a>
+    <a href="https://huggingface.co/hemanthvamsikrishna" target="_blank" class="platform-link" aria-label="Hugging Face">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/><path d="M8.5 14c1 .9 2.3 1.5 3.5 1.5S14.5 14.9 15.5 14" stroke-linecap="round"/></svg>
+      <span>Hugging Face</span>
+    </a>
+    <a href="https://medium.com/@hemanthvamsikrishna" target="_blank" class="platform-link" aria-label="Medium">
+      <svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="5" width="5" height="14"/><path d="M10 7l3.5 5L10 17V7Z"/><path d="M15 7h2v10h-2z"/></svg>
+      <span>Medium</span>
+    </a>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section id="industries">
+  <div class="section-head">
+    <h2 class="section-title">Industries I've Applied AI In</h2>
+  </div>
+  <div class="industry-row">
+    <span class="industry-chip" style="--accent:#6C5CE7;">Manufacturing</span>
+    <span class="industry-chip" style="--accent:#FF5470;">Higher Education</span>
+    <span class="industry-chip" style="--accent:#FFC857;">Chemical</span>
+    <span class="industry-chip" style="--accent:#2FD9C4;">Healthcare</span>
+    <span class="industry-chip" style="--accent:#6C5CE7;">Agriculture / AgTech</span>
+    <span class="industry-chip" style="--accent:#FF5470;">Mobility Tech</span>
+    <span class="industry-chip" style="--accent:#FFC857;">Enterprise Cloud & AI</span>
+  </div>
+</section>
+
+<!-- WORK EXPERIENCE -->
+<section id="journey" class="work">
+  <div class="section-head">
+    <h2 class="section-title">Work Experience</h2>
+    <span class="section-index">2019 — 2026</span>
+  </div>
+
+  <div class="era">
+    <div class="era-years">2026–<br>Present</div>
+    <div>
+      <div class="era-role">AI Computer Vision and Intelligence Assistant Systems Engineer (Volunteer, Full-time)</div>
+      <div class="era-company">Q's Ministry / BHITS · Jul 2026 – Present · Remote, California, United States</div>
+      <div class="era-desc collapsed" id="era-qsministry">
+        <strong>System Architecture & Computer-Vision Pipeline Leadership:</strong> Leading end-to-end technical architecture for an offline, on-premise computer-vision assistance application, defining module interfaces, data formats, and APIs across an engineering team; coordinating model selection for object, scene, pose, hand-position, and action recognition, and owning camera-to-application workflow design so vision outputs integrate cleanly with downstream routine and AI-agent modules.
+        <br><br>
+        <strong>Agentic AI & On-Premise LLM Integration Architecture:</strong> Architecting the integration layer between the computer-vision pipeline and the application's offline agentic AI and local LLM components, applying natural language processing for on-device prompt understanding, and defining event schemas and APIs so vision outputs feed directly into on-device retrieval-augmented reasoning and step-by-step application guidance, keeping the iOS/Android application a single coherent, fully on-premise AI system with no third-party cloud dependency.
+        <br><br>
+        <strong>Cross-Functional Leadership, Code Review & Technical Risk Management:</strong> Leading and mentoring a 3-person development team across full-stack integration, image-processing, and offline agentic-AI engineering; directing pull-request approval and integration review across all workstreams, resolving cross-module conflicts, preventing feature duplication, and reporting technical blockers and safety-relevant risks to keep the team aligned on shared architecture and standards.
+      </div>
+      <button class="era-toggle" data-target="era-qsministry">Read full role ↓</button>
+    </div>
+  </div>
+
+  <div class="era">
+    <div class="era-years">2025–<br>2026</div>
+    <div>
+      <div class="era-role">Graduate Student Employee (Part-Time)</div>
+      <div class="era-company">University of Central Missouri · Aug 2025 – May 2026 · Warrensburg, Missouri</div>
+      <div class="era-desc collapsed" id="era-gse">
+        <strong>Data Collection & Validation:</strong> Collected, validated, and cleaned institutional library datasets from multiple source systems to support operational reporting and usage analysis.
+        <br><br>
+        <strong>Exploratory Data Analysis:</strong> Conducted exploratory data analysis (EDA) to identify resource demand trends, usage patterns, and data quality gaps across services.
+        <br><br>
+        <strong>Data Visualization & Reporting:</strong> Developed visualizations and analytical summaries to communicate insights and support data-driven planning decisions.
+        <br><br>
+        <strong>Stakeholder Collaboration:</strong> Collaborated with stakeholders to translate reporting requirements into structured, analysis-ready datasets and actionable insights.
+      </div>
+      <button class="era-toggle" data-target="era-gse">Read full role ↓</button>
+    </div>
+  </div>
+
+  <div class="era">
+    <div class="era-years">2021–<br>2024</div>
+    <div>
+      <div class="era-role">Systems Engineer (Full Time)</div>
+      <div class="era-company">Tata Consultancy Services (TCS) · Dec 2021 – Jul 2024 · Hyderabad, India</div>
+      <div class="era-desc collapsed" id="era-tcs">
+        <strong>LLM Integration & RAG:</strong> Developed GPT-3.5–powered enterprise applications using Python (FastAPI), Azure OpenAI, and LangChain; designed modular prompt templates, system instructions, and multi-turn conversational flows to improve reliability and accuracy. Built RAG pipelines using Azure Cognitive Search, vector embeddings, chunking strategies, and metadata-based retrieval to deliver grounded, domain-specific answers for document-heavy enterprise use cases.
+        <br><br>
+        <strong>Statistical Software Development in R & Python:</strong> Developed production statistical computing solutions using R and Python supporting enterprise analytics serving 10K+ users; implemented data processing pipelines, statistical models, and machine learning algorithms in both languages; optimized computational performance through efficient data structures, vectorized operations, and algorithmic improvements reducing runtime by 40%; designed modular, reusable code libraries following software engineering best practices including version control (Git), unit testing (testthat in R, pytest in Python), and comprehensive documentation.
+        <br><br>
+        <strong>Data Structure Optimization & Package Development:</strong> Engineered advanced data structures in R and Python optimizing memory usage and performance for large-scale datasets (10M+ records); developed and maintained internal packages and libraries supporting analytical workflows; implemented efficient algorithms for data transformation, aggregation, and statistical computation; applied profiling tools (R profvis, Python cProfile) identifying performance bottlenecks and implementing optimization strategies; created scalable solutions supporting both interactive analysis and production deployments.
+        <br><br>
+        <strong>Data Engineering & Big Data Pipelines:</strong> Engineered large-scale data pipelines using Azure Data Factory and Azure Databricks; developed PySpark ETL jobs on Spark clusters, optimized distributed transformations, and implemented Delta Lake–based architectures on Data Lake Storage (ADLS) to ensure reliable, versioned, and ML-ready datasets.
+        <br><br>
+        <strong>Research Software Engineering & Repository Development:</strong> Built data repository systems managing large-scale datasets with versioning, metadata tracking, and quality validation; developed automated workflows for data ingestion, transformation, and analysis using R and Python; implemented parallel processing frameworks (R parallel, Python multiprocessing) for computationally intensive statistical operations; established software development best practices including code review, continuous integration, and automated testing; maintained production systems with comprehensive monitoring ensuring reliability and correctness of statistical computations. Created data visualizations using ggplot2 and matplotlib for technical and non-technical audiences. Applied statistical methods using R (tidyverse, caret, forecast) and Python (scikit-learn, statsmodels, SciPy) for hypothesis testing, regression modeling, time-series forecasting, and experimental design; developed reproducible statistical analysis workflows producing comprehensive reports and visualizations.
+        <br><br>
+        <strong>Data Pipeline Architecture & Azure Databricks Engineering:</strong> Engineered large-scale data pipelines using Azure Data Factory and Azure Databricks supporting enterprise AI applications; developed PySpark ETL jobs on Spark clusters processing 100K+ records daily, optimized distributed transformations with partitioning strategies, and implemented Delta Lake architectures on Azure Data Lake Storage (ADLS) ensuring reliable, versioned, analytics-ready datasets with 99.9% uptime across production environments.
+        <br><br>
+        <strong>Data Modeling & Database Optimization:</strong> Designed scalable data models supporting business intelligence and analytics workloads using Microsoft SQL Server and Azure cloud platforms; implemented indexing strategies and query optimization best practices reducing data retrieval times by 40%; collaborated cross-functionally with product managers, analysts, and engineers to translate business requirements into technical data architectures meeting governance and performance standards.
+        <br><br>
+        <strong>Document Intelligence & Cognitive Automation:</strong> Integrated Azure Document Intelligence, Cognitive Search, Blob Storage, and Function Apps to automate document ingestion, semantic indexing, and large-scale retrieval workflows. Implemented machine learning and computer vision models using TensorFlow, Keras, and OpenCV for classification.
+        <br><br>
+        <strong>Advanced Analytics Infrastructure & Semantic Search:</strong> Developed semantic search and retrieval systems using Azure Cognitive Search, vector embeddings, and metadata-based indexing to support analytics use cases; implemented chunking strategies and distributed data processing optimizing information retrieval performance; built scalable backend microservices using Python (FastAPI) and SQL supporting cross-database lookups, data aggregation, and structured content extraction for business intelligence applications.
+        <br><br>
+        <strong>Backend Engineering & Intelligent Retrieval:</strong> Developed scalable backend microservices supporting AI inference, vector search, prompt routing, and hybrid retrieval (keyword + embedding) for cross-database lookups, multi-document summarization, and structured content extraction using Python (FastAPI), Azure Cloud, and Microsoft SQL Server.
+        <br><br>
+        <strong>Production Systems Monitoring & Performance Enhancement:</strong> Deployed scalable data systems on Azure Cloud with comprehensive monitoring pipelines tracking data quality metrics, pipeline performance, and system reliability; implemented CI/CD workflows automating deployment processes; displayed strong ownership by iterating on data architectures based on performance analytics and stakeholder feedback; worked in fast-paced environment with regular releases, continuously enhancing data capabilities to solve business-critical problems.
+      </div>
+      <button class="era-toggle" data-target="era-tcs">Read full role ↓</button>
+    </div>
+  </div>
+
+  <div class="era">
+    <div class="era-years">2019–<br>2021</div>
+    <div>
+      <div class="era-subrole">
+        <div class="era-role">Data Analyst (Analytics and ML)<span class="era-concurrent">concurrent with Vaaraahi Farms below</span></div>
+        <div class="era-company">T.I.M.E. Pvt. Ltd. · Jun 2019 – Nov 2021 · Ramanayyapeta, Andhra Pradesh, India (Remote)</div>
+        <div class="era-desc collapsed" id="era-time">
+          Collected, integrated, and analyzed large-scale student enrollment, attendance, examination, and academic performance datasets using Python (Pandas, NumPy), SQL, and Microsoft Excel.
+          <br><br>
+          Designed supervised machine learning models including Logistic Regression, Decision Trees, Random Forest, and Gradient Boosting to identify at-risk students, predict enrollment trends, and support institutional planning.
+          <br><br>
+          Designed automated ETL pipelines to extract, transform, cleanse, validate, and integrate data from multiple academic systems using SQL joins, window functions, Python automation, and relational databases.
+          <br><br>
+          Performed feature engineering, missing value imputation, categorical encoding, and statistical analysis to improve predictive model performance while maintaining over 95% reporting accuracy.
+          <br><br>
+          Conducted forecasting and trend analysis to support enrollment planning and institutional resource allocation.
         </div>
-    </nav>
+        <button class="era-toggle" data-target="era-time">Read full role ↓</button>
+      </div>
 
-    <!-- Hero -->
-    <section class="hero" aria-label="Intro">
-        <div class="floating-shapes">
-            <div class="shape"></div><div class="shape"></div><div class="shape"></div>
+      <div class="era-subrole">
+        <div class="era-role">Startup Founder and AI/ML Engineer (Full Time)<span class="era-concurrent">concurrent with T.I.M.E. above</span></div>
+        <div class="era-company">Vaaraahi Farms (GST Registered) · Oct 2020 – Jun 2021 · Andhra Pradesh, India</div>
+        <div class="era-desc collapsed" id="era-vaaraahi">
+          <strong>Technology Leadership:</strong> Founded a registered services business offering technology-driven IoT and ML/data analytics solutions to agriculture-focused clients. Built regression, anomaly-detection, and forecasting models to predict nutrient imbalance, detect system faults, and optimize growing conditions in controlled-environment farms.
+          <br><br>
+          <strong>Statistical Computing & Predictive Modeling:</strong> implemented time-series forecasting models using R (forecast, zoo, tseries) and Python (statsmodels, Prophet) analyzing 1000+ IoT sensor streams; developed anomaly detection algorithms, regression models, and classification systems supporting operational decision-making; applied statistical rigor ensuring model validity, appropriate uncertainty quantification, and reproducible results.
+          <br><br>
+          <strong>Software Optimization & Algorithm Development:</strong> Optimized R and Python code for computational efficiency improving algorithm performance by 30%; implemented efficient data structures for time-series data, sensor measurements, and aggregated statistics; applied performance profiling identifying computational bottlenecks and implementing targeted optimizations; developed scalable solutions balancing statistical accuracy with computational efficiency.
+          <br><br>
+          <strong>Data-Driven Problem Solving & Requirements Gathering:</strong> Collaborated with stakeholders to gather business requirements and data needs; designed robust experiment plans combining quantitative data analysis with domain expertise; translated user requirements into technical data solutions achieving clarity from ambiguous problem statements and delivering measurable business value.
+          <br><br>
+          <strong>Predictive Maintenance:</strong> Implemented predictive maintenance algorithms that identified pump degradation, aeration failures, and chemical drift patterns using IoT telemetry, reducing downtime and enhancing system reliability.
+          <br><br>
+          <strong>Time-Series Data Processing & Predictive Analytics:</strong> Built production data pipelines processing IoT telemetry data using Python (scikit-learn, Pandas), SQL databases, and batch processing workflows; implemented LSTM-based time-series forecasting, anomaly detection algorithms, and optimization models analyzing sensor data patterns; ensured data quality and integrity across multiple data sources, proactively resolving discrepancies and improving data accuracy for operational decision-making in production environments.
+          <br><br>
+          <strong>ML Analytics:</strong> Developed ML-driven solutions for practical on-ground problems such as predicting lettuce tip-burn before it became visible, forecasting ammonia spikes in aquaponics to prevent fish mortality, estimating optimal harvest timing using microclimate patterns, and detecting abnormal pH drift caused by microbial activity resulting in proactive interventions and higher system stability.
+          <br><br>
+          <strong>Analytics Impact Measurement & Documentation:</strong> Measured and tracked impact of data-driven solutions through statistical analysis and controlled experiments; displayed strong ownership by continuously iterating on data models based on results and stakeholder feedback; documented data processes, analytical methodologies, and technical designs; worked closely with end users to understand data needs deeply and deliver analytics solutions improving operational efficiency and system reliability with quantifiable results.
         </div>
-        <div class="hero-content">
-            <!-- Heading at top -->
-            <h1>My two failed startups taught me what no MBA ever could</h1>
-            
-            <!-- CTA buttons in the middle -->
-            <div class="hero-actions">
-                <div class="hero-cta-buttons">
-                    <a href="#lab" class="hero-btn">
-                        <span>View My Work</span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                    <span class="btn-divider">|</span>
-                    <a href="#startups" class="hero-btn">
-                        <span>Read My Story</span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Subtitle below -->
-            <p class="subtitle">Wrapping up my Master's in Artificial Intelligence in May 2026. Spent the last year building end-to-end AI systems - everything from transformer architectures and RAG pipelines to production NLP and computer vision models. Now I'm focused on solving real problems with AI.</p>
+        <button class="era-toggle" data-target="era-vaaraahi">Read full role ↓</button>
+      </div>
+    </div>
+  </div>
+</section>
 
-            <!-- Featured Platforms - Simple Icon Links -->
-            <div class="featured-platforms">
-                <a href="https://github.com/hemanthvamsikrishna" target="_blank" class="platform-link" aria-label="GitHub">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2C6.48 2 2 6.58 2 12.22c0 4.51 2.87 8.33 6.84 9.68.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.13-4.56-5 0-1.11.39-2.01 1.03-2.72-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.04a9.26 9.26 0 0 1 5 0c1.9-1.31 2.74-1.04 2.74-1.04.56 1.42.21 2.47.1 2.73.64.71 1.03 1.61 1.03 2.72 0 3.88-2.34 4.74-4.57 4.99.36.32.68.95.68 1.92 0 1.38-.01 2.49-.01 2.83 0 .27.18.6.69.49A10.22 10.22 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z"/>
-                    </svg>
-                    <span>GitHub</span>
-                </a>
-                <a href="https://linkedin.com/in/your-handle" target="_blank" class="platform-link" aria-label="LinkedIn">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3.5 9h3v12h-3V9zm6 0h2.879v1.64h.041C13.04 9.62 14.37 9 15.88 9 19.2 9 20 11.19 20 14.36V21h-3v-6.07c0-1.45-.03-3.31-2.02-3.31-2.03 0-2.34 1.58-2.34 3.21V21H9.5V9z"/>
-                    </svg>
-                    <span>LinkedIn</span>
-                </a>
-                <a href="https://x.com/hemanthvamsy" target="_blank" class="platform-link" aria-label="X (Twitter)">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                    </svg>
-                    <span>X</span>
-                </a>
-                <a href="https://huggingface.co/hemanthvamsikrishna" target="_blank" class="platform-link" aria-label="Hugging Face">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <circle cx="12" cy="12" r="10"/>
-                        <circle cx="9" cy="10" r="1" fill="currentColor"/>
-                        <circle cx="15" cy="10" r="1" fill="currentColor"/>
-                        <path d="M8.5 14c1 .9 2.3 1.5 3.5 1.5S14.5 14.9 15.5 14" stroke-linecap="round"/>
-                    </svg>
-                    <span>Hugging Face</span>
-                </a>
-                <a href="https://medium.com/@hemanthvamsikrishna" target="_blank" class="platform-link" aria-label="Medium">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <rect x="3" y="5" width="5" height="14"/>
-                        <path d="M10 7l3.5 5L10 17V7Z"/>
-                        <path d="M15 7h2v10h-2z"/>
-                    </svg>
-                    <span>Medium</span>
-                </a>
-            </div>
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-head">
+    <h2 class="section-title">Skills</h2>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-cluster" style="--accent:#6C5CE7;">
+      <h4>Programming & Core Libraries</h4>
+      <div class="chip-row">
+        <span class="chip">Python</span><span class="chip">R</span><span class="chip">SQL</span><span class="chip">Bash</span><span class="chip">Pandas</span><span class="chip">NumPy</span><span class="chip">Git</span>
+      </div>
+    </div>
+    <div class="skill-cluster" style="--accent:#FF5470;">
+      <h4>Machine Learning & Frameworks</h4>
+      <div class="chip-row">
+        <span class="chip">PyTorch</span><span class="chip">TensorFlow</span><span class="chip">Keras</span><span class="chip">Scikit-learn</span><span class="chip">CNNs</span><span class="chip">LSTMs</span><span class="chip">Transformers</span><span class="chip">Feature Engineering</span><span class="chip">Hyperparameter Tuning</span><span class="chip">Model Evaluation</span>
+      </div>
+    </div>
+    <div class="skill-cluster" style="--accent:#2FD9C4;">
+      <h4>LLMs, NLP & Generative AI</h4>
+      <div class="chip-row">
+        <span class="chip">GPT</span><span class="chip">HuggingFace</span><span class="chip">Prompt Engineering</span><span class="chip">RAG</span><span class="chip">Fine-tuning</span><span class="chip">Transfer Learning</span><span class="chip">Embeddings</span><span class="chip">Vector Databases</span><span class="chip">Semantic Search</span><span class="chip">Text Classification</span><span class="chip">NER</span><span class="chip">Summarization</span>
+      </div>
+    </div>
+    <div class="skill-cluster" style="--accent:#FFC857;">
+      <h4>Data Engineering & Big Data</h4>
+      <div class="chip-row">
+        <span class="chip">PySpark</span><span class="chip">Azure Data Factory</span><span class="chip">Azure Databricks</span><span class="chip">Spark Clusters</span><span class="chip">Delta Lake</span><span class="chip">ADLS</span><span class="chip">ETL Pipelines</span><span class="chip">Distributed Computing</span><span class="chip">Batch/Stream Processing</span>
+      </div>
+    </div>
+    <div class="skill-cluster" style="--accent:#6C5CE7;">
+      <h4>Cloud & Azure Services</h4>
+      <div class="chip-row">
+        <span class="chip">Azure Cloud</span><span class="chip">Azure OpenAI</span><span class="chip">Azure Functions</span><span class="chip">Blob Storage</span><span class="chip">Cognitive Search</span><span class="chip">Document Intelligence</span><span class="chip">SQL Server</span>
+      </div>
+    </div>
+    <div class="skill-cluster" style="--accent:#FF5470;">
+      <h4>MLOps & Deployment</h4>
+      <div class="chip-row">
+        <span class="chip">FastAPI</span><span class="chip">REST APIs</span><span class="chip">Docker</span><span class="chip">CI/CD</span><span class="chip">Model Serving</span><span class="chip">Inference Optimization</span><span class="chip">Monitoring & Logging</span>
+      </div>
+    </div>
+    <div class="skill-cluster" style="--accent:#2FD9C4;">
+      <h4>Cybersecurity & Compliance</h4>
+      <p style="font-size:.85rem;color:var(--ink-soft);margin-bottom:.8rem;">Developed security policies, standards, and procedures documentation aligned to NIST risk management frameworks for organizations across the chemical, AI, and healthcare sectors.</p>
+      <div class="chip-row">
+        <span class="chip">NIST RMF</span><span class="chip">NIST CSF 2.0</span><span class="chip">HIPAA</span><span class="chip">FERPA</span><span class="chip">MITRE ATT&CK</span><span class="chip">Security Policy & Standards Documentation</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-            <!-- Social icons - existing (hidden below, kept for compatibility) -->
-            <div class="social-hero" aria-label="Primary social links" style="display: none;">
-                <a class="icon-link" href="#" target="_blank" aria-label="GitHub">
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.22c0 4.51 2.87 8.33 6.84 9.68.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.13-4.56-5 0-1.11.39-2.01 1.03-2.72-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.04a9.26 9.26 0 0 1 5 0c1.9-1.31 2.74-1.04 2.74-1.04.56 1.42.21 2.47.1 2.73.64.71 1.03 1.61 1.03 2.72 0 3.88-2.34 4.74-4.57 4.99.36.32.68.95.68 1.92 0 1.38-.01 2.49-.01 2.83 0 .27.18.6.69.49A10.22 10.22 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z" fill="currentColor"/></svg>
-                </a>
-                <a class="icon-link" href="#" target="_blank" aria-label="LinkedIn">
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3.5 9h3v12h-3V9zm6 0h2.879v1.64h.041C13.04 9.62 14.37 9 15.88 9 19.2 9 20 11.19 20 14.36V21h-3v-6.07c0-1.45-.03-3.31-2.02-3.31-2.03 0-2.34 1.58-2.34 3.21V21H9.5V9z" fill="currentColor"/></svg>
-                </a>
-                <a class="icon-link" href="#" target="_blank" aria-label="Hugging Face">
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/><path d="M8.5 14c1 .9 2.3 1.5 3.5 1.5S14.5 14.9 15.5 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                </a>
-                <a class="icon-link" href="#" target="_blank" aria-label="Medium">
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="5" height="14" fill="currentColor"/><path d="M10 7l3.5 5L10 17V7Z" fill="currentColor"/><path d="M15 7h2v10h-2z" fill="currentColor"/></svg>
-                </a>
-            </div>
+<!-- PROJECTS -->
+<section id="lab">
+  <div class="section-head">
+    <h2 class="section-title">Projects</h2>
+    <span class="section-index">01 — 04</span>
+  </div>
+  <div class="proj-list">
+    <div class="proj-row">
+      <div class="proj-num">01</div>
+      <div>
+        <div class="proj-title">RNN & Transformer Architecture from Scratch</div>
+        <p class="proj-desc">Complete implementation of RNN and Transformer architectures built from scratch in Python. Includes attention mechanisms, positional encoding, and multi-head attention — pure NumPy implementations for deep understanding of modern NLP architectures.</p>
+        <div class="proj-tags"><span>Python</span><span>Transformers</span><span>RNN</span><span>Attention</span><span>NumPy</span></div>
+      </div>
+      <a class="proj-link" href="https://github.com/hemanthvamsikrishna/RNN-Transformer-Architecture-from-scratch" target="_blank">View on GitHub</a>
+    </div>
+    <div class="proj-row">
+      <div class="proj-num">02</div>
+      <div>
+        <div class="proj-title">CNN Architecture from Scratch</div>
+        <p class="proj-desc">Ground-up implementation of Convolutional Neural Networks without deep learning frameworks. Built convolution layers, pooling, backpropagation, and optimization algorithms to understand the mathematical foundations of computer vision models.</p>
+        <div class="proj-tags"><span>Python</span><span>CNN</span><span>Computer Vision</span><span>NumPy</span><span>Backpropagation</span></div>
+      </div>
+      <a class="proj-link" href="https://github.com/hemanthvamsikrishna/CNN-Architecture-from-Scratch" target="_blank">View on GitHub</a>
+    </div>
+    <div class="proj-row">
+      <div class="proj-num">03</div>
+      <div>
+        <div class="proj-title">Building Neural Network from Scratch</div>
+        <p class="proj-desc">Foundational neural network implementation from first principles. Custom gradient descent, activation functions, forward/backward propagation, and loss functions — all built without ML libraries to master the core mechanics of deep learning.</p>
+        <div class="proj-tags"><span>Python</span><span>Neural Networks</span><span>Gradient Descent</span><span>NumPy</span></div>
+      </div>
+      <a class="proj-link" href="https://github.com/hemanthvamsikrishna/Building-Neural-Network-From-Scratch" target="_blank">View on GitHub</a>
+    </div>
+    <div class="proj-row">
+      <div class="proj-num">04</div>
+      <div>
+        <div class="proj-title">QHIVE — Quality Hive Network</div>
+        <p class="proj-desc">Distributed AI-driven framework for defect pattern mining and cross-plant rule discovery in manufacturing. Multi-agent architecture enabling collaborative model learning and real-time defect detection across simulated manufacturing networks.</p>
+        <div class="proj-tags"><span>Python</span><span>Distributed AI</span><span>Computer Vision</span><span>Manufacturing</span><span>Quality Control</span></div>
+      </div>
+      <a class="proj-link" href="https://github.com/hemanthvamsikrishna/QHIVE" target="_blank">View on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLES -->
+<section id="articles">
+  <div class="section-head">
+    <h2 class="section-title">On Medium — Latest Articles</h2>
+  </div>
+  <div class="scroll-shell">
+    <div class="scroll-track" id="articleScrollWrapper">
+      <a class="card" style="--accent:#6C5CE7;" href="https://medium.com/@hemanthvamsikrishna/are-humans-going-next-level-on-kardashev-scale-with-ai-data-centers-in-space-93efb2995893" target="_blank">
+        <div class="card-banner"><img src="https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&q=80" alt="AI Data Centers in Space" onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:2rem;\'>🚀</div>'"></div>
+        <div class="card-body">
+          <div class="card-meta">2024 · 6 min read</div>
+          <div class="card-title">Are Humans Going Next Level on Kardashev Scale with AI Data Centers in Space?</div>
+          <p class="card-excerpt">Exploring the future of computing beyond Earth — energy, infrastructure, and the intersection with AI demand.</p>
+          <span class="card-cta">Read on Medium →</span>
         </div>
-    </section>
-    <!-- Full-width Photo Section -->
-    <section class="hero-photo-section">
-        <img src="images/hemanth-hero.png" alt="Hemanth Vamsikrishna" class="hero-photo" />
-    </section>
-
-    <!-- Story -->
-    <!-- Journey -->
-    <section id="journey" class="journey">
-        <h2 class="section-title">Work Experience</h2>
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-date">Dec 2021 – July 2024</div>
-                <div class="timeline-title">Systems Engineer (Full Time)</div>
-                <div class="timeline-company">Tata Consultancy Services (TCS) · Hyderabad, India</div>
-                <div class="timeline-desc">
-                    <strong>LLM Integration & RAG: </strong> Developed GPT-3.5–powered enterprise applications using Python (FastAPI), Azure OpenAI, and LangChain; designed modular prompt templates, system instructions, and multi-turn conversational flows to improve reliability and accuracy. Built RAG pipelines using Azure Cognitive Search, vector embeddings, chunking strategies, and metadata-based retrieval to deliver grounded, domain-specific answers for document-heavy enterprise use cases.
-                    <br><br>
-                    <strong>Statistical Software Development in R & Python:</strong> Developed production statistical computing solutions using R and Python supporting enterprise analytics serving 10K+ users; implemented data processing pipelines, statistical models, and machine learning algorithms in both languages; optimized computational performance through efficient data structures, vectorized operations, and algorithmic improvements reducing runtime by 40%; designed modular, reusable code libraries following software engineering best practices including version control (Git), unit testing (testthat in R, pytest in Python), and comprehensive documentation.
-                    <br><br>
-                    <strong>Data Structure Optimization & Package Development:</strong> Engineered advanced data structures in R and Python optimizing memory usage and performance for large-scale datasets (10M+ records); developed and maintained internal packages and libraries supporting analytical workflows; implemented efficient algorithms for data transformation, aggregation, and statistical computation; applied profiling tools (R profvis, Python cProfile) identifying performance bottlenecks and implementing optimization strategies; created scalable solutions supporting both interactive analysis and production deployments.
-                    <br><br>
-                    <strong>Data Engineering & Big Data Pipelines:</strong> Engineered large-scale data pipelines using Azure Data Factory and Azure Databricks; developed PySpark ETL jobs on Spark clusters, optimized distributed transformations, and implemented Delta Lake–based architectures on Data Lake Storage (ADLS) to ensure reliable, versioned, and ML-ready datasets.
-                    <br><br>
-                    <strong>Research Software Engineering & Repository Development:</strong> Built data repository systems managing large-scale datasets with versioning, metadata tracking, and quality validation; developed automated workflows for data ingestion, transformation, and analysis using R and Python; implemented parallel processing frameworks (R parallel, Python multiprocessing) for computationally intensive statistical operations; established software development best practices including code review, continuous integration, and automated testing; maintained production systems with comprehensive monitoring ensuring reliability and correctness of statistical computations. Created data visualizations using ggplot2 and matplotlib for technical and non-technical audiences. Applied statistical methods using R (tidyverse, caret, forecast) and Python (scikit-learn, statsmodels, SciPy) for hypothesis testing, regression modeling, time-series forecasting, and experimental design; developed reproducible statistical analysis workflows producing comprehensive reports and visualizations.
-                    <br><br>
-                    <strong>Data Pipeline Architecture & Azure Databricks Engineering:</strong> Engineered large-scale data pipelines using Azure Data Factory and Azure Databricks supporting enterprise AI applications; developed PySpark ETL jobs on Spark clusters processing 100K+ records daily, optimized distributed transformations with partitioning strategies, and implemented Delta Lake architectures on Azure Data Lake Storage (ADLS) ensuring reliable, versioned, analytics-ready datasets with 99.9% uptime across production environments.
-                    <br><br>
-                    <strong>Data Modeling & Database Optimization:</strong> Designed scalable data models supporting business intelligence and analytics workloads using Microsoft SQL Server and Azure cloud platforms; implemented indexing strategies and query optimization best practices reducing data retrieval times by 40%; collaborated cross-functionally with product managers, analysts, and engineers to translate business requirements into technical data architectures meeting governance and performance standards.
-                    <br><br>
-                    <strong>Document Intelligence & Cognitive Automation:</strong> Integrated Azure Document Intelligence, Cognitive Search, Blob Storage, and Function Apps to automate document ingestion, semantic indexing, and large-scale retrieval workflows. Implemented machine learning and computer vision models using TensorFlow, Keras, and OpenCV for classification.
-                    <br><br>
-                    <strong>Advanced Analytics Infrastructure & Semantic Search:</strong> Developed semantic search and retrieval systems using Azure Cognitive Search, vector embeddings, and metadata-based indexing to support analytics use cases; implemented chunking strategies and distributed data processing optimizing information retrieval performance; built scalable backend microservices using Python (FastAPI) and SQL supporting cross-database lookups, data aggregation, and structured content extraction for business intelligence applications.
-                    <br><br>
-                    <strong>Backend Engineering & Intelligent Retrieval:</strong> Developed scalable backend microservices supporting AI inference, vector search, prompt routing, and hybrid retrieval (keyword + embedding) for cross-database lookups, multi-document summarization, and structured content extraction using Python (FastAPI), Azure Cloud, and Microsoft SQL Server.
-                    <br><br>
-                    <strong>Production Systems Monitoring & Performance Enhancement:</strong> Deployed scalable data systems on Azure Cloud with comprehensive monitoring pipelines tracking data quality metrics, pipeline performance, and system reliability; implemented CI/CD workflows automating deployment processes; displayed strong ownership by iterating on data architectures based on performance analytics and stakeholder feedback; worked in fast-paced environment with regular releases, continuously enhancing data capabilities to solve business-critical problems.
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-date">Oct 2020 - June 2021</div>
-                <div class="timeline-title">Startup Founder and AI/ML Engineer (Full Time)</div>
-                <div class="timeline-company">Vaaraahi Farms (GST Registered) · Andhra Pradesh, India</div>
-                <div class="timeline-desc">
-                    <strong>Technology Leadership:</strong> Founded a registered services business offering technology-driven IoT and ML/data analytics solutions to agriculture-focused clients. Built regression, anomaly-detection, and forecasting models to predict nutrient imbalance, detect system faults, and optimize growing conditions in controlled-environment farms.
-                    <br><br>
-                    <strong>Statistical Computing & Predictive Modeling: </strong> implemented time-series forecasting models using R (forecast, zoo, tseries) and Python (statsmodels, Prophet) analyzing 1000+ IoT sensor streams; developed anomaly detection algorithms, regression models, and classification systems supporting operational decision-making; applied statistical rigor ensuring model validity, appropriate uncertainty quantification, and reproducible results.
-                    <br><br>
-                    <strong>Software Optimization & Algorithm Development:</strong> Optimized R and Python code for computational efficiency improving algorithm performance by 30%; implemented efficient data structures for time-series data, sensor measurements, and aggregated statistics; applied performance profiling identifying computational bottlenecks and implementing targeted optimizations; developed scalable solutions balancing statistical accuracy with computational efficiency.
-                    <br><br>
-                    <strong>Data-Driven Problem Solving & Requirements Gathering:</strong> Collaborated with stakeholders to gather business requirements and data needs; designed robust experiment plans combining quantitative data analysis with domain expertise; translated user requirements into technical data solutions achieving clarity from ambiguous problem statements and delivering measurable business value.
-                    <br><br>
-                    <strong>Predictive Maintenance:</strong> Implemented predictive maintenance algorithms that identified pump degradation, aeration failures, and chemical drift patterns using IoT telemetry, reducing downtime and enhancing system reliability.
-                    <br><br>
-                    <strong>Time-Series Data Processing & Predictive Analytics:</strong> Built production data pipelines processing IoT telemetry data using Python (scikit-learn, Pandas), SQL databases, and batch processing workflows; implemented LSTM-based time-series forecasting, anomaly detection algorithms, and optimization models analyzing sensor data patterns; ensured data quality and integrity across multiple data sources, proactively resolving discrepancies and improving data accuracy for operational decision-making in production environments.
-                    <br><br>
-                    <strong>ML Analytics:</strong> Developed ML-driven solutions for practical on-ground problems such as predicting lettuce tip-burn before it became visible, forecasting ammonia spikes in aquaponics to prevent fish mortality, estimating optimal harvest timing using microclimate patterns, and detecting abnormal pH drift caused by microbial activity resulting in proactive interventions and higher system stability.
-                    <br><br>
-                    <strong>Analytics Impact Measurement & Documentation:</strong> Measured and tracked impact of data-driven solutions through statistical analysis and controlled experiments; displayed strong ownership by continuously iterating on data models based on results and stakeholder feedback; documented data processes, analytical methodologies, and technical designs; worked closely with end users to understand data needs deeply and deliver analytics solutions improving operational efficiency and system reliability with quantifiable results.
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-date">Aug 2024 – Present</div>
-                <div class="timeline-title">Graduate Student Employee (Part-Time)</div>
-                <div class="timeline-company">University of Central Missouri · Warrensburg, Missouri</div>
-                <div class="timeline-desc">
-                    <strong>Data Collection & Validation:</strong> Collected, validated, and cleaned institutional library datasets from multiple source systems to support operational reporting and usage analysis.
-                    <br><br>
-                    <strong>Exploratory Data Analysis:</strong> Conducted exploratory data analysis (EDA) to identify resource demand trends, usage patterns, and data quality gaps across services.
-                    <br><br>
-                    <strong>Data Visualization & Reporting:</strong> Developed visualizations and analytical summaries to communicate insights and support data-driven planning decisions.
-                    <br><br>
-                    <strong>Stakeholder Collaboration:</strong> Collaborated with stakeholders to translate reporting requirements into structured, analysis-ready datasets and actionable insights.
-                </div>
-            </div>
+      </a>
+      <a class="card" style="--accent:#FF5470;" href="https://medium.com/@hemanthvamsikrishna/how-to-design-a-neural-network-the-complete-guide-5f31b06681ba" target="_blank">
+        <div class="card-banner"><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80" alt="How to Design a Neural Network" onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:2rem;\'>🧠</div>'"></div>
+        <div class="card-body">
+          <div class="card-meta">2024 · 10 min read</div>
+          <div class="card-title">How to Design a Neural Network: The Complete Guide</div>
+          <p class="card-excerpt">A comprehensive approach to neural network architecture, from choosing the right structure to optimizing performance.</p>
+          <span class="card-cta">Read on Medium →</span>
         </div>
-    </section>
-
-    <!-- Skills (new) -->
-    <section id="skills" class="skills">
-        <h2 class="section-title">Skills</h2>
-        <div class="skill-groups">
-            <div class="skill-card"><h4>Programming & Core Libraries</h4><div class="pill-row">
-                <span class="pill">Python</span><span class="pill">SQL</span><span class="pill">Bash</span><span class="pill">Pandas</span><span class="pill">NumPy</span><span class="pill">Git</span>
-            </div></div>
-            <div class="skill-card"><h4>Machine Learning & Frameworks</h4><div class="pill-row">
-                <span class="pill">PyTorch</span><span class="pill">TensorFlow</span><span class="pill">Keras</span><span class="pill">Scikit-learn</span><span class="pill">CNNs</span><span class="pill">LSTMs</span><span class="pill">Transformers</span><span class="pill">Feature Engineering</span><span class="pill">Hyperparameter Tuning</span><span class="pill">Model Evaluation</span>
-            </div></div>
-            <div class="skill-card"><h4>LLMs, NLP & Generative AI</h4><div class="pill-row">
-                <span class="pill">GPT</span><span class="pill">HuggingFace</span><span class="pill">Prompt Engineering</span><span class="pill">RAG</span><span class="pill">Fine-tuning</span><span class="pill">Transfer Learning</span><span class="pill">Embeddings</span><span class="pill">Vector Databases</span><span class="pill">Semantic Search</span><span class="pill">Text Classification</span><span class="pill">NER</span><span class="pill">Summarization</span>
-            </div></div>
-            <div class="skill-card"><h4>Data Engineering & Big Data</h4><div class="pill-row">
-                <span class="pill">PySpark</span><span class="pill">Azure Data Factory</span><span class="pill">Azure Databricks</span><span class="pill">Spark Clusters</span><span class="pill">Delta Lake</span><span class="pill">ADLS</span><span class="pill">ETL Pipelines</span><span class="pill">Distributed Computing</span><span class="pill">Batch/Stream Processing</span>
-            </div></div>
-            <div class="skill-card"><h4>Cloud & Azure Services</h4><div class="pill-row">
-                <span class="pill">Azure Cloud</span><span class="pill">Azure OpenAI</span><span class="pill">Azure Functions</span><span class="pill">Blob Storage</span><span class="pill">Cognitive Search</span><span class="pill">Document Intelligence</span><span class="pill">SQL Server</span>
-            </div></div>
-            <div class="skill-card"><h4>MLOps & Deployment</h4><div class="pill-row">
-                <span class="pill">FastAPI</span><span class="pill">REST APIs</span><span class="pill">Docker</span><span class="pill">CI/CD</span><span class="pill">Model Serving</span><span class="pill">Inference Optimization</span><span class="pill">Monitoring & Logging</span>
-            </div></div>
+      </a>
+      <a class="card" style="--accent:#2FD9C4;" href="https://medium.com/@hemanthvamsikrishna/how-i-accidentally-discovered-the-perfect-roadmap-to-learn-artificial-intelligence-b338aa5d1331" target="_blank">
+        <div class="card-banner"><img src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&q=80" alt="AI Learning Roadmap" onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:2rem;\'>🗺️</div>'"></div>
+        <div class="card-body">
+          <div class="card-meta">2024 · 8 min read</div>
+          <div class="card-title">How I Accidentally Discovered the Perfect Roadmap to Learn AI</div>
+          <p class="card-excerpt">The roadmap I wish I had when starting out — distilled from trial, error, and eventually finding what actually works.</p>
+          <span class="card-cta">Read on Medium →</span>
         </div>
-    </section>
+      </a>
+    </div>
+    <div class="scroll-controls">
+      <button class="scroll-btn" data-scroll="articleScrollWrapper" data-dir="-1" aria-label="Scroll left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="scroll-btn" data-scroll="articleScrollWrapper" data-dir="1" aria-label="Scroll right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+  </div>
+</section>
 
-    <!-- Projects / Lab -->
-    <section id="lab">
-        <h2 class="section-title">Projects</h2>
-        
-        <div class="projects-scroll-container">
-            <div class="projects-scroll-wrapper" id="projectsScrollWrapper">
-                <div class="project-card">
-                    <h3 class="project-title">RNN & Transformer Architecture from Scratch</h3>
-                    <p class="project-desc">Complete implementation of RNN and Transformer architectures built from scratch in Python. Includes attention mechanisms, positional encoding, and multi-head attention—pure NumPy implementations for deep understanding of modern NLP architectures.</p>
-                    <div class="project-tags"><span class="tag">Python</span><span class="tag">Transformers</span><span class="tag">RNN</span><span class="tag">Attention</span><span class="tag">NumPy</span></div>
-                    <div class="project-links">
-                        <a class="btn-link" href="https://github.com/hemanthvamsikrishna/RNN-Transformer-Architecture-from-scratch" target="_blank" aria-label="View on GitHub">View on GitHub →</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <h3 class="project-title">CNN Architecture from Scratch</h3>
-                    <p class="project-desc">Ground-up implementation of Convolutional Neural Networks without deep learning frameworks. Built convolution layers, pooling, backpropagation, and optimization algorithms to understand the mathematical foundations of computer vision models.</p>
-                    <div class="project-tags"><span class="tag">Python</span><span class="tag">CNN</span><span class="tag">Computer Vision</span><span class="tag">NumPy</span><span class="tag">Backpropagation</span></div>
-                    <div class="project-links">
-                        <a class="btn-link" href="https://github.com/hemanthvamsikrishna/CNN-Architecture-from-Scratch" target="_blank">View on GitHub →</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <h3 class="project-title">Building Neural Network from Scratch</h3>
-                    <p class="project-desc">Foundational neural network implementation from first principles. Custom gradient descent, activation functions, forward/backward propagation, and loss functions—all built without ML libraries to master the core mechanics of deep learning.</p>
-                    <div class="project-tags"><span class="tag">Python</span><span class="tag">Neural Networks</span><span class="tag">Gradient Descent</span><span class="tag">NumPy</span></div>
-                    <div class="project-links">
-                        <a class="btn-link" href="https://github.com/hemanthvamsikrishna/Building-Neural-Network-From-Scratch" target="_blank">View on GitHub →</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <h3 class="project-title">QHIVE - Quality Hive Network</h3>
-                    <p class="project-desc">Distributed AI-driven framework for defect pattern mining and cross-plant rule discovery in manufacturing. Multi-agent architecture enabling collaborative model learning and real-time defect detection across simulated manufacturing networks.</p>
-                    <div class="project-tags"><span class="tag">Python</span><span class="tag">Distributed AI</span><span class="tag">Computer Vision</span><span class="tag">Manufacturing</span><span class="tag">Quality Control</span></div>
-                    <div class="project-links">
-                        <a class="btn-link" href="https://github.com/hemanthvamsikrishna/QHIVE" target="_blank">View on GitHub →</a>
-                    </div>
-                </div>
-            </div>
+<!-- PUBLICATIONS -->
+<section id="conferences">
+  <div class="section-head">
+    <h2 class="section-title">Publications & Conferences</h2>
+  </div>
+  <div class="scroll-shell">
+    <div class="scroll-track" id="pubScrollWrapper">
+      <a class="card" style="--accent:#FFC857;" href="https://www.taylorfrancis.com/books/edit/10.1201/9781003483144/cognitive-fairness-aware-techniques-human-machine-interface-vithya-ganesan-indu-vadhani-subrata-chowdhury-souvik-pal-vishnu-pendyala" target="_blank">
+        <div class="card-banner"><img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800&q=80" alt="Book Chapter Publication" onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:2rem;\'>📚</div>'"></div>
+        <div class="card-body">
+          <div class="card-meta">Forthcoming · Chapman & Hall/CRC</div>
+          <div class="card-title">Ch. 13: Implementing a Graph ML Pipeline for Anomaly Detection</div>
+          <p class="card-excerpt">Cognitive Fairness-Aware Techniques for Human-Machine Interface. ISBN-13: 9781032767093 — co-authored research on graph-based anomaly detection and GNN-driven modeling.</p>
+          <span class="card-cta">View Publication →</span>
         </div>
-
-        <!-- Scroll controls -->
-        <div class="scroll-controls">
-            <button class="scroll-btn" id="scrollLeftProjects" aria-label="Scroll left">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M15 18l-6-6 6-6"/>
-                </svg>
-            </button>
-            <button class="scroll-btn" id="scrollRightProjects" aria-label="Scroll right">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M9 18l6-6-6-6"/>
-                </svg>
-            </button>
+      </a>
+      <a class="card" style="--accent:#6C5CE7;" href="https://atmae.org/wp-content/uploads/25-Final-Conference-Proceedings.pdf" target="_blank">
+        <div class="card-banner"><img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80" alt="ATMAE Conference" onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:2rem;\'>🎤</div>'"></div>
+        <div class="card-body">
+          <div class="card-meta">2025 · Memphis, TN</div>
+          <div class="card-title">How AI is Transforming Industrial Ecosystems and Threatening Market Dominance</div>
+          <p class="card-excerpt">ATMAE Annual Conference 2025 — research paper on AI-driven automation, cybersecurity, and industrial data monopolies.</p>
+          <span class="card-cta">View Proceedings →</span>
         </div>
-    </section>
-
-    <!-- Articles (Medium) -->
-    <section id="articles" class="articles">
-        <h2 class="section-title">On Medium — Latest Articles</h2>
-        
-        <div class="articles-scroll-container">
-            <div class="article-scroll-wrapper" id="articleScrollWrapper">
-                <!-- Article 1 -->
-                <a class="article-card" href="https://medium.com/@hemanthvamsikrishna/are-humans-going-next-level-on-kardashev-scale-with-ai-data-centers-in-space-93efb2995893" target="_blank">
-                    <div class="article-banner">
-                        <img src="https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&q=80" alt="AI Data Centers in Space" onerror="this.parentElement.classList.add('gradient-fallback'); this.parentElement.innerHTML='🚀';">
-                    </div>
-                    <div class="article-content">
-                        <div class="article-meta">
-                            <span>2024</span>
-                            <span>•</span>
-                            <span>6 min read</span>
-                        </div>
-                        <div class="article-title">Are Humans Going Next Level on Kardashev Scale with AI Data Centers in Space?</div>
-                        <div class="article-subtitle">Exploring the future of computing beyond Earth</div>
-                        <p class="article-excerpt">As AI computing demands skyrocket, space-based data centers could be humanity's next leap on the Kardashev scale. Exploring the intersection of artificial intelligence, energy consumption, and space infrastructure...</p>
-                        <span class="read-more">Read on Medium →</span>
-                    </div>
-                </a>
-
-                <!-- Article 2 -->
-                <a class="article-card" href="https://medium.com/@hemanthvamsikrishna/how-to-design-a-neural-network-the-complete-guide-5f31b06681ba" target="_blank">
-                    <div class="article-banner">
-                        <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80" alt="How to Design a Neural Network" onerror="this.parentElement.classList.add('gradient-fallback'); this.parentElement.innerHTML='🧠';">
-                    </div>
-                    <div class="article-content">
-                        <div class="article-meta">
-                            <span>2024</span>
-                            <span>•</span>
-                            <span>10 min read</span>
-                        </div>
-                        <div class="article-title">How to Design a Neural Network: The Complete Guide</div>
-                        <div class="article-subtitle">A comprehensive approach to neural network architecture</div>
-                        <p class="article-excerpt">From choosing the right architecture to optimizing performance, this complete guide walks through the fundamental principles and practical considerations for designing effective neural networks...</p>
-                        <span class="read-more">Read on Medium →</span>
-                    </div>
-                </a>
-
-                <!-- Article 3 -->
-                <a class="article-card" href="https://medium.com/@hemanthvamsikrishna/how-i-accidentally-discovered-the-perfect-roadmap-to-learn-artificial-intelligence-b338aa5d1331" target="_blank">
-                    <div class="article-banner">
-                        <img src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&q=80" alt="AI Learning Roadmap" onerror="this.parentElement.classList.add('gradient-fallback'); this.parentElement.innerHTML='🗺️';">
-                    </div>
-                    <div class="article-content">
-                        <div class="article-meta">
-                            <span>2024</span>
-                            <span>•</span>
-                            <span>8 min read</span>
-                        </div>
-                        <div class="article-title">How I Accidentally Discovered the Perfect Roadmap to Learn Artificial Intelligence</div>
-                        <div class="article-subtitle">A practical path through the AI landscape</div>
-                        <p class="article-excerpt">Learning AI can feel overwhelming with countless resources and topics. Here's the roadmap I wish I had when starting out—distilled from trial, error, and eventually finding what actually works...</p>
-                        <span class="read-more">Read on Medium →</span>
-                    </div>
-                </a>
-            </div>
+      </a>
+      <a class="card" style="--accent:#FF5470;" href="https://sites.google.com/a/ucmo.edu/asqstudent/asq-home-page?authuser=0" target="_blank">
+        <div class="card-banner"><img src="https://images.unsplash.com/photo-1581093458791-9d42e1bb7d5f?w=800&q=80" alt="ASQ Conference" onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:2rem;\'>🏆</div>'"></div>
+        <div class="card-body">
+          <div class="card-meta">2024 · 3rd Prize 🏆</div>
+          <div class="card-title">The Hive Quality Network: A Distributed AI-Driven Framework for Defect Pattern Mining</div>
+          <p class="card-excerpt">17th Annual ASQ UCM Quality Management Conference — poster on federated learning and cross-plant rule discovery.</p>
+          <span class="card-cta">View Conference →</span>
         </div>
+      </a>
+    </div>
+    <div class="scroll-controls">
+      <button class="scroll-btn" data-scroll="pubScrollWrapper" data-dir="-1" aria-label="Scroll left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="scroll-btn" data-scroll="pubScrollWrapper" data-dir="1" aria-label="Scroll right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+    </div>
+  </div>
+</section>
 
-        <!-- Scroll controls -->
-        <div class="scroll-controls">
-            <button class="scroll-btn" id="scrollLeft" aria-label="Scroll left">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M15 18l-6-6 6-6"/>
-                </svg>
-            </button>
-            <button class="scroll-btn" id="scrollRight" aria-label="Scroll right">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M9 18l6-6-6-6"/>
-                </svg>
-            </button>
-        </div>
-    </section>
+<!-- STARTUPS -->
+<section id="startups">
+  <div class="section-head">
+    <h2 class="section-title">My Startup Journey</h2>
+  </div>
 
-    <!-- Conferences (new) -->
-    <section id="conferences">
-        <h2 class="section-title">Publications & Conferences</h2>
-        
-        <div class="articles-scroll-container">
-            <div class="article-scroll-wrapper" id="publicationScrollWrapper">
-                <!-- Publication 1: Book Chapter -->
-                <a class="article-card" href="https://www.taylorfrancis.com/books/edit/10.1201/9781003483144/cognitive-fairness-aware-techniques-human-machine-interface-vithya-ganesan-indu-vadhani-subrata-chowdhury-souvik-pal-vishnu-pendyala" target="_blank">
-                    <div class="article-banner">
-                        <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800&q=80" alt="Book Chapter Publication" onerror="this.parentElement.classList.add('gradient-fallback'); this.parentElement.innerHTML='📚';">
-                    </div>
-                    <div class="article-content">
-                        <div class="article-meta">
-                            <span>Forthcoming</span>
-                            <span>•</span>
-                            <span>Chapman & Hall/CRC</span>
-                        </div>
-                        <div class="article-title">Chapter 13: Implementing a Graph Machine Learning Pipeline for Anomaly Detection</div>
-                        <div class="article-subtitle">Cognitive Fairness-Aware Techniques for Human-Machine Interface</div>
-                        <p class="article-excerpt">ISBN-13: 9781032767093 | Co-authored research on graph-based anomaly detection architectures, fairness-aware AI considerations, and GNN-driven modeling workflows for human–machine decision systems...</p>
-                        <span class="read-more">View Publication →</span>
-                    </div>
-                </a>
+  <div class="journey-feature" style="--accent:#6C5CE7;">
+    <div class="journey-text">
+      <div class="journey-meta">2020 – 2021 · AgTech</div>
+      <h3>Vaaraahi Farms: AI-Powered Vertical Farming</h3>
+      <p>In my final semester of college (2020), I launched a second startup that merged my passion for farming with artificial intelligence to revolutionize food production. We developed an <strong>AI-powered vertical hydroponics and aquaponics system</strong> capable of producing 1 acre's yield in just 1/10th the space, using no soil, minimal water, and fully stacked indoor farming.</p>
+      <p>Our system used AI models trained on real-time environmental and nutrient data to optimize crop cycles, predict growth stages, and dynamically adjust lighting, water flow, and nutrient mixes for each plant type. Crops included spinach, iceberg, and romaine lettuce, grown under customized indoor grow lights.</p>
+      <p>On the aquaponics side, we raised korameenu (murrel fish), creating a <strong>closed-loop system</strong> where fish waste enriched the crops. The result: a fully automated, AI + IoT-driven smart farming platform that maximized efficiency, minimized waste, and brought sustainability into the future — all prototyped while still in college.</p>
+    </div>
+    <div class="journey-images">
+      <img class="img-main" src="images/vaaraahi-farms-1.jpg" alt="Vaaraahi Farms 1" />
+      <img src="images/vaaraahi-farms-2.jpg" alt="Vaaraahi Farms 2" />
+      <img src="images/vaaraahi-farms-3.jpg" alt="Vaaraahi Farms 3" />
+    </div>
+  </div>
 
-                <!-- Conference 1: ATMAE -->
-                <a class="article-card" href="https://atmae.org/wp-content/uploads/25-Final-Conference-Proceedings.pdf" target="_blank">
-                    <div class="article-banner">
-                        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80" alt="ATMAE Conference" onerror="this.parentElement.classList.add('gradient-fallback'); this.parentElement.innerHTML='🎤';">
-                    </div>
-                    <div class="article-content">
-                        <div class="article-meta">
-                            <span>2025</span>
-                            <span>•</span>
-                            <span>Memphis, TN</span>
-                        </div>
-                        <div class="article-title">How AI is Transforming Industrial Ecosystems and Threatening Market Dominance</div>
-                        <div class="article-subtitle">ATMAE Annual Conference 2025 — Research Paper</div>
-                        <p class="article-excerpt">Analyzed the convergence of AI-driven automation, cybersecurity vulnerabilities, and industrial data monopolies through reinforcement learning and system resilience modeling...</p>
-                        <span class="read-more">View Proceedings →</span>
-                    </div>
-                </a>
+  <div class="journey-feature reverse" style="--accent:#FF5470;">
+    <div class="journey-text">
+      <div class="journey-meta">2018 – 2019 · Mobility Tech</div>
+      <h3>Jamaivu Machines: Electric Wheelchair Revolution</h3>
+      <p>Back in 2018, while I was still in college, I started a hustle that turned into a full-blown mobility startup. We built a super cool <strong>electric add-on for wheelchairs</strong> — basically a single-wheel attachment powered by a 36V/48V lithium-ion battery and hub motor that could hit speeds of up to 25 km/h.</p>
+      <p>Just clamp it onto a regular wheelchair and boom — you've got a <strong>detachable 3-wheeled electric ride</strong>. No need to buy a bulky electric wheelchair. I led the whole product build from scratch: design, prototyping, testing, and getting real feedback from users.</p>
+      <p>The goal was simple: make mobility smarter, more affordable, and way more fun for people who need it. It was my first real taste of building something that could actually change lives.</p>
+    </div>
+    <div class="journey-images">
+      <img class="img-main" src="images/jamaivu-machines-1.jpg" alt="Jamaivu Machines 1" />
+      <img src="images/jamaivu-machines-2.jpg" alt="Jamaivu Machines 2" />
+      <img src="images/jamaivu-machines-3.jpg" alt="Jamaivu Machines 3" />
+    </div>
+  </div>
+</section>
 
-                <!-- Conference 2: ASQ -->
-                <a class="article-card" href="https://sites.google.com/a/ucmo.edu/asqstudent/asq-home-page?authuser=0" target="_blank">
-                    <div class="article-banner">
-                        <img src="https://images.unsplash.com/photo-1581093458791-9d42e1bb7d5f?w=800&q=80" alt="ASQ Conference" onerror="this.parentElement.classList.add('gradient-fallback'); this.parentElement.innerHTML='🏆';">
-                    </div>
-                    <div class="article-content">
-                        <div class="article-meta">
-                            <span>2024</span>
-                            <span>•</span>
-                            <span>3rd Prize 🏆</span>
-                        </div>
-                        <div class="article-title">The Hive Quality Network: A Distributed AI-Driven Framework for Defect Pattern Mining</div>
-                        <div class="article-subtitle">17th Annual ASQ UCM Quality Management Conference — Poster</div>
-                        <p class="article-excerpt">Designed distributed multi-agent architectures enabling collaborative model learning and real-time defect detection across simulated manufacturing networks. Cross-plant rule discovery through federated learning...</p>
-                        <span class="read-more">View Conference →</span>
-                    </div>
-                </a>
-            </div>
-        </div>
+<!-- CONNECT -->
+<footer class="connect" id="connect">
+  <div class="section-head">
+    <h2 class="section-title">Let's build something</h2>
+  </div>
+  <div class="connect-row">
+    <div>
+      <p style="color:rgba(247,244,238,.65);margin-bottom:1rem;">Open to opportunities, shipping AI, and good coffee conversations.</p>
+      <a class="connect-email" href="mailto:hemanthvamsikrishna@gmail.com">hemanthvamsikrishna@gmail.com</a>
+    </div>
+    <div class="connect-socials">
+      <a href="https://github.com/hemanthvamsikrishna" target="_blank" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.22c0 4.51 2.87 8.33 6.84 9.68.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.13-4.56-5 0-1.11.39-2.01 1.03-2.72-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.04a9.26 9.26 0 0 1 5 0c1.9-1.31 2.74-1.04 2.74-1.04.56 1.42.21 2.47.1 2.73.64.71 1.03 1.61 1.03 2.72 0 3.88-2.34 4.74-4.57 4.99.36.32.68.95.68 1.92 0 1.38-.01 2.49-.01 2.83 0 .27.18.6.69.49A10.22 10.22 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z"/></svg></a>
+      <a href="https://www.linkedin.com/in/hemanthvamsikrishna/" target="_blank" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3.5 9h3v12h-3V9zm6 0h2.879v1.64h.041C13.04 9.62 14.37 9 15.88 9 19.2 9 20 11.19 20 14.36V21h-3v-6.07c0-1.45-.03-3.31-2.02-3.31-2.03 0-2.34 1.58-2.34 3.21V21H9.5V9z"/></svg></a>
+      <a href="https://x.com/hemanthvamsy" target="_blank" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <a href="https://huggingface.co/hemanthvamsikrishna" target="_blank" aria-label="Hugging Face"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="9" cy="10" r="1" fill="currentColor"/><circle cx="15" cy="10" r="1" fill="currentColor"/><path d="M8.5 14c1 .9 2.3 1.5 3.5 1.5S14.5 14.9 15.5 14" stroke-linecap="round"/></svg></a>
+      <a href="https://medium.com/@hemanthvamsikrishna" target="_blank" aria-label="Medium"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="5" width="5" height="14"/><path d="M10 7l3.5 5L10 17V7Z"/><path d="M15 7h2v10h-2z"/></svg></a>
+    </div>
+  </div>
+  <div class="connect-foot">
+    <span>No AI was harmed in designing this website 🤖</span>
+    <span>© 2026 Hemanth Vamsi Krishna. All rights reserved.</span>
+  </div>
+</footer>
 
-        <!-- Scroll controls -->
-        <div class="scroll-controls">
-            <button class="scroll-btn" id="scrollLeftPub" aria-label="Scroll left">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M15 18l-6-6 6-6"/>
-                </svg>
-            </button>
-            <button class="scroll-btn" id="scrollRightPub" aria-label="Scroll right">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M9 18l6-6-6-6"/>
-                </svg>
-            </button>
-        </div>
-    </section>
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close preview">&times;</button>
+  <img id="lightboxImg" src="" alt="" />
+</div>
 
-    <!-- Startup Journey -->
-    <section id="startups" class="startup-story">
-        <h2 class="section-title">My Startup Journey</h2>
-        
-        <div class="startup-accordion">
-            <!-- Startup 1: Vaaraahi Farms -->
-            <div class="accordion-item" data-startup="vaaraahi">
-                <div class="accordion-header">
-                    <div class="accordion-preview">
-                        <div class="accordion-meta">2020 - 2021 · AgTech</div>
-                        <h3 class="accordion-title">Vaaraahi Farms: AI-Powered Vertical Farming</h3>
-                        <p class="accordion-excerpt">Merged farming with AI to revolutionize food production—1 acre's yield in 1/10th the space using vertical hydroponics and aquaponics.</p>
-                    </div>
-                    <button class="accordion-toggle" aria-label="Expand story">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </button>
-                </div>
-                <div class="accordion-content">
-                    <div class="accordion-images">
-                        <div class="accordion-image-slider" data-startup="vaaraahi">
-                            <img src="images/vaaraahi-farms-1.jpg" alt="Vaaraahi Farms 1" class="active" />
-                            <img src="images/vaaraahi-farms-2.jpg" alt="Vaaraahi Farms 2" />
-                            <img src="images/vaaraahi-farms-3.jpg" alt="Vaaraahi Farms 3" />
-                        </div>
-                        <div class="image-controls">
-                            <button class="img-nav prev" data-startup="vaaraahi">‹</button>
-                            <div class="img-dots">
-                                <span class="dot active" data-index="0"></span>
-                                <span class="dot" data-index="1"></span>
-                                <span class="dot" data-index="2"></span>
-                            </div>
-                            <button class="img-nav next" data-startup="vaaraahi">›</button>
-                        </div>
-                    </div>
-                    <div class="accordion-story">
-                        <p>In my final semester of college (2020), I launched a second startup that merged my passion for farming with artificial intelligence to revolutionize food production. We developed an <strong>AI-powered vertical hydroponics and aquaponics system</strong> capable of producing 1 acre's yield in just 1/10th the space, using no soil, minimal water, and fully stacked indoor farming.</p>
-                        <p>Our system used AI models trained on real-time environmental and nutrient data to optimize crop cycles, predict growth stages, and dynamically adjust lighting, water flow, and nutrient mixes for each plant type. Crops included spinach, iceberg, and romaine lettuce, grown under customized indoor grow lights.</p>
-                        <p>On the aquaponics side, we raised korameenu (murrel fish), creating a <strong>closed-loop system</strong> where fish waste enriched the crops. The result: a fully automated, AI + IoT-driven smart farming platform that maximized efficiency, minimized waste, and brought sustainability into the future—all prototyped while still in college.</p>
-                    </div>
-                </div>
-            </div>
+<script>
+  // Nav scroll state
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
 
-            <!-- Startup 2: Jamaivu Machines -->
-            <div class="accordion-item" data-startup="jamaivu">
-                <div class="accordion-header">
-                    <div class="accordion-preview">
-                        <div class="accordion-meta">2018 - 2019 · Mobility Tech</div>
-                        <h3 class="accordion-title">Jamaivu Machines: Electric Wheelchair Revolution</h3>
-                        <p class="accordion-excerpt">Built an electric add-on for wheelchairs—a detachable single-wheel attachment hitting 25 km/h. Made mobility smarter and more affordable.</p>
-                    </div>
-                    <button class="accordion-toggle" aria-label="Expand story">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </button>
-                </div>
-                <div class="accordion-content">
-                    <div class="accordion-images">
-                        <div class="accordion-image-slider" data-startup="jamaivu">
-                            <img src="images/jamaivu-machines-1.jpg" alt="Jamaivu Machines 1" class="active" />
-                            <img src="images/jamaivu-machines-2.jpg" alt="Jamaivu Machines 2" />
-                            <img src="images/jamaivu-machines-3.jpg" alt="Jamaivu Machines 3" />
-                        </div>
-                        <div class="image-controls">
-                            <button class="img-nav prev" data-startup="jamaivu">‹</button>
-                            <div class="img-dots">
-                                <span class="dot active" data-index="0"></span>
-                                <span class="dot" data-index="1"></span>
-                                <span class="dot" data-index="2"></span>
-                            </div>
-                            <button class="img-nav next" data-startup="jamaivu">›</button>
-                        </div>
-                    </div>
-                    <div class="accordion-story">
-                        <p>Back in 2018, while I was still in college, I started a hustle that turned into a full-blown mobility startup. We built a super cool <strong>electric add-on for wheelchairs</strong>—basically a single-wheel attachment powered by a 36V/48V lithium-ion battery and hub motor that could hit speeds of up to 25 km/h.</p>
-                        <p>Just clamp it onto a regular wheelchair and boom—you've got a <strong>detachable 3-wheeled electric ride</strong>. No need to buy a bulky electric wheelchair. I led the whole product build from scratch: design, prototyping, testing, and getting real feedback from users.</p>
-                        <p>The goal was simple: make mobility smarter, more affordable, and way more fun for people who need it. It was my first real taste of building something that could actually change lives.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  // Mobile menu
+  const mobileMenu = document.getElementById('mobileMenu');
+  const navLinks = document.getElementById('navLinks');
+  mobileMenu.addEventListener('click', () => navLinks.classList.toggle('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('active')));
 
-    <!-- Profiles (optional section for platforms) -->
-    <section id="profiles" class="profiles-minimal">
-        <div class="social-icons-row">
-            <a href="https://github.com/hemanthvamsikrishna" target="_blank" class="social-icon" aria-label="GitHub">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C6.48 2 2 6.58 2 12.22c0 4.51 2.87 8.33 6.84 9.68.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.71-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.36 1.12 2.94.86.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.13-4.56-5 0-1.11.39-2.01 1.03-2.72-.1-.26-.45-1.31.1-2.73 0 0 .84-.27 2.75 1.04a9.26 9.26 0 0 1 5 0c1.9-1.31 2.74-1.04 2.74-1.04.56 1.42.21 2.47.1 2.73.64.71 1.03 1.61 1.03 2.72 0 3.88-2.34 4.74-4.57 4.99.36.32.68.95.68 1.92 0 1.38-.01 2.49-.01 2.83 0 .27.18.6.69.49A10.22 10.22 0 0 0 22 12.22C22 6.58 17.52 2 12 2Z"/>
-                </svg>
-            </a>
-            <a href="https://linkedin.com/in/your-handle" target="_blank" class="social-icon" aria-label="LinkedIn">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5.001 2.5 2.5 0 0 1 0-5zM3.5 9h3v12h-3V9zm6 0h2.879v1.64h.041C13.04 9.62 14.37 9 15.88 9 19.2 9 20 11.19 20 14.36V21h-3v-6.07c0-1.45-.03-3.31-2.02-3.31-2.03 0-2.34 1.58-2.34 3.21V21H9.5V9z"/>
-                </svg>
-            </a>
-            <a href="https://x.com/hemanthvamsy" target="_blank" class="social-icon" aria-label="X (Twitter)">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                </svg>
-            </a>
-            <a href="https://huggingface.co/hemanthvamsikrishna" target="_blank" class="social-icon" aria-label="Hugging Face">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <circle cx="12" cy="12" r="10"/>
-                    <circle cx="9" cy="10" r="1" fill="currentColor"/>
-                    <circle cx="15" cy="10" r="1" fill="currentColor"/>
-                    <path d="M8.5 14c1 .9 2.3 1.5 3.5 1.5S14.5 14.9 15.5 14" stroke-linecap="round"/>
-                </svg>
-            </a>
-            <a href="https://medium.com/@hemanthvamsikrishna" target="_blank" class="social-icon" aria-label="Medium">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                    <rect x="3" y="5" width="5" height="14"/>
-                    <path d="M10 7l3.5 5L10 17V7Z"/>
-                    <path d="M15 7h2v10h-2z"/>
-                </svg>
-            </a>
-        </div>
-    </section>
+  // Era read-more toggles
+  document.querySelectorAll('.era-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = document.getElementById(btn.dataset.target);
+      const collapsed = target.classList.toggle('collapsed');
+      btn.textContent = collapsed ? 'Read full role ↓' : 'Show less ↑';
+    });
+  });
 
-    <!-- Connect / Footer -->
-    <footer id="connect">
-        <p style="color: var(--text-light); font-size: .9rem; margin-bottom: 1rem;">💼 Open to opportunities, shipping AI, and good coffee conversations</p>
-        <a href="/cdn-cgi/l/email-protection#9af2fff7fbf4eef2ecfbf7e9f3f1e8f3e9f2f4fbdafdf7fbf3f6b4f9f5f7" style="color: var(--primary); text-decoration: none; font-weight: 500;"><span class="__cf_email__" data-cfemail="9cf4f9f1fdf2e8f4eafdf1eff5f7eef5eff4f2fddcfbf1fdf5f0b2fff3f1">[email&#160;protected]</span></a>
-        <p style="color: var(--text-light); font-size: .8rem; margin-top: 2rem;">No AI was harmed in designing this website 🤖</p>
-        <p style="color: var(--text-light); font-size: .75rem; margin-top: 1.5rem; opacity: 0.6;">© 2025 Hemanth Vamsikrishna. All rights reserved.</p>
-    </footer>
+  // Horizontal scroll controls
+  document.querySelectorAll('.scroll-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const track = document.getElementById(btn.dataset.scroll);
+      const dir = parseInt(btn.dataset.dir, 10);
+      track.scrollBy({ left: dir * 380, behavior: 'smooth' });
+    });
+  });
+  // Auto-fetch real preview images for Articles & Publications from their own links
+  // Falls back silently to the existing curated image if this fails (proxy down, no og:image, etc.)
+  async function fetchOgImage(url) {
+    try {
+      const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+      const res = await fetch(proxyUrl);
+      const html = await res.text();
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const ogImage = doc.querySelector('meta[property="og:image"]')?.getAttribute('content')
+        || doc.querySelector('meta[name="twitter:image"]')?.getAttribute('content');
+      return ogImage || null;
+    } catch (err) {
+      return null;
+    }
+  }
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-        // ============================================
-        // MEDIUM ARTICLES CONFIGURATION
-        // ============================================
-        // Simply add your Medium article URLs here and the page will automatically
-        // fetch the banner images, titles, and descriptions from each article
-        const MEDIUM_ARTICLES = [
-            'https://medium.com/@hemanthvamsikrishna/are-humans-going-next-level-on-kardashev-scale-with-ai-data-centers-in-space-93efb2995893',
-            'https://medium.com/@hemanthvamsikrishna/how-to-design-a-neural-network-the-complete-guide-5f31b06681ba',
-            'https://medium.com/@hemanthvamsikrishna/how-i-accidentally-discovered-the-perfect-roadmap-to-learn-artificial-intelligence-b338aa5d1331',
-        ];
-        
-        // Set to true to automatically load articles from URLs above
-        const AUTO_FETCH_ARTICLES = false; // Set to true when you add real URLs
-        
-        // ============================================
-        
-        // Dark Mode Toggle
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) navbar.classList.add('scrolled');
-            else navbar.classList.remove('scrolled');
-        });
+  async function autoFetchCardImages() {
+    for (const card of document.querySelectorAll('#articleScrollWrapper .card, #pubScrollWrapper .card')) {
+      const url = card.getAttribute('href');
+      const img = card.querySelector('.card-banner img');
+      if (!url || !img) continue;
+      const ogImage = await fetchOgImage(url);
+      if (ogImage) img.src = ogImage;
+    }
+  }
+  autoFetchCardImages();
 
-        // Mobile menu toggle
-        const mobileMenu = document.getElementById('mobileMenu');
-        const navLinks = document.getElementById('navLinks');
-        mobileMenu.addEventListener('click', function(){ navLinks.classList.toggle('active'); });
-        document.querySelectorAll('.nav-links a').forEach(link=>{ link.addEventListener('click',()=> navLinks.classList.remove('active')); });
 
-        // Smooth reveal on scroll
-        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
-        const observer = new IntersectionObserver(function(entries){ entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.style.opacity='1'; entry.target.style.transform='translateY(0)'; } }); }, observerOptions);
-        document.querySelectorAll('section').forEach(section=>{ section.style.opacity='0'; section.style.transform='translateY(20px)'; section.style.transition='all .6s ease-out'; observer.observe(section); });
-
-        // Hero parallax
-        window.addEventListener('scroll', ()=>{
-            const scrolled = window.pageYOffset;
-            const hero = document.querySelector('.hero-content');
-            if(hero) hero.style.transform = `translateY(${scrolled * 0.4}px)`;
-        });
-
-        // Article Auto-Scroll Functionality
-        const scrollWrapper = document.getElementById('articleScrollWrapper');
-        const scrollLeft = document.getElementById('scrollLeft');
-        const scrollRight = document.getElementById('scrollRight');
-        
-        let autoScrollInterval;
-        let isAutoScrolling = true;
-        
-        // Function to fetch article metadata from URL
-        async function fetchArticleMetadata(url) {
-            try {
-                // Using a CORS proxy + Open Graph scraper
-                const apiUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
-                const response = await fetch(apiUrl);
-                const html = await response.text();
-                
-                // Parse Open Graph tags
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                
-                const getMetaContent = (property) => {
-                    const meta = doc.querySelector(`meta[property="${property}"]`) || 
-                                 doc.querySelector(`meta[name="${property}"]`);
-                    return meta ? meta.getAttribute('content') : null;
-                };
-                
-                return {
-                    title: getMetaContent('og:title') || doc.querySelector('title')?.textContent,
-                    description: getMetaContent('og:description') || getMetaContent('description'),
-                    image: getMetaContent('og:image'),
-                    author: getMetaContent('article:author') || getMetaContent('author'),
-                    publishedTime: getMetaContent('article:published_time')
-                };
-            } catch (error) {
-                console.error('Error fetching metadata:', error);
-                return null;
-            }
-        }
-        
-        // Function to populate article card with fetched data
-        async function populateArticleCard(card, url) {
-            const metadata = await fetchArticleMetadata(url);
-            
-            if (metadata) {
-                // Update banner image
-                const banner = card.querySelector('.article-banner');
-                if (metadata.image && banner) {
-                    const img = banner.querySelector('img');
-                    if (img) {
-                        img.src = metadata.image;
-                        img.alt = metadata.title || 'Article banner';
-                    }
-                }
-                
-                // Update title if fetched
-                const titleEl = card.querySelector('.article-title');
-                if (metadata.title && titleEl && !titleEl.hasAttribute('data-custom')) {
-                    titleEl.textContent = metadata.title;
-                }
-                
-                // Update description if fetched and no custom excerpt
-                const excerptEl = card.querySelector('.article-excerpt');
-                if (metadata.description && excerptEl && !excerptEl.hasAttribute('data-custom')) {
-                    excerptEl.textContent = metadata.description;
-                }
-            }
-        }
-        
-        // Auto-populate articles on page load
-        document.addEventListener('DOMContentLoaded', async () => {
-            if (!AUTO_FETCH_ARTICLES || MEDIUM_ARTICLES.length === 0) {
-                // Use static articles if auto-fetch is disabled
-                const articleCards = document.querySelectorAll('.article-card');
-                articleCards.forEach(card => {
-                    const url = card.getAttribute('href');
-                    if (url && url !== '#' && url.startsWith('http')) {
-                        // Optionally fetch metadata even for static cards
-                        // populateArticleCard(card, url);
-                    }
-                });
-                return;
-            }
-            
-            // Clear the container and show loading
-            const wrapper = scrollWrapper;
-            if (!wrapper) return;
-            
-            wrapper.innerHTML = '<div style="flex: 0 0 380px; display: flex; align-items: center; justify-content: center; height: 300px; color: var(--text-light);">Loading articles...</div>';
-            
-            // Fetch all articles
-            const articlePromises = MEDIUM_ARTICLES.map(url => fetchArticleMetadata(url));
-            const articles = await Promise.all(articlePromises);
-            
-            // Clear loading and create cards
-            wrapper.innerHTML = '';
-            
-            articles.forEach((metadata, index) => {
-                if (metadata) {
-                    const card = createArticleCard(metadata);
-                    wrapper.innerHTML += card;
-                } else {
-                    console.warn(`Failed to load article ${index + 1}`);
-                }
-            });
-            
-            // Start auto-scroll after loading
-            startAutoScroll();
-        });
-        
-        // Function to create article card HTML from metadata
-        function createArticleCard(metadata) {
-            const { title, description, image, url } = metadata;
-            
-            const truncatedDesc = description && description.length > 180 
-                ? description.substring(0, 180) + '...' 
-                : description || 'Click to read more on Medium';
-            
-            return `
-                <a class="article-card" href="${url}" target="_blank">
-                    <div class="article-banner">
-                        ${image ? `<img src="${image}" alt="${title}" onerror="this.parentElement.classList.add('gradient-fallback'); this.parentElement.innerHTML='✨';">` : '<div class="gradient-fallback">✨</div>'}
-                    </div>
-                    <div class="article-content">
-                        <div class="article-meta">
-                            <span>Medium Article</span>
-                        </div>
-                        <div class="article-title">${title || 'Untitled Article'}</div>
-                        <p class="article-excerpt">${truncatedDesc}</p>
-                        <span class="read-more">Read on Medium →</span>
-                    </div>
-                </a>
-            `;
-        }
-        
-        // Auto-scroll function
-        function startAutoScroll() {
-            if (scrollWrapper) {
-                autoScrollInterval = setInterval(() => {
-                    if (isAutoScrolling) {
-                        const maxScroll = scrollWrapper.scrollWidth - scrollWrapper.clientWidth;
-                        const currentScroll = scrollWrapper.scrollLeft;
-                        
-                        // If we've reached the end, scroll back to start
-                        if (currentScroll >= maxScroll - 10) {
-                            scrollWrapper.scrollTo({ left: 0, behavior: 'smooth' });
-                        } else {
-                            scrollWrapper.scrollBy({ left: 400, behavior: 'smooth' });
-                        }
-                    }
-                }, 3000); // Auto-scroll every 3 seconds
-            }
-        }
-        
-        // Manual scroll controls
-        if (scrollLeft && scrollWrapper) {
-            scrollLeft.addEventListener('click', () => {
-                isAutoScrolling = false;
-                scrollWrapper.scrollBy({ left: -400, behavior: 'smooth' });
-                setTimeout(() => { isAutoScrolling = true; }, 5000); // Resume auto-scroll after 5 seconds
-            });
-        }
-        
-        if (scrollRight && scrollWrapper) {
-            scrollRight.addEventListener('click', () => {
-                isAutoScrolling = false;
-                scrollWrapper.scrollBy({ left: 400, behavior: 'smooth' });
-                setTimeout(() => { isAutoScrolling = true; }, 5000); // Resume auto-scroll after 5 seconds
-            });
-        }
-        
-        // Pause auto-scroll on hover
-        if (scrollWrapper) {
-            scrollWrapper.addEventListener('mouseenter', () => {
-                isAutoScrolling = false;
-            });
-            
-            scrollWrapper.addEventListener('mouseleave', () => {
-                isAutoScrolling = true;
-            });
-            
-            // Start auto-scrolling when page loads
-            startAutoScroll();
-        }
-        
-        // Publications scroll controls (similar to articles)
-        const pubScrollWrapper = document.getElementById('publicationScrollWrapper');
-        const scrollLeftPub = document.getElementById('scrollLeftPub');
-        const scrollRightPub = document.getElementById('scrollRightPub');
-        
-        if (scrollLeftPub && pubScrollWrapper) {
-            scrollLeftPub.addEventListener('click', () => {
-                pubScrollWrapper.scrollBy({ left: -400, behavior: 'smooth' });
-            });
-        }
-        
-        if (scrollRightPub && pubScrollWrapper) {
-            scrollRightPub.addEventListener('click', () => {
-                pubScrollWrapper.scrollBy({ left: 400, behavior: 'smooth' });
-            });
-        }
-        
-        // Projects scroll controls
-        const projectsScrollWrapper = document.getElementById('projectsScrollWrapper');
-        const scrollLeftProjects = document.getElementById('scrollLeftProjects');
-        const scrollRightProjects = document.getElementById('scrollRightProjects');
-        
-        if (scrollLeftProjects && projectsScrollWrapper) {
-            scrollLeftProjects.addEventListener('click', () => {
-                projectsScrollWrapper.scrollBy({ left: -400, behavior: 'smooth' });
-            });
-        }
-        
-        if (scrollRightProjects && projectsScrollWrapper) {
-            scrollRightProjects.addEventListener('click', () => {
-                projectsScrollWrapper.scrollBy({ left: 400, behavior: 'smooth' });
-            });
-        }
-        
-        // Startup Story Accordion
-        const accordionItems = document.querySelectorAll('.accordion-item');
-        
-        accordionItems.forEach(item => {
-            const header = item.querySelector('.accordion-header');
-            const toggle = item.querySelector('.accordion-toggle');
-            
-            header.addEventListener('click', () => {
-                const isExpanded = item.classList.contains('expanded');
-                
-                // Close all other accordions
-                accordionItems.forEach(otherItem => {
-                    if (otherItem !== item) {
-                        otherItem.classList.remove('expanded');
-                    }
-                });
-                
-                // Toggle current accordion
-                item.classList.toggle('expanded');
-            });
-        });
-        
-        // Image carousel within each accordion
-        const imageCarousels = {};
-        
-        document.querySelectorAll('.accordion-image-slider').forEach(slider => {
-            const startup = slider.getAttribute('data-startup');
-            const images = slider.querySelectorAll('img');
-            const prevBtn = document.querySelector(`.img-nav.prev[data-startup="${startup}"]`);
-            const nextBtn = document.querySelector(`.img-nav.next[data-startup="${startup}"]`);
-            const dots = document.querySelectorAll(`.dot[data-index]`);
-            
-            imageCarousels[startup] = {
-                currentIndex: 0,
-                totalImages: images.length
-            };
-            
-            function updateImages() {
-                images.forEach((img, index) => {
-                    img.classList.toggle('active', index === imageCarousels[startup].currentIndex);
-                });
-                dots.forEach((dot, index) => {
-                    if (dot.closest('.accordion-item').getAttribute('data-startup') === startup) {
-                        dot.classList.toggle('active', index === imageCarousels[startup].currentIndex);
-                    }
-                });
-            }
-            
-            if (prevBtn) {
-                prevBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    imageCarousels[startup].currentIndex = 
-                        (imageCarousels[startup].currentIndex - 1 + imageCarousels[startup].totalImages) % imageCarousels[startup].totalImages;
-                    updateImages();
-                });
-            }
-            
-            if (nextBtn) {
-                nextBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    imageCarousels[startup].currentIndex = 
-                        (imageCarousels[startup].currentIndex + 1) % imageCarousels[startup].totalImages;
-                    updateImages();
-                });
-            }
-            
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    const parentItem = dot.closest('.accordion-item');
-                    if (parentItem && parentItem
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  function openLightbox(src, alt) {
+    lightboxImg.src = src;
+    lightboxImg.alt = alt || '';
+    lightbox.classList.add('active');
+  }
+  function closeLightbox() {
+    lightbox.classList.remove('active');
+    lightboxImg.src = '';
+  }
+  document.querySelectorAll('.journey-images img').forEach(img => {
+    img.addEventListener('click', () => openLightbox(img.src, img.alt));
+  });
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+</body>
+</html>
