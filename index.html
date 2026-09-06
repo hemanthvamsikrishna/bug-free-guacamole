@@ -69,7 +69,7 @@
   .hero{
     min-height:100vh;
     display:flex;flex-direction:column;justify-content:center;
-    padding:9rem 6vw 4rem;
+    padding:9rem 6vw 1.5rem;
     position:relative;
   }
   .hero-eyebrow{
@@ -142,7 +142,7 @@
   @media (max-width:860px){.hero-avatar{width:150px;height:150px;}.hero-avatar-fallback svg{width:44px;height:44px;}}
 
   /* SECTION SHELL */
-  section{padding:6rem 6vw;position:relative;}
+  section{padding:5rem 6vw;position:relative;}
   .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:2rem;margin-bottom:3rem;flex-wrap:wrap;}
   .section-title{font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:700;letter-spacing:-0.01em;}
   .section-index{font-size:.85rem;color:var(--ink-soft);font-weight:500;}
@@ -186,7 +186,7 @@
     color:var(--ink);
   }
   .industry-row{display:flex;flex-wrap:wrap;gap:.9rem;}
-  .industry-chip{
+  #industries{padding-top:0;padding-bottom:3rem;}  .industry-chip{
     padding:.7rem 1.3rem;border-radius:999px;font-weight:600;font-size:.95rem;
     background:color-mix(in srgb, var(--accent, var(--violet)) 14%, white);
     border:1.5px solid color-mix(in srgb, var(--accent, var(--violet)) 35%, white);
@@ -231,12 +231,12 @@
 
   /* STARTUPS — editorial alternating feature */
   .journey-feature{
-    display:grid;grid-template-columns:1fr 1fr;gap:3.2rem;align-items:center;
+    display:flex;flex-wrap:wrap;align-items:flex-start;gap:3.2rem;
     padding:3.6rem 0;border-top:1px solid var(--ink-faint);
   }
   .journey-feature:last-child{border-bottom:1px solid var(--ink-faint);}
-  .journey-feature .journey-text{order:1;}
-  .journey-feature .journey-images{order:2;}
+  .journey-feature .journey-text{order:1;flex:1 1 420px;min-width:300px;}
+  .journey-feature .journey-images{order:2;flex:1 1 380px;min-width:280px;}
   .journey-feature.reverse .journey-text{order:2;}
   .journey-feature.reverse .journey-images{order:1;}
   .journey-meta{font-size:.85rem;font-weight:600;color:var(--accent, var(--violet));margin-bottom:.7rem;}
@@ -288,8 +288,7 @@
     .era{grid-template-columns:1fr;}
     .proj-row{grid-template-columns:40px 1fr;}
     .proj-link{grid-column:1/-1;}
-    .journey-feature{grid-template-columns:1fr;}
-    .journey-feature .journey-text,.journey-feature .journey-images{order:initial;}
+    .journey-feature .journey-text,.journey-feature .journey-images{order:initial;flex-basis:100%;}
     .journey-images{height:260px;}
   }
 </style>
@@ -331,7 +330,7 @@
   <div class="hero-heading-row">
     <h1>My two failed startups taught me what no <span class="underline">MBA</span> ever could</h1>
     <div class="hero-avatar">
-      <img src="images/profile.jpg" alt="Hemanth Vamsi Krishna" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+      <img id="heroAvatarImg" src="images/profile.jpg" alt="Hemanth Vamsi Krishna" />
       <div class="hero-avatar-fallback">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
       </div>
@@ -610,7 +609,7 @@
   <div class="scroll-shell">
     <div class="scroll-track" id="articleScrollWrapper">
       <a class="card" style="--accent:#6C5CE7;" href="https://medium.com/@hemanthvamsikrishna/are-humans-going-next-level-on-kardashev-scale-with-ai-data-centers-in-space-93efb2995893" target="_blank">
-        <div class="card-banner"><img src="https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&q=80" alt="AI Data Centers in Space" onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:2rem;\'>🚀</div>'"></div>
+        <div class="card-banner"><img class="card-img" data-fallback="🚀" src="https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&q=80" alt="AI Data Centers in Space"></div>
         <div class="card-body">
           <div class="card-meta">2024 · 6 min read</div>
           <div class="card-title">Are Humans Going Next Level on Kardashev Scale with AI Data Centers in Space?</div>
@@ -619,7 +618,7 @@
         </div>
       </a>
       <a class="card" style="--accent:#FF5470;" href="https://medium.com/@hemanthvamsikrishna/how-to-design-a-neural-network-the-complete-guide-5f31b06681ba" target="_blank">
-        <div class="card-banner"><img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80" alt="How to Design a Neural Network" onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:2rem;\'>🧠</div>'"></div>
+        <div class="card-banner"><img class="card-img" data-fallback="🧠" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80" alt="How to Design a Neural Network"></div>
         <div class="card-body">
           <div class="card-meta">2024 · 10 min read</div>
           <div class="card-title">How to Design a Neural Network: The Complete Guide</div>
@@ -628,7 +627,7 @@
         </div>
       </a>
       <a class="card" style="--accent:#2FD9C4;" href="https://medium.com/@hemanthvamsikrishna/how-i-accidentally-discovered-the-perfect-roadmap-to-learn-artificial-intelligence-b338aa5d1331" target="_blank">
-        <div class="card-banner"><img src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&q=80" alt="AI Learning Roadmap" onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:2rem;\'>🗺️</div>'"></div>
+        <div class="card-banner"><img class="card-img" data-fallback="🗺️" src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&q=80" alt="AI Learning Roadmap"></div>
         <div class="card-body">
           <div class="card-meta">2024 · 8 min read</div>
           <div class="card-title">How I Accidentally Discovered the Perfect Roadmap to Learn AI</div>
@@ -652,7 +651,7 @@
   <div class="scroll-shell">
     <div class="scroll-track" id="pubScrollWrapper">
       <a class="card" style="--accent:#FFC857;" href="https://www.taylorfrancis.com/books/edit/10.1201/9781003483144/cognitive-fairness-aware-techniques-human-machine-interface-vithya-ganesan-indu-vadhani-subrata-chowdhury-souvik-pal-vishnu-pendyala" target="_blank">
-        <div class="card-banner"><img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800&q=80" alt="Book Chapter Publication" onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:2rem;\'>📚</div>'"></div>
+        <div class="card-banner"><img class="card-img" data-fallback="📚" src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800&q=80" alt="Book Chapter Publication"></div>
         <div class="card-body">
           <div class="card-meta">Forthcoming · Chapman & Hall/CRC</div>
           <div class="card-title">Ch. 13: Implementing a Graph ML Pipeline for Anomaly Detection</div>
@@ -661,7 +660,7 @@
         </div>
       </a>
       <a class="card" style="--accent:#6C5CE7;" href="https://atmae.org/wp-content/uploads/25-Final-Conference-Proceedings.pdf" target="_blank">
-        <div class="card-banner"><img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80" alt="ATMAE Conference" onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:2rem;\'>🎤</div>'"></div>
+        <div class="card-banner"><img class="card-img" data-fallback="🎤" src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80" alt="ATMAE Conference"></div>
         <div class="card-body">
           <div class="card-meta">2025 · Memphis, TN</div>
           <div class="card-title">How AI is Transforming Industrial Ecosystems and Threatening Market Dominance</div>
@@ -670,7 +669,7 @@
         </div>
       </a>
       <a class="card" style="--accent:#FF5470;" href="https://sites.google.com/a/ucmo.edu/asqstudent/asq-home-page?authuser=0" target="_blank">
-        <div class="card-banner"><img src="https://images.unsplash.com/photo-1581093458791-9d42e1bb7d5f?w=800&q=80" alt="ASQ Conference" onerror="this.parentElement.innerHTML='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;font-size:2rem;\'>🏆</div>'"></div>
+        <div class="card-banner"><img class="card-img" data-fallback="🏆" src="https://images.unsplash.com/photo-1581093458791-9d42e1bb7d5f?w=800&q=80" alt="ASQ Conference"></div>
         <div class="card-body">
           <div class="card-meta">2024 · 3rd Prize 🏆</div>
           <div class="card-title">The Hive Quality Network: A Distributed AI-Driven Framework for Defect Pattern Mining</div>
@@ -782,6 +781,23 @@
       track.scrollBy({ left: dir * 380, behavior: 'smooth' });
     });
   });
+  // Robust image fallbacks (avatar + article/publication cards) — handled in JS
+  // rather than inline onerror attributes, which some sandboxed preview environments block.
+  const heroAvatarImg = document.getElementById('heroAvatarImg');
+  if (heroAvatarImg) {
+    heroAvatarImg.addEventListener('error', () => {
+      heroAvatarImg.style.display = 'none';
+      const fallback = heroAvatarImg.nextElementSibling;
+      if (fallback) fallback.style.display = 'flex';
+    });
+  }
+  document.querySelectorAll('.card-img').forEach(img => {
+    img.addEventListener('error', () => {
+      const emoji = img.dataset.fallback || '✨';
+      img.parentElement.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:2rem;">${emoji}</div>`;
+    }, { once: true });
+  });
+
   // Auto-fetch real preview images for Articles & Publications from their own links
   // Falls back silently to the existing curated image if this fails (proxy down, no og:image, etc.)
   async function fetchOgImage(url) {
